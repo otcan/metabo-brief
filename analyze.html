@@ -10,42 +10,92 @@
     />
     <link rel="stylesheet" href="css/styles.css"/>
 </head>
-<body>
-<nav class="navbar navbar-expand-lg">
-    <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="index.html">
-            <img src="assets/logo/logo.svg" alt="MetaboBrief Logo" width="35" height="35" class="me-2"/>
-            <span class="fw-bold text-dark">MetaboBrief</span>
+<body class="snp-app">
+<nav class="snp-topbar">
+    <div class="container snp-topbar-inner">
+        <a class="snp-brand" href="index.html" aria-label="MetaboBrief home">
+            <img src="assets/logo/logo.svg" alt="" width="34" height="34"/>
+            <span>MetaboBrief</span>
         </a>
-        <div class="d-flex gap-2">
-            <a href="index.html" class="btn btn-outline-dark rounded-pill px-3">Home</a>
-            <a href="https://github.com/otcan/metabo-brief" class="btn btn-primary rounded-pill px-3">Source</a>
+        <div class="snp-topbar-actions">
+            <a href="index.html" class="snp-nav-link">Overview</a>
+            <a href="https://github.com/otcan/metabo-brief" class="snp-nav-button">GitHub</a>
         </div>
     </div>
 </nav>
 
 <main>
-    <section class="analyzer-hero">
+    <section class="snp-workbench">
         <div class="container">
-            <div class="analyzer-hero-grid">
-                <div>
-                    <p class="details-kicker">Local SNP analysis</p>
-                    <h1>Analyze a raw genotype file in your browser.</h1>
-                    <p class="analyzer-lead">
-                        MetaboBrief parses 23andMe-style and AncestryDNA-style SNP files locally,
-                        matches rsIDs against the starter panel, and renders an evidence-attributed report.
+            <div class="snp-workbench-grid">
+                <div class="snp-intro">
+                    <p class="snp-kicker">Local SNP analysis</p>
+                    <h1>Run the curated SNP panel without uploading genotype data.</h1>
+                    <p class="snp-lead">
+                        MetaboBrief reads 23andMe-style and AncestryDNA-style raw files in the browser,
+                        matches direct rsID/genotype calls against the open evidence panel, and renders a
+                        local report with source links and method limits.
                     </p>
-                </div>
-                <div class="analyzer-panel">
-                    <label class="form-label fw-semibold" for="snp-file">Raw genotype file</label>
-                    <input id="snp-file" class="form-control" type="file" accept=".txt,.csv,.tsv"/>
-                    <p class="analyzer-note">
-                        Files are read with browser APIs. The default app has no upload endpoint.
-                    </p>
-                    <div class="d-flex flex-column flex-sm-row gap-2 mt-3">
-                        <button id="load-sample" type="button" class="btn btn-primary rounded-pill px-4">Load Synthetic Sample</button>
-                        <button id="export-json" type="button" class="btn btn-outline-dark rounded-pill px-4" disabled>Export JSON</button>
+                    <div class="snp-method-grid" aria-label="Analysis method">
+                        <div>
+                            <span>01</span>
+                            <strong>Parse raw SNP file</strong>
+                            <p>Accepts tab, CSV, and common allele-column exports.</p>
+                        </div>
+                        <div>
+                            <span>02</span>
+                            <strong>Match direct genotypes</strong>
+                            <p>No strand flipping, imputation, phasing, or liftover.</p>
+                        </div>
+                        <div>
+                            <span>03</span>
+                            <strong>Render evidence report</strong>
+                            <p>Scores, pathways, caveats, and PubMed links stay inspectable.</p>
+                        </div>
                     </div>
+                </div>
+
+                <div class="upload-panel" aria-labelledby="start-analysis-title">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="snp-kicker">Start</p>
+                            <h2 id="start-analysis-title">Analyze a file</h2>
+                        </div>
+                        <span class="local-badge">Browser only</span>
+                    </div>
+
+                    <input id="snp-file" class="upload-native" type="file" accept=".txt,.csv,.tsv"/>
+                    <label class="upload-dropzone" for="snp-file">
+                        <span class="upload-label">Raw genotype file</span>
+                        <strong>Choose .txt, .csv, or .tsv</strong>
+                        <span>Data is read with browser APIs. This app has no upload endpoint.</span>
+                    </label>
+                    <p id="selected-file-name" class="selected-file-name">No file selected</p>
+
+                    <div class="upload-actions">
+                        <button id="load-sample" type="button" class="snp-action snp-action-primary">Synthetic sample</button>
+                        <button id="export-json" type="button" class="snp-action snp-action-secondary" disabled>Export JSON</button>
+                    </div>
+
+                    <div class="panel-facts" aria-label="Loaded panel inventory">
+                        <div>
+                            <span>Panel</span>
+                            <strong id="panel-release">Loading</strong>
+                        </div>
+                        <div>
+                            <span>Variants</span>
+                            <strong id="panel-variant-count">-</strong>
+                        </div>
+                        <div>
+                            <span>Claims</span>
+                            <strong id="panel-claim-count">-</strong>
+                        </div>
+                        <div>
+                            <span>Evidence rows</span>
+                            <strong id="panel-study-count">-</strong>
+                        </div>
+                    </div>
+
                     <p id="analyzer-status" class="analyzer-status" role="status" aria-live="polite">Loading SNP panel...</p>
                 </div>
             </div>
@@ -53,28 +103,56 @@
     </section>
 
     <section class="analysis-section">
-        <div class="container">
-            <div class="analysis-layout">
-                <aside class="analysis-sidebar">
-                    <h2>Run Summary</h2>
-                    <div id="analysis-summary" class="analysis-summary">
-                        <p class="text-muted">Load a file or synthetic sample to start.</p>
+        <div class="container analysis-shell">
+            <aside class="analysis-sidebar">
+                <div class="sidebar-header">
+                    <p class="snp-kicker">Run</p>
+                    <h2>Summary</h2>
+                </div>
+                <div id="analysis-summary" class="analysis-summary">
+                    <div class="analysis-idle">
+                        <strong>No report yet</strong>
+                        <span>Load a genotype file or synthetic sample to start.</span>
                     </div>
+                </div>
+                <div class="sidebar-header sidebar-header-spaced">
+                    <p class="snp-kicker">Method</p>
                     <h2>Warnings</h2>
-                    <ul id="analysis-warnings" class="analysis-warnings">
-                        <li>No analysis has run yet.</li>
-                    </ul>
-                </aside>
-                <section class="analysis-results" aria-label="SNP findings">
-                    <h2>Findings</h2>
+                </div>
+                <ul id="analysis-warnings" class="analysis-warnings">
+                    <li>No analysis has run yet.</li>
+                </ul>
+            </aside>
+
+            <section class="analysis-results" aria-label="SNP findings">
+                <div class="results-toolbar">
+                    <div>
+                        <p class="snp-kicker">Evidence report</p>
+                        <h2>Findings</h2>
+                    </div>
+                    <div class="results-controls" aria-label="Filter findings">
+                        <label class="control-field">
+                            <span>Search</span>
+                            <input id="finding-search" type="search" placeholder="Gene, rsID, pathway" disabled/>
+                        </label>
+                        <label class="control-field">
+                            <span>Pathway</span>
+                            <select id="pathway-filter" disabled>
+                                <option value="all">All pathways</option>
+                            </select>
+                        </label>
+                    </div>
+                    <span id="finding-count" class="result-count">No report</span>
+                </div>
+                <div class="results-body">
                     <div id="analysis-findings">
                         <div class="analysis-empty">
                             <h3>No file loaded</h3>
-                            <p>Choose a raw SNP file or use the synthetic sample to see the report renderer.</p>
+                            <p>Choose a raw SNP file or run the synthetic sample to inspect the report renderer.</p>
                         </div>
                     </div>
-                </section>
-            </div>
+                </div>
+            </section>
         </div>
     </section>
 </main>
