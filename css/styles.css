@@ -280,6 +280,58 @@ footer a {
 .cta3-form .form-status[data-state="error"] {
   color: #fecaca;
 }
+
+.trust-strip {
+  padding: 3rem 0;
+  background: #f8fafc;
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.trust-pill {
+  min-height: 178px;
+  padding: 1.25rem;
+  border: 1px solid #dbe3ee;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.trust-kicker {
+  display: block;
+  margin-bottom: 0.7rem;
+  color: #2563EB;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.trust-pill strong {
+  display: block;
+  color: #111827;
+  line-height: 1.25;
+}
+
+.trust-pill p {
+  margin: 0.7rem 0 0;
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 992px) {
+  .trust-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 576px) {
+  .trust-grid {
+    grid-template-columns: 1fr;
+  }
+}
 .about-section {
   background-color: #fff;
   text-align: center;
