@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Privacy Notes | MetaboBrief</title>
+
+    <!-- Bootstrap 5 CDN -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <img src="assets/logo/logo.svg" alt="MetaboBrief Logo" width="35" height="35" class="me-2"/>
+            <span class="fw-bold text-dark">MetaboBrief</span>
+        </a>
+    </div>
+</nav>
+
+<section class="details-section">
+    <div class="container">
+        <div class="details-card mx-auto">
+            <p class="details-kicker">Privacy</p>
+            <h1 class="details-title">Privacy Notes</h1>
+            <p class="details-subtitle">MetaboBrief is a static starter. It does not include a backend, account system, analytics, or data upload service.</p>
+
+            <h2 class="h5 mt-4">What we collect</h2>
+            <ul>
+                <li>The demo stores only cookie-banner preference in local storage.</li>
+                <li>No genotype, metabolomics, or health data is collected by this static template.</li>
+            </ul>
+
+            <h2 class="h5 mt-4">Data handling guidance</h2>
+            <ul>
+                <li>Do not publish real personal health, genotype, or metabolomics data in a public fork.</li>
+                <li>Use synthetic examples or properly consented, de-identified datasets.</li>
+            </ul>
+
+            <h2 class="h5 mt-4">Storage and processors</h2>
+            <p>The included demo has no third-party form processor. GitHub Pages and the CDN assets you keep may still receive normal web request metadata.</p>
+
+            <h2 class="h5 mt-4">Your choices</h2>
+            <p>If you deploy your own version with analytics, forms, uploads, or account features, replace this page with your own privacy policy.</p>
+
+            <h2 class="h5 mt-4">Contact</h2>
+            <p>Open source project discussion happens through <a href="https://github.com/otcan/metabo-brief/issues">GitHub issues</a>.</p>
+        </div>
+    </div>
+</section>
+
+<div id="gdpr-banner" class="gdpr-banner" role="dialog" aria-live="polite" aria-label="Privacy notice">
+    <div class="gdpr-inner">
+        <p>We use essential cookies and local storage to remember your preferences. We do not use advertising or analytics cookies.</p>
+        <div class="gdpr-actions">
+            <button type="button" class="gdpr-btn gdpr-accept">Accept</button>
+            <button type="button" class="gdpr-btn gdpr-reject">Reject</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

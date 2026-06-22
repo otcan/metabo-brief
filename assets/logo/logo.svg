@@ -1,0 +1,9 @@
+<svg width="224" height="224" viewBox="0 0 224 224" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title id="title">MetaboBrief logo</title>
+  <rect width="224" height="224" rx="44" fill="#123E2F"/>
+  <circle cx="112" cy="112" r="68" fill="#D7EFE8"/>
+  <path d="M73 117c14-38 65-52 92-22" stroke="#2563EB" stroke-width="14" stroke-linecap="round"/>
+  <path d="M151 107c-14 38-65 52-92 22" stroke="#1B4D3E" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="72" cy="117" r="10" fill="#2563EB"/>
+  <circle cx="152" cy="107" r="10" fill="#1B4D3E"/>
+</svg>
