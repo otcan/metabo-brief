@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SNP Analyzer | MetaboBrief</title>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <img src="assets/logo/logo.svg" alt="MetaboBrief Logo" width="35" height="35" class="me-2"/>
+            <span class="fw-bold text-dark">MetaboBrief</span>
+        </a>
+        <div class="d-flex gap-2">
+            <a href="index.html" class="btn btn-outline-dark rounded-pill px-3">Home</a>
+            <a href="https://github.com/otcan/metabo-brief" class="btn btn-primary rounded-pill px-3">Source</a>
+        </div>
+    </div>
+</nav>
+
+<main>
+    <section class="analyzer-hero">
+        <div class="container">
+            <div class="analyzer-hero-grid">
+                <div>
+                    <p class="details-kicker">Local SNP analysis</p>
+                    <h1>Analyze a raw genotype file in your browser.</h1>
+                    <p class="analyzer-lead">
+                        MetaboBrief parses 23andMe-style and AncestryDNA-style SNP files locally,
+                        matches rsIDs against the starter panel, and renders an evidence-attributed report.
+                    </p>
+                </div>
+                <div class="analyzer-panel">
+                    <label class="form-label fw-semibold" for="snp-file">Raw genotype file</label>
+                    <input id="snp-file" class="form-control" type="file" accept=".txt,.csv,.tsv"/>
+                    <p class="analyzer-note">
+                        Files are read with browser APIs. The default app has no upload endpoint.
+                    </p>
+                    <div class="d-flex flex-column flex-sm-row gap-2 mt-3">
+                        <button id="load-sample" type="button" class="btn btn-primary rounded-pill px-4">Load Synthetic Sample</button>
+                        <button id="export-json" type="button" class="btn btn-outline-dark rounded-pill px-4" disabled>Export JSON</button>
+                    </div>
+                    <p id="analyzer-status" class="analyzer-status" role="status" aria-live="polite">Loading SNP panel...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="analysis-section">
+        <div class="container">
+            <div class="analysis-layout">
+                <aside class="analysis-sidebar">
+                    <h2>Run Summary</h2>
+                    <div id="analysis-summary" class="analysis-summary">
+                        <p class="text-muted">Load a file or synthetic sample to start.</p>
+                    </div>
+                    <h2>Warnings</h2>
+                    <ul id="analysis-warnings" class="analysis-warnings">
+                        <li>No analysis has run yet.</li>
+                    </ul>
+                </aside>
+                <section class="analysis-results" aria-label="SNP findings">
+                    <h2>Findings</h2>
+                    <div id="analysis-findings">
+                        <div class="analysis-empty">
+                            <h3>No file loaded</h3>
+                            <p>Choose a raw SNP file or use the synthetic sample to see the report renderer.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div id="gdpr-banner" class="gdpr-banner" role="dialog" aria-live="polite" aria-label="Privacy notice">
+    <div class="gdpr-inner">
+        <p>We use essential cookies and local storage to remember your preferences. We do not use advertising or analytics cookies.</p>
+        <div class="gdpr-actions">
+            <button type="button" class="gdpr-btn gdpr-accept">Accept</button>
+            <button type="button" class="gdpr-btn gdpr-reject">Reject</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/main.js"></script>
+<script type="module" src="analyzer/app.js"></script>
+</body>
+</html>

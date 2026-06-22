@@ -1,0 +1,338 @@
+{
+  "version": "0.1.0",
+  "name": "MetaboBrief starter SNP panel",
+  "license": "MIT for panel structure; external sources retain their own terms",
+  "sourcePolicy": "Panel records summarize public scientific sources and are not clinical classifications.",
+  "variants": [
+    {
+      "rsid": "rs1801133",
+      "gene": "MTHFR",
+      "label": "MTHFR C677T one-carbon metabolism marker",
+      "pathway": "Methylation / one-carbon metabolism",
+      "evidenceLevel": "established functional marker",
+      "sourceLinks": [
+        { "label": "NCBI dbSNP rs1801133", "url": "https://www.ncbi.nlm.nih.gov/snp/rs1801133" },
+        { "label": "ClinVar rs1801133 records", "url": "https://www.ncbi.nlm.nih.gov/clinvar/?term=rs1801133" }
+      ],
+      "genotypes": {
+        "CC": {
+          "score": 0,
+          "direction": "typical",
+          "interpretation": "This genotype is not scored as an MTHFR C677T constraint in this starter panel."
+        },
+        "CT": {
+          "score": 1,
+          "direction": "moderate_attention",
+          "interpretation": "One T allele may modestly reduce MTHFR enzyme activity. Treat this as a pathway hypothesis and validate with biomarkers rather than acting on genotype alone."
+        },
+        "TT": {
+          "score": 2,
+          "direction": "higher_attention",
+          "interpretation": "Two T alleles are commonly associated with lower MTHFR enzyme activity and higher homocysteine tendency in some contexts. This is not a diagnosis."
+        }
+      },
+      "validationMarkers": ["Homocysteine", "Serum B12", "RBC folate", "Methylmalonic acid"],
+      "limitations": [
+        "Folate status, B12 status, riboflavin, diet, kidney function, medications, and ancestry affect interpretation.",
+        "This panel does not infer folate need or recommend supplementation."
+      ]
+    },
+    {
+      "rsid": "rs1801131",
+      "gene": "MTHFR",
+      "label": "MTHFR A1298C supporting one-carbon marker",
+      "pathway": "Methylation / one-carbon metabolism",
+      "evidenceLevel": "supporting functional marker",
+      "sourceLinks": [
+        { "label": "NCBI dbSNP rs1801131", "url": "https://www.ncbi.nlm.nih.gov/snp/rs1801131" },
+        { "label": "ClinVar rs1801131 records", "url": "https://www.ncbi.nlm.nih.gov/clinvar/?term=rs1801131" }
+      ],
+      "genotypes": {
+        "AA": {
+          "score": 0,
+          "direction": "typical",
+          "interpretation": "This genotype is not scored as an MTHFR A1298C constraint in this starter panel."
+        },
+        "AC": {
+          "score": 0.5,
+          "direction": "low_attention",
+          "interpretation": "One C allele is tracked as a low-attention supporting marker. Interpret together with measured folate-cycle biomarkers."
+        },
+        "CC": {
+          "score": 1,
+          "direction": "moderate_attention",
+          "interpretation": "Two C alleles are tracked as a moderate supporting marker. This should not be interpreted without biomarker context."
+        }
+      },
+      "validationMarkers": ["Homocysteine", "Serum B12", "RBC folate"],
+      "limitations": [
+        "A1298C has weaker standalone interpretability than C677T.",
+        "This panel does not model compound MTHFR diplotypes beyond simple per-SNP scoring."
+      ]
+    },
+    {
+      "rsid": "rs762551",
+      "gene": "CYP1A2",
+      "label": "CYP1A2 caffeine metabolism tendency marker",
+      "pathway": "Xenobiotic / caffeine metabolism",
+      "evidenceLevel": "common pharmacogenetic association",
+      "sourceLinks": [
+        { "label": "NCBI dbSNP rs762551", "url": "https://www.ncbi.nlm.nih.gov/snp/rs762551" },
+        { "label": "PubMed rs762551 search", "url": "https://pubmed.ncbi.nlm.nih.gov/?term=rs762551+CYP1A2+caffeine" }
+      ],
+      "genotypes": {
+        "AA": {
+          "score": 0,
+          "direction": "typical_or_faster",
+          "interpretation": "Often discussed as a higher-inducibility CYP1A2 genotype in caffeine studies. Lifestyle, smoking, medications, and hormones can dominate genotype."
+        },
+        "AC": {
+          "score": 1,
+          "direction": "moderate_attention",
+          "interpretation": "One C allele is tracked as a possible lower caffeine-clearance tendency. Validate against actual caffeine tolerance and context."
+        },
+        "CC": {
+          "score": 1.5,
+          "direction": "higher_attention",
+          "interpretation": "Two C alleles are tracked as a possible lower caffeine-clearance tendency. This is not a medication or diet recommendation."
+        }
+      },
+      "validationMarkers": ["Caffeine response log", "Sleep latency", "Blood pressure response"],
+      "limitations": [
+        "Caffeine response is strongly affected by dose, timing, smoking, pregnancy, hormones, medications, and sleep debt.",
+        "This is not a clinical pharmacogenomic interpretation."
+      ]
+    },
+    {
+      "rsid": "rs4988235",
+      "gene": "MCM6/LCT",
+      "label": "Lactase persistence marker",
+      "pathway": "Carbohydrate digestion",
+      "evidenceLevel": "established trait marker in some ancestries",
+      "sourceLinks": [
+        { "label": "NCBI dbSNP rs4988235", "url": "https://www.ncbi.nlm.nih.gov/snp/rs4988235" },
+        { "label": "PubMed lactase persistence rs4988235 search", "url": "https://pubmed.ncbi.nlm.nih.gov/?term=rs4988235+lactase+persistence" }
+      ],
+      "genotypes": {
+        "CC": {
+          "score": 1.5,
+          "direction": "higher_attention",
+          "interpretation": "In many European-ancestry studies, CC is associated with lactase non-persistence tendency. Symptoms and ancestry context matter."
+        },
+        "CT": {
+          "score": 0,
+          "direction": "persistence_tendency",
+          "interpretation": "One T allele is commonly associated with lactase persistence in European-ancestry contexts."
+        },
+        "TT": {
+          "score": 0,
+          "direction": "persistence_tendency",
+          "interpretation": "Two T alleles are commonly associated with lactase persistence in European-ancestry contexts."
+        }
+      },
+      "validationMarkers": ["Diet symptom log", "Hydrogen breath test if clinically indicated"],
+      "limitations": [
+        "Other lactase persistence variants exist and vary by ancestry.",
+        "Digestive symptoms can reflect many non-genetic causes."
+      ]
+    },
+    {
+      "rsid": "rs671",
+      "gene": "ALDH2",
+      "label": "ALDH2 acetaldehyde metabolism marker",
+      "pathway": "Alcohol / aldehyde metabolism",
+      "evidenceLevel": "established functional marker",
+      "sourceLinks": [
+        { "label": "NCBI dbSNP rs671", "url": "https://www.ncbi.nlm.nih.gov/snp/rs671" },
+        { "label": "PubMed ALDH2 rs671 search", "url": "https://pubmed.ncbi.nlm.nih.gov/?term=rs671+ALDH2" }
+      ],
+      "genotypes": {
+        "GG": {
+          "score": 0,
+          "direction": "typical",
+          "interpretation": "This genotype is not scored as reduced ALDH2 activity in this starter panel."
+        },
+        "AG": {
+          "score": 2,
+          "direction": "higher_attention",
+          "interpretation": "One A allele is associated with reduced ALDH2 activity and acetaldehyde handling. Avoid interpreting this as permission or prohibition advice."
+        },
+        "AA": {
+          "score": 2.5,
+          "direction": "higher_attention",
+          "interpretation": "Two A alleles are associated with strongly reduced ALDH2 activity. This is a safety-relevant genotype and should be interpreted conservatively."
+        }
+      },
+      "validationMarkers": ["Alcohol flushing history", "Clinician review if relevant"],
+      "limitations": [
+        "Alcohol response and risk depend on behavior, dose, ancestry, medications, and health context.",
+        "This report does not provide alcohol-use advice."
+      ]
+    },
+    {
+      "rsid": "rs7903146",
+      "gene": "TCF7L2",
+      "label": "Glucose regulation association marker",
+      "pathway": "Glucose / insulin signaling",
+      "evidenceLevel": "replicated common-trait association",
+      "sourceLinks": [
+        { "label": "NCBI dbSNP rs7903146", "url": "https://www.ncbi.nlm.nih.gov/snp/rs7903146" },
+        { "label": "GWAS Catalog rs7903146 search", "url": "https://www.ebi.ac.uk/gwas/search?query=rs7903146" }
+      ],
+      "genotypes": {
+        "CC": {
+          "score": 0,
+          "direction": "typical",
+          "interpretation": "This genotype is not scored as a TCF7L2 T-allele signal in this starter panel."
+        },
+        "CT": {
+          "score": 1,
+          "direction": "moderate_attention",
+          "interpretation": "One T allele is a common association signal for glucose-regulation traits. It is not diagnostic."
+        },
+        "TT": {
+          "score": 1.5,
+          "direction": "higher_attention",
+          "interpretation": "Two T alleles are a stronger common association signal for glucose-regulation traits. Use measured biomarkers for interpretation."
+        }
+      },
+      "validationMarkers": ["Fasting glucose", "HbA1c", "Fasting insulin", "Oral glucose tolerance test if clinically indicated"],
+      "limitations": [
+        "Common-trait associations have small effects and are not deterministic.",
+        "Diet, activity, sleep, body composition, medications, and ancestry can dominate genotype."
+      ]
+    },
+    {
+      "rsid": "rs9939609",
+      "gene": "FTO",
+      "label": "Body-weight and appetite association marker",
+      "pathway": "Appetite / body-weight regulation",
+      "evidenceLevel": "replicated common-trait association",
+      "sourceLinks": [
+        { "label": "NCBI dbSNP rs9939609", "url": "https://www.ncbi.nlm.nih.gov/snp/rs9939609" },
+        { "label": "GWAS Catalog rs9939609 search", "url": "https://www.ebi.ac.uk/gwas/search?query=rs9939609" }
+      ],
+      "genotypes": {
+        "TT": {
+          "score": 0,
+          "direction": "typical",
+          "interpretation": "This genotype is not scored as an FTO A-allele signal in this starter panel."
+        },
+        "AT": {
+          "score": 0.75,
+          "direction": "low_attention",
+          "interpretation": "One A allele is a common association signal for body-weight and appetite-related traits. It is not deterministic."
+        },
+        "AA": {
+          "score": 1.25,
+          "direction": "moderate_attention",
+          "interpretation": "Two A alleles are a stronger common association signal for body-weight and appetite-related traits. Context matters more than genotype alone."
+        }
+      },
+      "validationMarkers": ["Body composition trend", "Satiety and hunger log", "Sleep duration", "Activity level"],
+      "limitations": [
+        "FTO associations are population-level signals with modest individual predictive value.",
+        "This panel does not estimate obesity risk."
+      ]
+    },
+    {
+      "rsid": "rs1800562",
+      "gene": "HFE",
+      "label": "HFE C282Y iron-handling marker",
+      "pathway": "Iron handling",
+      "evidenceLevel": "clinical-review marker",
+      "sourceLinks": [
+        { "label": "NCBI dbSNP rs1800562", "url": "https://www.ncbi.nlm.nih.gov/snp/rs1800562" },
+        { "label": "ClinVar rs1800562 records", "url": "https://www.ncbi.nlm.nih.gov/clinvar/?term=rs1800562" }
+      ],
+      "genotypes": {
+        "GG": {
+          "score": 0,
+          "direction": "typical",
+          "interpretation": "This genotype is not scored as carrying the C282Y alternate allele in this starter panel."
+        },
+        "AG": {
+          "score": 1.5,
+          "direction": "higher_attention",
+          "interpretation": "One A allele indicates C282Y carrier status in this simplified panel. Interpret with iron labs and clinical context."
+        },
+        "AA": {
+          "score": 2.5,
+          "direction": "clinical_review",
+          "interpretation": "Two A alleles are a clinically relevant HFE signal. This requires measured iron markers and qualified clinical review."
+        }
+      },
+      "validationMarkers": ["Ferritin", "Transferrin saturation", "Serum iron", "TIBC"],
+      "limitations": [
+        "This panel does not diagnose hereditary hemochromatosis.",
+        "Penetrance varies, and iron markers are required for practical interpretation."
+      ]
+    },
+    {
+      "rsid": "rs1799945",
+      "gene": "HFE",
+      "label": "HFE H63D iron-handling marker",
+      "pathway": "Iron handling",
+      "evidenceLevel": "clinical-review supporting marker",
+      "sourceLinks": [
+        { "label": "NCBI dbSNP rs1799945", "url": "https://www.ncbi.nlm.nih.gov/snp/rs1799945" },
+        { "label": "ClinVar rs1799945 records", "url": "https://www.ncbi.nlm.nih.gov/clinvar/?term=rs1799945" }
+      ],
+      "genotypes": {
+        "CC": {
+          "score": 0,
+          "direction": "typical",
+          "interpretation": "This genotype is not scored as carrying the H63D alternate allele in this starter panel."
+        },
+        "CG": {
+          "score": 0.75,
+          "direction": "low_attention",
+          "interpretation": "One G allele indicates H63D carrier status in this simplified panel. Interpret together with C282Y and measured iron labs."
+        },
+        "GG": {
+          "score": 1.25,
+          "direction": "moderate_attention",
+          "interpretation": "Two G alleles are tracked as an iron-handling signal, but interpretation requires iron labs and clinical context."
+        }
+      },
+      "validationMarkers": ["Ferritin", "Transferrin saturation", "Serum iron", "TIBC"],
+      "limitations": [
+        "This panel does not phase HFE variants or infer compound heterozygosity.",
+        "Measured iron markers are required for practical interpretation."
+      ]
+    },
+    {
+      "rsid": "rs887829",
+      "gene": "UGT1A1",
+      "label": "UGT1A1 bilirubin-tendency marker",
+      "pathway": "Glucuronidation / bilirubin handling",
+      "evidenceLevel": "replicated biomarker association",
+      "sourceLinks": [
+        { "label": "NCBI dbSNP rs887829", "url": "https://www.ncbi.nlm.nih.gov/snp/rs887829" },
+        { "label": "PubMed rs887829 bilirubin search", "url": "https://pubmed.ncbi.nlm.nih.gov/?term=rs887829+bilirubin+UGT1A1" }
+      ],
+      "genotypes": {
+        "CC": {
+          "score": 0,
+          "direction": "typical",
+          "interpretation": "This genotype is not scored as a T-allele bilirubin-tendency signal in this starter panel."
+        },
+        "CT": {
+          "score": 1,
+          "direction": "moderate_attention",
+          "interpretation": "One T allele is associated with higher bilirubin tendency in population studies. This is not a liver-disease diagnosis."
+        },
+        "TT": {
+          "score": 1.5,
+          "direction": "higher_attention",
+          "interpretation": "Two T alleles are associated with a stronger higher-bilirubin tendency. Interpret with measured bilirubin and clinical context."
+        }
+      },
+      "validationMarkers": ["Total bilirubin", "Direct bilirubin", "ALT", "AST", "GGT"],
+      "limitations": [
+        "Bilirubin is affected by fasting, illness, liver health, hemolysis, medications, and other UGT1A1 variants.",
+        "This marker is not a diagnosis of Gilbert syndrome."
+      ]
+    }
+  ]
+}

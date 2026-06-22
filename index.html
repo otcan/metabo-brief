@@ -29,7 +29,7 @@
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
             <ul class="navbar-nav gap-3">
                 <li class="nav-item">
-                    <a class="nav-link fw-semibold text-dark links" href="#features">Practices & Features</a>
+                    <a class="nav-link fw-semibold text-dark links" href="analyze.html">Analyze SNPs</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link fw-semibold text-dark links" href="#audience">For Who</a>
@@ -56,15 +56,14 @@
         <div class="row justify-content-start">
             <div class="col-md-7 col-lg-6">
                 <h1 class="display-4 fw-bold hero-title">
-                    Personalized Metabolomics for Your Health Journey
+                    Local-first SNP analysis for personal omics briefs
                 </h1>
                 <div class="hero-highlight-card rounded p-4 my-4 text-white">
                     <p class="mb-0 fw-semibold fst-italic">Your biology is unique.</p> <br>
-                    <p class="mb-2 fw-semibold fst-italic">Your health plan should be too.</p>
+                    <p class="mb-2 fw-semibold fst-italic">Your SNP report should stay local.</p>
 
                 </div>
-                <p class="lead">Understand your body's metabolic blueprint and receive a personalized
-                    hypothesis brief that keeps evidence, uncertainty, and validation steps visible.</p>
+                <p class="lead">Parse raw genotype files in the browser, match a curated SNP panel, and produce a report that keeps evidence, uncertainty, and validation steps visible.</p>
             </div>
         </div>
     </div>
@@ -72,11 +71,11 @@
 
 <!-- CTA Strip -->
 <section id="cta" class="cta-section">
-    <h2>Open-source metabolomics report starter</h2>
-    <p class="cta-copy">A static template for translating metabolomics, genotype, and pathway evidence into a clear hypothesis brief.
-        <br class="d-none d-sm-block">Use it as a public demo, report shell, or starting point for your own analysis workflow.</p>
+    <h2>Analyze SNP files without uploading them</h2>
+    <p class="cta-copy">MetaboBrief now treats SNP analysis as core: local parsing, curated panel matching, pathway grouping, and evidence-attributed report output.
+        <br class="d-none d-sm-block">Metabolomics panels can plug in later; raw genotype analysis comes first.</p>
     <div class="cta-form">
-        <a class="btn btn-light rounded-pill px-4" href="personalized.html">Read the Method</a>
+        <a class="btn btn-light rounded-pill px-4" href="analyze.html">Open SNP Analyzer</a>
         <a class="btn btn-outline-light rounded-pill px-4" href="https://github.com/otcan/metabo-brief">Fork on GitHub</a>
     </div>
 </section>
@@ -87,23 +86,23 @@
         <div class="trust-grid">
             <div class="trust-pill">
                 <span class="trust-kicker">Privacy</span>
-                <strong>Local-first static template</strong>
-                <p>No backend, uploads, analytics, checkout, or contact form in the default repo.</p>
+                <strong>Local-first SNP parser</strong>
+                <p>Raw genotype files are read by browser APIs and matched locally against the panel.</p>
             </div>
             <div class="trust-pill">
                 <span class="trust-kicker">Evidence</span>
-                <strong>Attribution before certainty</strong>
-                <p>Report sections are shaped to show sources, limitations, and validation markers.</p>
+                <strong>Curated source links</strong>
+                <p>Every panel record carries source links, limitations, and validation markers.</p>
             </div>
             <div class="trust-pill">
                 <span class="trust-kicker">Data</span>
-                <strong>Synthetic demos by default</strong>
-                <p>Public forks should not publish raw genotype, metabolomics, or private report data.</p>
+                <strong>Starter panel included</strong>
+                <p>The first panel covers methylation, caffeine, lactase, glucose, iron, ALDH2, and bilirubin markers.</p>
             </div>
             <div class="trust-pill">
                 <span class="trust-kicker">Use</span>
-                <strong>Informational, not clinical</strong>
-                <p>The template communicates hypotheses; it does not diagnose or prescribe.</p>
+                <strong>Informational output</strong>
+                <p>The analyzer does not diagnose, prescribe, phase, impute, or perform liftover.</p>
             </div>
         </div>
     </div>
@@ -112,22 +111,22 @@
 <!-- About Section -->
 <section class="about-section">
     <h2>Project Practices</h2>
-    <p class="lead">MetaboBrief is a static, client-side template for clear personalized metabolomics communication.</p>
+    <p class="lead">MetaboBrief is a static, client-side SNP analyzer and report surface for personal omics interpretation.</p>
     <div class="feature-grid">
         <div class="feature-card">
             <img src="assets/icons/frame-1.svg" alt="Scientific Excellence"/>
             <h5>Scientific Excellence</h5>
-            <p>Built on cutting-edge research and advanced metabolomic science to deliver accurate insights.</p>
+            <p>Uses direct rsID/genotype matching against a transparent JSON knowledge panel.</p>
         </div>
         <div class="feature-card">
             <img src="assets/icons/frame-2.svg" alt="Privacy First"/>
             <h5>Privacy First</h5>
-            <p>No backend is included. Keep sensitive genotype, metabolomics, and health data out of public demos.</p>
+            <p>No backend is included. Keep sensitive genotype data local and avoid committing real files.</p>
         </div>
         <div class="feature-card">
             <img src="assets/icons/frame-3.svg" alt="Expert Team"/>
             <h5>Editable Template</h5>
-            <p>Replace the sample copy, report cards, evidence text, and visuals with your own validated workflow.</p>
+            <p>Expand the SNP panel, improve report cards, or add later metabolomics modules.</p>
         </div>
     </div>
 </section>
@@ -216,8 +215,7 @@
     <div class="container">
         <h2 class="section-title mb-3 mt-3">Who Is It For?</h2>
         <p class="section-subtitle mb-2">
-            Our metabolomics platform is designed to serve a wide range of health-conscious individuals and
-            organizations.
+            MetaboBrief is designed for people and teams who want local SNP analysis with cautious, evidence-attributed reports.
         </p>
         <p class="fw-semibold fst-italic mb-5 who-sub-text">Built for people who want answers — and actions.</p>
 
@@ -395,18 +393,16 @@
         <div class="text-center mb-5 mt-3">
             <h2 class="fw-bold mb-2">Personalized Report Preview</h2>
             <p class="text-muted mx-auto" style="max-width: 640px;">
-                Get a glimpse of your comprehensive health analysis and personalized recommendations based on your
-                unique metabolic profile.
+                Get a glimpse of how SNP findings can be grouped into pathways, limitations, and validation markers.
             </p>
         </div>
 
         <div class="row align-items-start">
             <!-- Left Column -->
             <div class="col-md-6">
-                <h5 class="fw-semibold mb-3">Discover Your Metabolic Blueprint</h5>
+                <h5 class="fw-semibold mb-3">Review Your SNP Pathway Signals</h5>
                 <p class="mb-4 text-muted">
-                    Our detailed reports provide actionable insights into your metabolic health, helping you make
-                    informed decisions about your wellness journey.
+                    The report surface turns genotype matches into readable hypotheses with source links and measurement follow-ups.
                 </p>
 
                 <ul class="report-feature-list list-unstyled">
@@ -416,9 +412,7 @@
                         </div>
                         <div>
                             <strong>PDF Report</strong>
-                            <p class="text-muted mb-0">Get a science-backed, personalized report that breaks down your
-                                metabolic strengths, imbalances, and actionable health insights—all in one downloadable
-                                PDF.</p>
+                            <p class="text-muted mb-0">Export a local JSON report now; print/PDF views can build on the same structured findings.</p>
                         </div>
                     </li>
                     <li class="d-flex gap-3 mb-4">

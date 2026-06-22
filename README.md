@@ -1,12 +1,12 @@
 # MetaboBrief
 
-**Open-source personalized metabolomics brief starter. Static-first. Privacy-aware. Evidence-attributed.**
+**Open-source local SNP analysis and personal omics brief generation. Static-first. Privacy-aware. Evidence-attributed.**
 
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![pages](https://img.shields.io/badge/demo-GitHub%20Pages-success)](https://otcan.github.io/metabo-brief/)
 [![privacy: local-first](https://img.shields.io/badge/privacy-local--first-success)](#privacy-posture)
 
-MetaboBrief is a static starter for personalized metabolomics briefs. It packages a public landing page, method explainer, report preview, privacy notes, and GitHub Pages deployment workflow that can be adapted for synthetic demos or validated internal workflows.
+MetaboBrief is a browser-first SNP analyzer and report surface. It parses raw genotype files locally, matches rsIDs against a curated JSON SNP panel, and renders an evidence-attributed personal omics brief.
 
 The project is published for open-source use under `otcan/metabo-brief`.
 
@@ -15,28 +15,34 @@ Live demo: <https://otcan.github.io/metabo-brief/>
 ## What is included
 
 - Static HTML/CSS/JavaScript pages with no build step.
+- Browser-only parsing for 23andMe-style and AncestryDNA-style raw genotype files.
+- A starter curated SNP panel in `data/snp-panel.json`.
+- Local SNP report rendering in `analyze.html`.
 - A report-preview layout for pathway-level hypotheses and action-plan sections.
-- Short and long methodology pages for metabolomics and digital-twin framing.
+- Short and long methodology pages for future metabolomics and digital-twin framing.
 - Privacy and use notes that emphasize synthetic data for public demos.
-- A GitHub Pages workflow in `.github/workflows/static.yml`.
+- GitHub Actions for static deployment and SNP parser validation.
 
 ## Supported inputs
 
-MetaboBrief is a communication shell, not an analysis engine. It is designed to present outputs from validated workflows.
+MetaboBrief now treats SNP analysis as core. The default analyzer performs direct rsID/genotype matching against the bundled panel.
 
 | Input type | Status | Notes |
 |---|---|---|
-| Synthetic metabolomics summaries | Supported | Best for public demos and examples. |
-| De-identified pathway hypotheses | Supported | Include source attribution, uncertainty, and validation markers. |
-| Genotype or SNP summaries | Template only | Do not publish real user genotype files or raw variants in a public fork. |
-| Raw metabolomics files | Not processed | Use an external validated pipeline, then paste summarized results. |
-| Raw 23andMe, AncestryDNA, VCF, or gVCF files | Not processed | This repo does not parse or analyze genotype files. |
+| 23andMe-style raw SNP text | Supported | Four-column `rsid/chromosome/position/genotype` rows. |
+| AncestryDNA-style raw SNP text | Supported | Five-column `rsid/chromosome/position/allele1/allele2` rows. |
+| Generic rsID + genotype TSV/CSV | Partially supported | Header-based parsing handles common column names. |
+| Raw VCF / gVCF | Not yet supported | Planned separately; no liftover or REF/ALT modeling yet. |
+| Raw metabolomics files | Later | Metabolomics panel support is deferred. |
 
 ## Outputs
 
 | Output | File |
 |---|---|
 | Landing page and report preview | `index.html` |
+| Local SNP analyzer | `analyze.html` |
+| SNP parser and analysis engine | `analyzer/snp-core.js` |
+| Starter SNP panel | `data/snp-panel.json` |
 | Short methodology explainer | `personalized.html` |
 | Longer methodology explainer | `personalized-full.html` |
 | Research navigation page | `research-summary.html` |
@@ -45,21 +51,34 @@ MetaboBrief is a communication shell, not an analysis engine. It is designed to 
 ## What is not included
 
 - No backend, account system, checkout, analytics, or upload pipeline.
+- No strand flipping, imputation, phasing, or genome-build liftover yet.
+- No VCF/gVCF parser yet.
 - No medical advice engine.
+- No bundled third-party evidence databases beyond the starter JSON panel.
 - No real personal health, genotype, metabolomics, or evidence-review payloads.
 
 ## Use locally
 
-Open `index.html` in a browser, or serve the directory with any static server:
+Serve the directory with any static server:
 
 ```bash
 python3 -m http.server 8080
 ```
 
-Then visit `http://127.0.0.1:8080`.
+Then visit:
+
+- `http://127.0.0.1:8080/analyze.html` for SNP analysis.
+- `http://127.0.0.1:8080/` for the project landing page.
+
+Run the parser tests:
+
+```bash
+npm test
+```
 
 ## Privacy posture
 
+- Raw genotype files are read locally with browser file APIs.
 - No data leaves the browser in the default template.
 - No telemetry, analytics, uploads, checkout, or contact form is included.
 - The demo uses local storage only for cookie-banner preference.
@@ -69,21 +88,25 @@ If you add uploads, analytics, forms, accounts, or API calls, update the privacy
 
 ## Regulatory posture
 
-MetaboBrief is informational software for communicating hypotheses and uncertainty. It does not diagnose disease, classify variants, prescribe interventions, or replace qualified professional judgment. Any scientific claim in a fork should be attributed to its source and paired with limitations.
+MetaboBrief is informational software for SNP pathway interpretation and personal omics communication. It does not diagnose disease, classify variants clinically, prescribe interventions, or replace qualified professional judgment. Any scientific claim in a fork should be attributed to its source and paired with limitations.
 
 ## Customize
 
-1. Replace sample copy in `index.html`, `personalized.html`, and `personalized-full.html`.
-2. Replace report preview sections with your own synthetic or consented/de-identified examples.
-3. Update `privacy.html` and `terms.html` before deploying any version with forms, uploads, analytics, or account features.
-4. Replace assets under `assets/` if your fork has its own visual identity.
+1. Expand or edit the SNP panel in `data/snp-panel.json`.
+2. Keep source links, limitations, and validation markers on every panel record.
+3. Replace sample copy in `index.html`, `personalized.html`, and `personalized-full.html`.
+4. Update `privacy.html` and `terms.html` before deploying any version with forms, uploads, analytics, or account features.
+5. Replace assets under `assets/` if your fork has its own visual identity.
 
 ## Roadmap
 
-- Add a fully synthetic example report with matching JSON payload.
-- Add a small schema for evidence cards and validation markers.
+- Expand parser coverage and add VCF/gVCF support.
+- Add strand-flip and build/liftover handling with explicit tests.
+- Expand the starter SNP panel with stricter curation metadata.
+- Add a fully synthetic SNP report with matching JSON payload.
+- Add a schema for SNP panel records and evidence cards.
 - Add accessibility and content-quality checks for generated report pages.
-- Add optional export styles for print/PDF workflows.
+- Add metabolomics panel support after the SNP core is stable.
 
 ## Safety notes
 

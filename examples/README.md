@@ -1,12 +1,12 @@
 # Examples
 
-This directory is reserved for examples that demonstrate MetaboBrief structure without exposing personal data.
+This directory contains synthetic files that demonstrate MetaboBrief without exposing personal data.
 
 ## Planned examples
 
-- A synthetic metabolomics summary.
-- A synthetic pathway-hypothesis report card.
-- A matching machine-readable JSON payload for the report preview.
+- `synthetic-23andme.txt`: synthetic 23andMe-style raw SNP file.
+- `synthetic-ancestry.txt`: synthetic AncestryDNA-style raw SNP file.
+- A matching machine-readable JSON report export is planned.
 
 ## Example rules
 

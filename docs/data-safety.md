@@ -1,6 +1,6 @@
 # Data Safety
 
-MetaboBrief is designed as a static communication template. It should not receive or store real personal data unless a fork adds infrastructure and governance for that purpose.
+MetaboBrief is designed as a local-first SNP analyzer and static communication template. Raw genotype files are sensitive personal data. The default analyzer reads files locally in the browser and does not upload them.
 
 ## Default behavior
 
@@ -10,6 +10,7 @@ MetaboBrief is designed as a static communication template. It should not receiv
 - No contact form.
 - No checkout.
 - Local storage is used only for the cookie-banner preference.
+- Raw SNP files are not stored by the default app.
 
 ## Public demo checklist
 
@@ -33,4 +34,4 @@ Document:
 - Which third-party processors receive it.
 - Whether outputs may contain sensitive health or genotype information.
 
-Do not rely on this template as clinical software without the validation, review, and regulatory work required for your use case.
+Do not rely on this analyzer as clinical software without the validation, review, and regulatory work required for your use case.

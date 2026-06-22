@@ -321,15 +321,264 @@ footer a {
   font-size: 0.95rem;
 }
 
+.analyzer-hero {
+  padding: 5rem 0;
+  background: #f8fafc;
+}
+
+.analyzer-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  gap: 2rem;
+  align-items: center;
+}
+
+.analyzer-hero h1 {
+  max-width: 760px;
+  color: #111827;
+  font-size: clamp(2.2rem, 6vw, 4.4rem);
+  line-height: 1;
+}
+
+.analyzer-lead {
+  max-width: 680px;
+  color: #4b5563;
+  font-size: 1.12rem;
+}
+
+.analyzer-panel {
+  padding: 1.5rem;
+  border: 1px solid #dbe3ee;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 20px 60px rgba(17, 24, 39, 0.08);
+}
+
+.analyzer-note,
+.analyzer-status {
+  margin: 0.85rem 0 0;
+  color: #64748b;
+  font-size: 0.92rem;
+}
+
+.analyzer-status[data-state="success"] {
+  color: #166534;
+}
+
+.analyzer-status[data-state="error"] {
+  color: #991b1b;
+}
+
+.analysis-section {
+  padding: 4rem 0;
+  background: #ffffff;
+}
+
+.analysis-layout {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.analysis-sidebar {
+  position: sticky;
+  top: 1rem;
+  padding: 1.25rem;
+  border: 1px solid #dbe3ee;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.analysis-sidebar h2,
+.analysis-results h2 {
+  font-size: 1.1rem;
+}
+
+.analysis-summary {
+  display: grid;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.analysis-stat {
+  padding: 0.9rem;
+  border: 1px solid #dbe3ee;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.analysis-stat span {
+  display: block;
+  color: #64748b;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.analysis-stat strong {
+  display: block;
+  color: #111827;
+  font-size: 1.55rem;
+}
+
+.analysis-pathways {
+  padding: 0.9rem;
+  border: 1px solid #dbe3ee;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.analysis-pathways h3 {
+  font-size: 0.98rem;
+}
+
+.analysis-pathways ul,
+.analysis-warnings {
+  padding-left: 1rem;
+}
+
+.analysis-pathways li {
+  margin-bottom: 0.55rem;
+}
+
+.analysis-pathways li span {
+  display: block;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.analysis-warnings li {
+  margin-bottom: 0.65rem;
+  color: #4b5563;
+}
+
+.analysis-empty,
+.finding-card {
+  padding: 1.25rem;
+  border: 1px solid #dbe3ee;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.finding-card + .finding-card {
+  margin-top: 1rem;
+}
+
+.finding-topline {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.finding-kicker {
+  margin: 0 0 0.35rem;
+  color: #2563EB;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.finding-card h3 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.finding-label {
+  margin-top: 1rem;
+  color: #111827;
+  font-weight: 700;
+}
+
+.finding-score {
+  min-width: 84px;
+  padding: 0.75rem;
+  border: 1px solid #dbe3ee;
+  border-left: 4px solid #94a3b8;
+  border-radius: 8px;
+  background: #f8fafc;
+  text-align: right;
+}
+
+.finding-score[data-direction="higher_attention"],
+.finding-score[data-direction="clinical_review"] {
+  border-left-color: #be123c;
+}
+
+.finding-score[data-direction="moderate_attention"] {
+  border-left-color: #d97706;
+}
+
+.finding-score span {
+  display: block;
+  color: #64748b;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.finding-score strong {
+  color: #111827;
+  font-size: 1.25rem;
+}
+
+.finding-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.finding-grid h4 {
+  font-size: 0.98rem;
+}
+
+.finding-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.finding-links a {
+  padding: 0.4rem 0.65rem;
+  border: 1px solid #dbe3ee;
+  border-radius: 999px;
+  color: #0f766e;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
 @media (max-width: 992px) {
   .trust-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .analyzer-hero-grid,
+  .analysis-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .analysis-sidebar {
+    position: static;
   }
 }
 
 @media (max-width: 576px) {
   .trust-grid {
     grid-template-columns: 1fr;
+  }
+
+  .finding-topline,
+  .finding-grid {
+    display: block;
+  }
+
+  .finding-score {
+    margin-top: 1rem;
+    text-align: left;
   }
 }
 .about-section {

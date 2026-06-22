@@ -1,6 +1,6 @@
 # Contributing to MetaboBrief
 
-MetaboBrief is a static template for communicating personalized metabolomics hypotheses. Contributions should make the template clearer, safer, easier to fork, or easier to validate.
+MetaboBrief is a local-first SNP analyzer and static template for communicating personal omics hypotheses. Contributions should make parsing, curation, reporting, privacy, and validation clearer.
 
 ## Development setup
 
@@ -14,9 +14,10 @@ Then open `http://127.0.0.1:8080`.
 
 ## Contribution areas
 
-- Improve report sections for uncertainty, source attribution, limitations, and validation markers.
+- Improve SNP parser coverage while keeping behavior explicit and tested.
+- Improve panel records for uncertainty, source attribution, limitations, and validation markers.
 - Improve accessibility, responsive layout, and print/PDF behavior.
-- Add synthetic examples that demonstrate report structure without exposing personal data.
+- Add synthetic genotype examples that demonstrate parser behavior without exposing personal data.
 - Improve documentation for privacy, deployment, and safe reuse.
 
 ## Data rules
