@@ -3,834 +3,130 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>MetaboBrief</title>
+    <meta name="description" content="Run the curated SNP panel without uploading genotype data."/>
+    <meta http-equiv="refresh" content="0; url=analyze.html"/>
+    <link rel="canonical" href="https://otcan.github.io/metabo-brief/analyze.html"/>
+    <title>MetaboBrief SNP Analyzer</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #111827;
+            --muted: #475569;
+            --line: #d7e0ea;
+            --panel: #ffffff;
+            --page: #f4f7fb;
+            --accent: #0f766e;
+            --action: #152033;
+        }
 
-    <!-- Bootstrap 5 CDN -->
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-    />
+        * {
+            box-sizing: border-box;
+        }
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/styles.css"/>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: grid;
+            place-items: center;
+            background: var(--page);
+            color: var(--ink);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        main {
+            width: min(720px, calc(100% - 2rem));
+            padding: 2rem;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: var(--panel);
+            box-shadow: 0 18px 46px rgba(15, 23, 42, 0.08);
+        }
+
+        .brand {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            margin-bottom: 2rem;
+            font-weight: 800;
+        }
+
+        .brand img {
+            width: 36px;
+            height: 36px;
+        }
+
+        .kicker {
+            margin: 0 0 0.5rem;
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2.1rem, 7vw, 4rem);
+            line-height: 0.98;
+            letter-spacing: 0;
+        }
+
+        p {
+            max-width: 58ch;
+            margin: 1rem 0 0;
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        a {
+            min-height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1rem;
+            border-radius: 7px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .primary {
+            background: var(--action);
+            color: #ffffff;
+        }
+
+        .secondary {
+            border: 1px solid var(--line);
+            color: var(--ink);
+        }
+    </style>
+    <script>
+        window.location.replace("analyze.html");
+    </script>
 </head>
-
 <body>
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg">
-    <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="index.html">
-            <img src="assets/logo/logo.svg" alt="MetaboBrief Logo" width="35" height="35" class="me-2"/>
-            <span class="fw-bold text-dark">MetaboBrief</span>
-        </a>
-        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-            <ul class="navbar-nav gap-3">
-                <li class="nav-item">
-                    <a class="nav-link fw-semibold text-dark links" href="analyze.html">Analyze SNPs</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fw-semibold text-dark links" href="#audience">For Who</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fw-semibold text-dark links" href="#how-it-works">How It Works</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fw-semibold text-dark links" href="#benefits">Benefits</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fw-semibold text-dark links" href="#faqs">FAQ</a>
-                </li>
-            </ul>
-        </div>
-        <a href="https://github.com/otcan/metabo-brief" class="btn d-none d-lg-inline-block" style="font-family: Roboto, sans-serif !important;">View Source</a>
+<main>
+    <div class="brand">
+        <img src="assets/logo/logo.svg" alt="" width="36" height="36"/>
+        <span>MetaboBrief</span>
     </div>
-</nav>
-<!-- Hero Section -->
-<section id="hero" class="hero-fullscreen position-relative text-white">
-    <img src="assets/images/hero.png" alt="Hero illustration"
-         class="hero-background-img position-absolute w-100 h-100 object-fit-cover"/>
-    <div class="container position-relative z-1 py-5">
-        <div class="row justify-content-start">
-            <div class="col-md-7 col-lg-6">
-                <h1 class="display-4 fw-bold hero-title">
-                    Local-first SNP analysis for personal omics briefs
-                </h1>
-                <div class="hero-highlight-card rounded p-4 my-4 text-white">
-                    <p class="mb-0 fw-semibold fst-italic">Your biology is unique.</p> <br>
-                    <p class="mb-2 fw-semibold fst-italic">Your SNP report should stay local.</p>
-
-                </div>
-                <p class="lead">Parse raw genotype files in the browser, match a curated SNP panel, and produce a report that keeps evidence, uncertainty, and validation steps visible.</p>
-            </div>
-        </div>
+    <p class="kicker">Local SNP analysis</p>
+    <h1>Run the curated SNP panel without uploading genotype data.</h1>
+    <p>
+        The main MetaboBrief demo is the browser-only SNP analyzer. If you are not redirected automatically,
+        open the analyzer below.
+    </p>
+    <div class="actions">
+        <a class="primary" href="analyze.html">Open SNP Analyzer</a>
+        <a class="secondary" href="https://github.com/otcan/metabo-brief">GitHub</a>
     </div>
-</section>
-
-<!-- CTA Strip -->
-<section id="cta" class="cta-section">
-    <h2>Analyze SNP files without uploading them</h2>
-    <p class="cta-copy">MetaboBrief now treats SNP analysis as core: local parsing, curated panel matching, pathway grouping, and evidence-attributed report output.
-        <br class="d-none d-sm-block">Metabolomics panels can plug in later; raw genotype analysis comes first.</p>
-    <div class="cta-form">
-        <a class="btn btn-light rounded-pill px-4" href="analyze.html">Open SNP Analyzer</a>
-        <a class="btn btn-outline-light rounded-pill px-4" href="https://github.com/otcan/metabo-brief">Fork on GitHub</a>
-    </div>
-</section>
-
-<!-- Trust Strip -->
-<section class="trust-strip" aria-label="Project posture">
-    <div class="container">
-        <div class="trust-grid">
-            <div class="trust-pill">
-                <span class="trust-kicker">Privacy</span>
-                <strong>Local-first SNP parser</strong>
-                <p>Raw genotype files are read by browser APIs and matched locally against the panel.</p>
-            </div>
-            <div class="trust-pill">
-                <span class="trust-kicker">Evidence</span>
-                <strong>Curated source links</strong>
-                <p>Every panel record carries source links, limitations, and validation markers.</p>
-            </div>
-            <div class="trust-pill">
-                <span class="trust-kicker">Data</span>
-                <strong>Starter panel included</strong>
-                <p>The first panel covers methylation, caffeine, lactase, glucose, iron, ALDH2, and bilirubin markers.</p>
-            </div>
-            <div class="trust-pill">
-                <span class="trust-kicker">Use</span>
-                <strong>Informational output</strong>
-                <p>The analyzer does not diagnose, prescribe, phase, impute, or perform liftover.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- About Section -->
-<section class="about-section">
-    <h2>Project Practices</h2>
-    <p class="lead">MetaboBrief is a static, client-side SNP analyzer and report surface for personal omics interpretation.</p>
-    <div class="feature-grid">
-        <div class="feature-card">
-            <img src="assets/icons/frame-1.svg" alt="Scientific Excellence"/>
-            <h5>Scientific Excellence</h5>
-            <p>Uses direct rsID/genotype matching against a transparent JSON knowledge panel.</p>
-        </div>
-        <div class="feature-card">
-            <img src="assets/icons/frame-2.svg" alt="Privacy First"/>
-            <h5>Privacy First</h5>
-            <p>No backend is included. Keep sensitive genotype data local and avoid committing real files.</p>
-        </div>
-        <div class="feature-card">
-            <img src="assets/icons/frame-3.svg" alt="Expert Team"/>
-            <h5>Editable Template</h5>
-            <p>Expand the SNP panel, improve report cards, or add later metabolomics modules.</p>
-        </div>
-    </div>
-</section>
-
-<!-- Features Section -->
-<section id="features" class="metabo-section-bg text-white">
-    <div class="container">
-        <!-- Heading -->
-        <div class="text-center">
-            <h2 class="mb-3 mt-3">What Makes the Brief Structure Useful</h2>
-            <p class="lead mb-2">
-                Keep source attribution, pathway context, validation markers, and action hypotheses in the same readable surface.
-            </p>
-            <p><span class="fw-semibold fst-italic">Structured enough for science. Clear enough for readers.</span></p>
-
-        </div>
-
-        <!-- Feature Cards -->
-        <div class="row g-4 justify-content-center text-start mt-3 mb-5" >
-            <div class="col-md-6 col-lg-6 d-flex">
-                <div class="feature-tile w-100 d-flex align-items-center gap-3">
-                    <div class="icon-wrapper">
-                        <img src="assets/icons/frame-4.svg" alt="Comprehensive Analysis" width="32" height="32">
-                    </div>
-                    <div>
-                        <h5>Comprehensive Analysis</h5>
-                        <p>Use the structure to present <span class="fw-semibold">digital twin modeling and metabolic simulation</span>
-                            outputs from your own validated workflow.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-6 d-flex">
-                <div class="feature-tile w-100 d-flex align-items-center gap-3">
-                    <div class="icon-wrapper">
-                        <img src="assets/icons/frame-5.svg" alt="Trend Monitoring" width="32" height="32">
-                    </div>
-                    <div>
-                        <h5>Trend Monitoring</h5>
-                        <p>Frame repeated metabolomics snapshots as comparable hypotheses, validation markers, and next-step questions.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-6 d-flex">
-                <div class="feature-tile w-100 d-flex align-items-center gap-3">
-                    <div class="icon-wrapper">
-                        <img src="assets/icons/frame-6.svg" alt="AI-Powered Insights" width="32" height="32">
-                    </div>
-                    <div>
-                        <h5>AI-Powered Insights</h5>
-                        <p>Pair analysis outputs with plain-language summaries, source attribution, uncertainty, and constraints.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-6 d-flex">
-                <div class="feature-tile w-100 d-flex align-items-center gap-3">
-                    <div class="icon-wrapper">
-                        <img src="assets/icons/frame-7.svg" alt="Actionable Plans" width="32" height="32">
-                    </div>
-                    <div>
-                        <h5>Actionable Plans</h5>
-                        <p>Translate findings into reviewable hypotheses, not unsupported prescriptions.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Metabolomics Matter -->
-        <div class="text-center mt-5 mb-5">
-            <h2 class="mb-3">Why Metabolomics Matter</h2>
-            <p class="mb-4 cta-copy">Metabolomics provides a real-time snapshot of your body’s biochemical activity, revealing
-                how your lifestyle, diet,<br class="d-none d-sm-block"> and genetics interact—making it essential for truly personalized and effective
-                health optimization.</p>
-            <img src="assets/images/metabolomic.png" alt="Why Metabolomics Matter Diagram"
-                 class="img-fluid metabolomic-diagram mb-4"/>
-        </div>
-
-        <!-- CTA -->
-        <div class="text-center mt-5 mb-4">
-            <a href="research-summary.html" target="_blank" class="link-learn-more  px-4">Learn The Science Behind Metabolomics</a>
-        </div>
-    </div>
-</section>
-
-<!-- Who Is It For Section -->
-<section id="audience" class="who-section text-center">
-    <div class="container">
-        <h2 class="section-title mb-3 mt-3">Who Is It For?</h2>
-        <p class="section-subtitle mb-2">
-            MetaboBrief is designed for people and teams who want local SNP analysis with cautious, evidence-attributed reports.
-        </p>
-        <p class="fw-semibold fst-italic mb-5 who-sub-text">Built for people who want answers — and actions.</p>
-
-        <div class="row g-4 justify-content-center">
-            <!-- Card 1 -->
-            <div class="col-md-4">
-                <div class="flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <img src="assets/images/who-1.png" class="w-100" alt="Individuals">
-                            <div class="who-label text-white fw-semibold text-center py-2 bg-who-1">Individuals</div>
-                        </div>
-                        <div class="flip-card-back flip-bg-1 d-flex flex-column justify-content-start align-items-start p-4"
-                             style="background: #EFF6FF">
-                            <h5 class="fw-bold mb-2">Individuals</h5>
-                            <ul class="checklist text-start">
-                                <li>Health-conscious individuals seeking personalized insights</li>
-                                <li>People with specific health goals or concerns</li>
-                                <li>Athletes looking to optimize performance</li>
-                                <li>Anyone interested in preventative health measures</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="col-md-4">
-                <div class="flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <img src="assets/images/who-2.png" class="w-100" alt="Healthcare Professionals">
-                            <div class="who-label text-white fw-semibold text-center py-2 bg-who-2">Healthcare
-                                Professionals
-                            </div>
-                        </div>
-                        <div class="flip-card-back flip-bg-2 d-flex flex-column justify-content-start align-items-start p-4"
-                             style="background: #D7EFE8">
-                            <h5 class="fw-bold mb-2">Healthcare Professionals</h5>
-                            <ul class="checklist text-start">
-                                <li>Doctors seeking deeper patient insights</li>
-                                <li>Comprehensive metabolic data to enhance clinical decision-making</li>
-                                <li>Identify underlying metabolic factors affecting patient health</li>
-                                <li>Evidence-based recommendations for personalized care plans</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="col-md-4">
-                <div class="flip-card">
-                    <div class="flip-card-inner">
-                        <div class="flip-card-front">
-                            <img src="assets/images/who-3.png" class="w-100" alt="Organizations">
-                            <div class="who-label text-white fw-semibold text-center py-2 bg-who-3">Organizations</div>
-                        </div>
-                        <div class="flip-card-back flip-bg-3 d-flex flex-column justify-content-start align-items-start p-4"
-                             style="background: #E1F6FE">
-                            <h5 class="fw-bold mb-2">Organizations</h5>
-                            <ul class="checklist text-start">
-                                <li>Corporate wellness programs</li>
-                                <li>Universities and research institutions</li>
-                                <li>Healthcare organizations exploring innovation</li>
-                                <li>Insurance and risk reduction use cases</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<!-- How It Works Section -->
-<section id="how-it-works" class="how-section ">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="section-title mb-3 mt-3">How We Develop Your Report</h2>
-            <p class="section-subtitle">From raw SNPs to ranked constraints and clear next steps.</p>
-            <p class="fst-italic fw-semibold mb-5" style="font-size: 16px">Grounded science. Clear translation.</p>
-
-        </div>
-              <div class="timeline mx-auto">
-            <div class="mb-5 step-box d-flex align-items-start">
-                <div class="step-number">1</div>
-                <div>
-                    <h5 class="align-items-start">Variant Mapping</h5>
-                    <p class="mb-2">We start with your raw SNP file.</p>
-                    <ul class="checklist text-start mb-2">
-                        <li>We identify variants that affect metabolic enzymes, transporters, and regulatory proteins.</li>
-                        <li>We ignore cosmetic or ancestry-only variants.</li>
-                    </ul>
-                    <p class="mb-1">Only functionally relevant biology is considered.</p>
-                </div>
-            </div>
-            <div class="mb-5 step-box d-flex align-items-start">
-                <div class="step-number">2</div>
-                <div>
-                    <h5>Pathway Impact Assessment</h5>
-                    <p class="mb-2">Instead of looking at genes in isolation, we map them into metabolic pathways.</p>
-                    <p class="mb-2">We evaluate:</p>
-                    <ul class="checklist text-start mb-2">
-                        <li>Where capacity may be reduced</li>
-                        <li>Where flux may be inefficient</li>
-                        <li>Where compensatory load may increase</li>
-                    </ul>
-                    <p class="mb-1">This prevents overinterpreting single SNPs.</p>
-                </div>
-            </div>
-            <div class="mb-5 step-box d-flex align-items-start">
-                <div class="step-number">3</div>
-                <div>
-                    <h5>Constraint Prioritization</h5>
-                    <p class="mb-2">Not all variants matter equally.</p>
-                    <p class="mb-2">We rank potential bottlenecks based on:</p>
-                    <ul class="checklist text-start mb-2">
-                        <li>Functional evidence</li>
-                        <li>Pathway centrality</li>
-                        <li>Redundancy in the network</li>
-                        <li>Cumulative effect</li>
-                    </ul>
-                    <p class="mb-1">You receive only the top constraints most likely to influence real physiology.</p>
-                </div>
-            </div>
-            <div class="step-box d-flex align-items-start">
-                <div class="step-number">4</div>
-                <div>
-                    <h5>Translation to Action</h5>
-                    <p class="mb-2">Each constraint is translated into:</p>
-                    <ul class="checklist text-start mb-2">
-                        <li>A biological explanation in plain language</li>
-                        <li>Directional recommendations</li>
-                        <li>Suggested validation markers</li>
-                    </ul>
-                    <p class="mb-1">We do not diagnose disease. We provide structured hypotheses.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- CTA 3 Section -->
-<section id="cta3" class="cta3-section text-white text-center">
-    <div class="container">
-        <h2 class="cta3-heading fw-bold mb-4 mt-3">
-            Optimize Your Health with Precision: DNA-Based Metabolomics Health Report
-        </h2>
-        <p class="cta3-subtitle mx-auto mb-3 mt-4" style="max-width: 800px;">
-            Use the HTML report shell, landing page, and evidence explainer as a starting point for
-            your own personalized metabolomics communication workflow.
-        </p>
-        <p class="early-access fw-semibold fst-italic mb-4 mt-4">Static first. Easy to fork. Clear by default.</p>
-
-        <ul class="cta3-list list-unstyled text-start mx-auto mb-5 mt-5" style="max-width: 540px;">
-            <li>• Bootstrap-based static pages</li>
-            <li>• Report preview layout for pathway-level hypotheses</li>
-            <li>• Plain-language evidence and limitation sections</li>
-            <li>• GitHub Pages workflow for public demos</li>
-        </ul>
-
-        <div class="cta3-form d-flex flex-column flex-sm-row justify-content-center gap-3 mt-5 mb-5">
-            <a href="personalized-full.html" class="btn btn-light rounded-pill px-4">Open Full Method</a>
-            <a href="https://github.com/otcan/metabo-brief/issues" class="btn btn-outline-light rounded-pill px-4">Discuss Ideas</a>
-        </div>
-    </div>
-</section>
-<!-- Report Preview Section -->
-<section id="report" class="report-section">
-    <div class="container">
-
-        <!-- Centered Title and Subtitle -->
-        <div class="text-center mb-5 mt-3">
-            <h2 class="fw-bold mb-2">Personalized Report Preview</h2>
-            <p class="text-muted mx-auto" style="max-width: 640px;">
-                Get a glimpse of how SNP findings can be grouped into pathways, limitations, and validation markers.
-            </p>
-        </div>
-
-        <div class="row align-items-start">
-            <!-- Left Column -->
-            <div class="col-md-6">
-                <h5 class="fw-semibold mb-3">Review Your SNP Pathway Signals</h5>
-                <p class="mb-4 text-muted">
-                    The report surface turns genotype matches into readable hypotheses with source links and measurement follow-ups.
-                </p>
-
-                <ul class="report-feature-list list-unstyled">
-                    <li class="d-flex gap-3 mb-4">
-                        <div class="feature-icon-circle">
-                            <img src="assets/icons/frame-8.svg" alt="PDF Report"/>
-                        </div>
-                        <div>
-                            <strong>PDF Report</strong>
-                            <p class="text-muted mb-0">Export a local JSON report now; print/PDF views can build on the same structured findings.</p>
-                        </div>
-                    </li>
-                    <li class="d-flex gap-3 mb-4">
-                        <div class="feature-icon-circle">
-                            <img src="assets/icons/frame-8.svg" alt="Biomarker Analysis"/>
-                        </div>
-                        <div>
-                            <strong>Comprehensive Biomarker Analysis</strong>
-                            <p class="text-muted mb-0">Detailed breakdown of top 3 key metabolites and their impact on
-                                your health.</p>
-                        </div>
-                    </li>
-                    <li class="d-flex gap-3 mb-4">
-                        <div class="feature-icon-circle">
-                            <img src="assets/icons/frame-8.svg" alt="Recommendations"/>
-                        </div>
-                        <div>
-                            <strong>Personalized Recommendations</strong>
-                            <p class="text-muted mb-0">Tailored nutrition, supplements, exercise, and lifestyle guidance
-                                based on your data.</p>
-                        </div>
-                    </li>
-                    <li class="d-flex gap-3 mb-4">
-                        <div class="feature-icon-circle">
-                            <img src="assets/icons/frame-8.svg" alt="Tracking"/>
-                        </div>
-                        <div>
-                            <strong>Progress Tracking</strong>
-                            <p class="text-muted mb-0">Monitor changes in your metabolic health over time.</p>
-                        </div>
-                    </li>
-                    <li class="d-flex gap-3">
-                        <div class="feature-icon-circle">
-                            <img src="assets/icons/frame-8.svg" alt="Dashboard"/>
-                        </div>
-                        <div>
-                            <strong>Account with Dashboard Features</strong>
-                            <p class="text-muted mb-0">Access your evolving metabolic data anytime with a personalized
-                                dashboard that tracks your progress and updates your recommendations.</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Right Column -->
-            <div class="col-md-6 d-flex align-items-stretch">
-                <div class="report-card shadow-sm rounded overflow-hidden flex-grow-1 d-flex flex-column">
-                    <!-- Header -->
-                    <div class="report-header d-flex justify-content-between align-items-center p-3">
-                        <div>
-                            <h6 class="text-white mb-0 fw-semibold">Metabolic Health Report</h6>
-                            <small class="text-white-50">DNA-Driven Wellness Insights and Action Plan<br>John Doe •
-                                Generated June 22, 2025</small>
-                        </div>
-                        <div class="feature-face-circle">
-                            <img src="assets/images/face.jpg" alt="User" class="rounded-circle" width="58" height="58"/>
-                        </div>
-                    </div>
-
-                    <!-- Tab Navigation -->
-                    <ul class="nav nav-tabs report-tabs" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="insights-tab" data-bs-toggle="tab"
-                                    data-bs-target="#insights" type="button" role="tab" aria-controls="insights"
-                                    aria-selected="true">
-                                Your Top 3 Metabolic Insights
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="action-tab" data-bs-toggle="tab" data-bs-target="#action"
-                                    type="button" role="tab" aria-controls="action" aria-selected="false">
-                                Your Action Plan
-                            </button>
-                        </li>
-                    </ul>
-
-                    <!-- Tab Content -->
-                    <div class="tab-content flex-grow-1">
-                        <!-- Insights Tab -->
-                        <div class="tab-pane fade show active d-flex flex-column" id="insights" role="tabpanel"
-                             aria-labelledby="insights-tab">
-                            <div class="report-body d-flex flex-column justify-content-between">
-                                <div>
-                                    <div class="report-insight mb-3">
-                                        <div class="d-flex align-items-start gap-3">
-                                            <img src="assets/icons/frame-9.svg" width="32" alt="Insight 1"/>
-                                            <div>
-                                                <h6 class="fw-semibold mb-1">Insight 1: Folate Processing Bottleneck
-                                                    (MTHFR C677T)</h6>
-                                                <p class="mb-1"><strong>What it means:</strong> Your MTHFR gene variant
-                                                    affects how efficiently your body processes folate and folic acid
-                                                    into their active forms.</p>
-                                                <p class="mb-0"><strong>Why it matters:</strong> This can impact your
-                                                    body’s methylation processes, affecting energy production, mood
-                                                    regulation, and detoxification pathways.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="report-insight mb-2">
-                                        <div class="d-flex align-items-start gap-3">
-                                            <img src="assets/icons/frame-10.svg" width="32" alt="Insight 2"/>
-                                            <div>
-                                                <h6 class="fw-semibold mb-1">Insight 2: Appetite & Weight Regulation
-                                                    (FTO rs9939609)</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="report-pager">Page 1 of 2</div>
-                            </div>
-                        </div>
-
-                        <!-- Action Plan Tab -->
-                        <div class="tab-pane fade d-flex flex-column" id="action" role="tabpanel"
-                             aria-labelledby="action-tab">
-                            <div class="report-body d-flex flex-column justify-content-between">
-                                <div>
-                                    <div class="report-insight mb-3">
-                                        <div class="d-flex align-items-start gap-3">
-                                            <img src="assets/icons/frame-9.svg" width="32" alt="Plan 1"/>
-                                            <div>
-                                                <h6 class="fw-semibold mb-1">Recommended Nutrition Plan</h6>
-                                                <p class="mb-1">Focus on folate-rich foods (leafy greens, beans) and
-                                                    consider methylated folate supplements.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="report-insight mb-2">
-                                        <div class="d-flex align-items-start gap-3">
-                                            <img src="assets/icons/frame-10.svg" width="32" alt="Plan 2"/>
-                                            <div>
-                                                <h6 class="fw-semibold mb-1">Lifestyle Strategy</h6>
-                                                <p class="mb-0">Incorporate daily moderate exercise and cognitive
-                                                    training to counter potential genetic risks.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="report-pager">Page 2 of 2</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Benefits Section -->
-<section id="benefits" class="benefits-section text-center text-dark position-relative">
-    <div class="container pb-5">
-        <h2 class="fw-bold mb-3 mt-3">Benefits of Personalized Metabolomics</h2>
-        <p class="mb-5 text-muted">
-            Discover how our advanced metabolicomic analysis can transform your approach to health and wellness.
-        </p>
-
-        <div class="row g-4 justify-content-center">
-            <!-- Benefit 1 -->
-            <div class="col-md-6 col-lg-5">
-                <div class="benefit-card">
-                    <div class="benefit-icon mb-3">
-                        <img src="assets/icons/frame-11.svg" alt="Health Outcomes" width="20"/>
-                    </div>
-                    <h5 class="fw-semibold">Improved Health Outcomes</h5>
-                    <p class="text-muted">
-                        Identify potential health risks before they become problems. Our personalized approach helps you
-                        make targeted lifestyle changes for better long-term health.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Benefit 2 -->
-            <div class="col-md-6 col-lg-5">
-                <div class="benefit-card">
-                    <div class="benefit-icon mb-3">
-                        <img src="assets/icons/frame-12.svg" alt="Performance" width="20"/>
-                    </div>
-                    <h5 class="fw-semibold">Optimized Performance</h5>
-                    <p class="text-muted">
-                        Understand how your body processes nutrients, responds to exercise, and manages stress to
-                        optimize your physical and mental performance.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Benefit 3 -->
-            <div class="col-md-6 col-lg-5">
-                <div class="benefit-card">
-                    <div class="benefit-icon mb-3">
-                        <img src="assets/icons/frame-13.svg" alt="Preventative" width="20"/>
-                    </div>
-                    <h5 class="fw-semibold">Preventative Healthcare</h5>
-                    <p class="text-muted">
-                        Move from reactive to proactive healthcare. Identify metabolic patterns that may indicate future
-                        health concerns and address them early.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Benefit 4 -->
-            <div class="col-md-6 col-lg-5">
-                <div class="benefit-card">
-                    <div class="benefit-icon mb-3">
-                        <img src="assets/icons/frame-14.svg" alt="Timing" width="20"/>
-                    </div>
-                    <h5 class="fw-semibold">Personalized Timing</h5>
-                    <p class="text-muted">
-                        Learn the optimal timing for meals, exercise, and rest based on your unique metabolic rhythms to
-                        maximize energy and recovery.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Edge-to-edge Science Box -->
-    <div class="science-box-wrapper">
-        <div class="science-box text-center px-3 py-5">
-            <h5 class="fw-semibold mb-3">The Science Behind the Benefits</h5>
-            <p class="text-muted mb-4 mx-auto" style="max-width: 700px;">
-                Our approach is based on peer-reviewed research in metabolomics, which has demonstrated significant
-                improvements in health outcomes when treatment and lifestyle recommendations are personalized based on
-                individual metabolic profiles.
-            </p>
-            <a class="contact-button-faq" href="research-summary.html" target="_blank" class="link-learn-more  px-4">Read About the Science Behind the Benefits</a>
-        </div>
-    </div>
-</section>
-
-<!-- FAQs Section -->
-<section id="faqs" class="faq-section ">
-    <div class="container">
-        <div class="faq-box mx-auto p-4 p-md-5 shadow-sm">
-            <h2 class="text-center fw-bold mb-3">Frequently Asked Questions</h2>
-            <p class="text-center text-muted mb-5">Find answers to common questions about our metabolomic analysis and
-                personalized health insights.</p>
-            <div class="accordion" id="faqAccordion">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="faq1-heading">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1"
-                                aria-expanded="true" aria-controls="faq1">
-                            What is metabolomics?
-                        </button>
-                    </h2>
-                    <div id="faq1" class="accordion-collapse collapse show" aria-labelledby="faq1-heading"
-                         data-bs-parent="#faqAccordion">
-                        <div class="accordion-body">
-                            Metabolomics is the comprehensive study of metabolites, which are small molecules produced
-                            during metabolism. By analyzing these metabolites, we can gain insights into how your body
-                            functions at a cellular level and identify patterns that affect your health.
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="faq2-heading">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
-                            How accurate are the personalized insights?
-                        </button>
-                    </h2>
-                    <div id="faq2" class="accordion-collapse collapse" aria-labelledby="faq2-heading"
-                         data-bs-parent="#faqAccordion">
-                        <div class="accordion-body">
-                            MetaboBrief does not generate insights by itself. Accuracy depends on the upstream analysis, evidence sources, and validation process used by your fork.
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="faq3-heading">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#faq3" aria-expanded="false" aria-controls="faq2">
-                            How is my data protected?
-                        </button>
-                    </h2>
-                    <div id="faq3" class="accordion-collapse collapse" aria-labelledby="faq2-heading"
-                         data-bs-parent="#faqAccordion">
-                        <div class="accordion-body">
-                            The default template does not upload data or send analytics. Keep public examples synthetic and update the privacy notes if your fork adds data collection.
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="faq4-heading">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#faq4" aria-expanded="false" aria-controls="faq2">
-                            How long does the process take?
-                        </button>
-                    </h2>
-                    <div id="faq4" class="accordion-collapse collapse" aria-labelledby="faq2-heading"
-                         data-bs-parent="#faqAccordion">
-                        <div class="accordion-body">
-                            The static site publishes instantly. Any real-world report workflow depends on your upstream data processing and review process.
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="faq5-heading">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#faq5" aria-expanded="false" aria-controls="faq2">
-                            Can I use my existing DNA test results?
-                        </button>
-                    </h2>
-                    <div id="faq5" class="accordion-collapse collapse" aria-labelledby="faq2-heading"
-                         data-bs-parent="#faqAccordion">
-                        <div class="accordion-body">
-                            Yes. The local analyzer accepts common raw SNP text formats, including 23andMe-style and AncestryDNA-style files, and matches them against the curated panel in your browser.
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="faq6-heading">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#faq6" aria-expanded="false" aria-controls="faq2">
-                            Is this covered by insurance?
-                        </button>
-                    </h2>
-                    <div id="faq6" class="accordion-collapse collapse" aria-labelledby="faq2-heading"
-                         data-bs-parent="#faqAccordion">
-                        <div class="accordion-body">
-                            MetaboBrief is open-source software, not a clinical service or reimbursable medical product.
-                        </div>
-                    </div>
-                </div>
-                <!-- Add more FAQ items as needed -->
-            </div>
-
-        </div>
-    </div>
-</section>
-<!-- CTA 4 Section -->
-<section id="cta4" class="cta3-section text-white text-center">
-    <div class="container">
-        <h2 class="cta3-heading fw-bold mb-3 mt-3">
-            Optimize Your Health with Precision: DNA-Based Metabolomics Health Report
-        </h2>
-        <p class="cta3-subtitle mx-auto mb-4" style="max-width: 900px;">
-            Fork the template, replace the sample content, and publish your own metabolomics brief with GitHub Pages.
-        </p>
-        <div class="cta3-form d-flex flex-column flex-sm-row justify-content-center gap-3 mb-3 mt-4">
-            <a href="https://github.com/otcan/metabo-brief" class="btn btn-light rounded-pill px-4">View Repository</a>
-            <a href="research-summary.html" class="btn btn-outline-light rounded-pill px-4">Read Research Notes</a>
-        </div>
-    </div>
-</section>
-<!-- Interest Section -->
-<section id="interest" class="interest-section">
-    <div class="container">
-        <div class="interest-box mx-auto text-center  p-4 p-md-5">
-            <h5 class="fw-semibold mb-3">Interested in Contributing?</h5>
-            <p class="text-muted mb-4">
-                Open an issue with template improvements, evidence-format suggestions, accessibility fixes,
-                or examples that keep sensitive health data private.
-            </p>
-            <a href="https://github.com/otcan/metabo-brief/issues" class="contact-button btn rounded-pill px-4" style="font-family: Roboto, sans-serif !important;">Open an Issue</a>
-        </div>
-    </div>
-</section>
-
-<!-- Footer -->
-<footer class="site-footer text-white">
-    <div class="container py-5">
-        <div class="row gy-4 text-start">
-
-            <!-- Column 1 -->
-            <div class="col-md-3">
-                <h6 class="fw-semibold">MetaboBrief</h6>
-                <p class="footer-text">A static starter for personalized metabolomics briefs and report previews.</p>
-                <div class="d-flex gap-3 mt-3">
-                    <a href="https://github.com/otcan/metabo-brief" aria-label="GitHub repository"><img src="assets/icons/frame-8.svg" width="18" alt="Repository"/></a>
-                </div>
-            </div>
-
-            <!-- Column 2 -->
-            <div class="col-md-3">
-                <h6 class="fw-semibold">Project</h6>
-                <ul class="list-unstyled mt-3">
-                    <li><a href="index.html#features" class="footer-link">Features</a></li>
-                    <li><a href="index.html#report" class="footer-link">Report Preview</a></li>
-                </ul>
-            </div>
-
-            <!-- Column 3 -->
-            <div class="col-md-3">
-                <h6 class="fw-semibold">Resources</h6>
-                <ul class="list-unstyled mt-3">
-                    <li><a href="research-summary.html" class="footer-link">Research</a></li>
-                    <li><a href="index.html#faqs" class="footer-link">FAQs</a></li>
-                    <li><a href="privacy.html" class="footer-link">Privacy Notes</a></li>
-                    <li><a href="terms.html" class="footer-link">Use Notes</a></li>
-                </ul>
-            </div>
-
-            <!-- Column 4 -->
-            <div class="col-md-3">
-                <h6 class="fw-semibold">Community</h6>
-                <ul class="list-unstyled mt-3">
-                    <li><a href="https://github.com/otcan/metabo-brief/issues" class="footer-link">Issues</a></li>
-                    <li><a href="https://github.com/otcan/metabo-brief" class="footer-link">Source</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer-bottom text-center small py-3 border-top border-secondary-subtle">
-        <span class="footer-text">MetaboBrief is released under the MIT License.</span>
-    </div>
-</footer>
-<div id="gdpr-banner" class="gdpr-banner" role="dialog" aria-live="polite" aria-label="Privacy notice">
-    <div class="gdpr-inner">
-        <p>We use essential cookies and local storage to remember your preferences. We do not use advertising or analytics cookies.</p>
-        <div class="gdpr-actions">
-            <button type="button" class="gdpr-btn gdpr-accept">Accept</button>
-            <button type="button" class="gdpr-btn gdpr-reject">Reject</button>
-        </div>
-    </div>
-</div>
-<!-- JS Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/main.js"></script>
+</main>
 </body>
 </html>

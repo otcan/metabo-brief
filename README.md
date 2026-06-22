@@ -12,6 +12,8 @@ The project is published for open-source use under `otcan/metabo-brief`.
 
 Live demo: <https://otcan.github.io/metabo-brief/>
 
+The project root opens the SNP analyzer. The previous marketing-style homepage has been removed from the default demo path.
+
 ## Product direction
 
 MetaboBrief should become the easiest self-hosted, open-source way to turn consumer DNA files into understandable, evidence-linked reports without uploading the DNA.
@@ -54,7 +56,7 @@ MetaboBrief now treats SNP analysis as core. The default analyzer performs direc
 
 | Output | File |
 |---|---|
-| Landing page and report preview | `index.html` |
+| Analyzer-first entry page | `index.html` |
 | Local SNP analyzer | `analyze.html` |
 | SNP parser and analysis engine | `analyzer/snp-core.js` |
 | Starter SNP panel | `data/snp-panel.json` |
@@ -82,8 +84,8 @@ python3 -m http.server 8080
 
 Then visit:
 
-- `http://127.0.0.1:8080/analyze.html` for SNP analysis.
-- `http://127.0.0.1:8080/` for the project landing page.
+- `http://127.0.0.1:8080/` for the analyzer-first entry page.
+- `http://127.0.0.1:8080/analyze.html` for the SNP analyzer directly.
 
 Run the parser tests:
 

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Made the project root an analyzer-first entry page that opens `analyze.html`.
 - Added product direction, architecture, evidence contract, and roadmap documents for the open-source SNP-first direction.
 - Documented the transition away from prototype aggregate pathway scores toward evidence grades, actionability, and coverage confidence.
 - Clarified future licensing as a maintainer decision rather than changing the current MIT license.
