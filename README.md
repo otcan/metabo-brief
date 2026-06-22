@@ -12,6 +12,21 @@ The project is published for open-source use under `otcan/metabo-brief`.
 
 Live demo: <https://otcan.github.io/metabo-brief/>
 
+## Product direction
+
+MetaboBrief should become the easiest self-hosted, open-source way to turn consumer DNA files into understandable, evidence-linked reports without uploading the DNA.
+
+The current repository is the Lite foundation: local browser parsing, bundled starter annotations, and static hosting. The next phase is to formalize evidence packs, provider/build detection, report schema, and self-hosted deployment.
+
+Design contracts:
+
+- [Product direction](docs/product-direction.md)
+- [Architecture direction](docs/architecture.md)
+- [Evidence and report contract](docs/evidence-contract.md)
+- [Roadmap](docs/roadmap.md)
+- [SNP panel notes](docs/snp-panel.md)
+- [Data safety](docs/data-safety.md)
+
 ## What is included
 
 - Static HTML/CSS/JavaScript pages with no build step.
@@ -100,14 +115,18 @@ MetaboBrief is informational software for SNP pathway interpretation and persona
 
 ## Roadmap
 
-- Expand parser coverage and add VCF/gVCF support.
-- Add strand-flip and build/liftover handling with explicit tests.
-- Add strand-flip and allele-orientation handling for common consumer genotype exports.
-- Expand the curated SNP panel with stricter curation metadata.
-- Add a fully synthetic SNP report with matching JSON payload.
-- Add a schema for SNP panel records and evidence cards.
-- Add accessibility and content-quality checks for generated report pages.
-- Add metabolomics panel support after the SNP core is stable.
+The roadmap is tracked in [docs/roadmap.md](docs/roadmap.md).
+
+Near-term priorities:
+
+- Define the shared report JSON schema and evidence-grading framework.
+- Move from one `snp-panel.json` file to versioned annotation packs.
+- Add TypeScript parser modules, web-worker parsing, ZIP support, and provider detection.
+- Add genome-build and orientation detection before expanding report claims.
+- Replace aggregate pathway totals with evidence grade, actionability, effect direction, clinical relevance, replication status, and coverage confidence.
+- Add printable HTML/PDF export and deterministic JSON export.
+- Add official static container and full Docker Compose deployment.
+- Defer metabolomics and AI interpretation until the genomics foundation is trustworthy.
 
 ## Safety notes
 
@@ -122,3 +141,5 @@ Contributions are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md), and ke
 ## License
 
 MIT License. See [LICENSE](LICENSE).
+
+Future v1 licensing is an explicit maintainer decision. The current direction document recommends evaluating AGPL-3.0 for the complete application and annotation compiler while keeping evidence packs under source-specific licences.

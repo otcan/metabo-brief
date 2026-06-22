@@ -28,13 +28,28 @@ Each SNP record includes:
 
 Each genotype entry includes:
 
-- signed `score`
+- signed prototype `score`
 - `direction`
 - `magnitude`
 - `certainty`
 - `targetType`
 - claim ID
 - interpretation text
+
+## Scoring status
+
+The current `score`, `magnitude`, and `certainty` fields came from the legacy curated panel and are useful for sorting and prototyping. They should not be presented as validated biological risk, pathway performance, or treatment scores.
+
+Future reports should prioritize:
+
+- evidence grade
+- actionability
+- effect direction
+- clinical relevance
+- replication status
+- coverage confidence
+
+Numerical scores should only be introduced when there is a documented, validated formula with explicit population and ancestry assumptions.
 
 ## Important limitations
 
@@ -54,3 +69,5 @@ That means a genotype must match the panel's recorded allele orientation to prod
 ## Curation policy
 
 Every scored panel entry should have source links, limitations, and validation markers. The report is informational and should not be used to diagnose disease, prescribe interventions, or replace qualified clinical judgment.
+
+See [evidence-contract.md](evidence-contract.md) for the target annotation-pack and report contract.
