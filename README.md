@@ -16,7 +16,7 @@ Live demo: <https://otcan.github.io/metabo-brief/>
 
 - Static HTML/CSS/JavaScript pages with no build step.
 - Browser-only parsing for 23andMe-style and AncestryDNA-style raw genotype files.
-- A starter curated SNP panel in `data/snp-panel.json`.
+- A curated SNP panel in `data/snp-panel.json` with 140 SNPs and 491 genotype claims.
 - Local SNP report rendering in `analyze.html`.
 - A report-preview layout for pathway-level hypotheses and action-plan sections.
 - Short and long methodology pages for future metabolomics and digital-twin framing.
@@ -51,7 +51,7 @@ MetaboBrief now treats SNP analysis as core. The default analyzer performs direc
 ## What is not included
 
 - No backend, account system, checkout, analytics, or upload pipeline.
-- No strand flipping, imputation, phasing, or genome-build liftover yet.
+- No strand flipping, imputation, phasing, or genome-build liftover yet. Genotypes must match the panel's recorded allele orientation.
 - No VCF/gVCF parser yet.
 - No medical advice engine.
 - No bundled third-party evidence databases beyond the starter JSON panel.
@@ -102,7 +102,8 @@ MetaboBrief is informational software for SNP pathway interpretation and persona
 
 - Expand parser coverage and add VCF/gVCF support.
 - Add strand-flip and build/liftover handling with explicit tests.
-- Expand the starter SNP panel with stricter curation metadata.
+- Add strand-flip and allele-orientation handling for common consumer genotype exports.
+- Expand the curated SNP panel with stricter curation metadata.
 - Add a fully synthetic SNP report with matching JSON payload.
 - Add a schema for SNP panel records and evidence cards.
 - Add accessibility and content-quality checks for generated report pages.

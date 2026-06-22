@@ -8,6 +8,8 @@ This directory contains synthetic files that demonstrate MetaboBrief without exp
 - `synthetic-ancestry.txt`: synthetic AncestryDNA-style raw SNP file.
 - A matching machine-readable JSON report export is planned.
 
+The synthetic examples use the allele orientation expected by the current curated panel. The analyzer does not yet perform strand flipping.
+
 ## Example rules
 
 - Use synthetic data by default.

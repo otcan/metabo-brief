@@ -491,6 +491,22 @@ footer a {
   font-weight: 700;
 }
 
+.finding-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.finding-meta span {
+  padding: 0.32rem 0.55rem;
+  border: 1px solid #dbe3ee;
+  border-radius: 999px;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
 .finding-score {
   min-width: 84px;
   padding: 0.75rem;

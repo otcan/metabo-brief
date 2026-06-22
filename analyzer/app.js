@@ -74,7 +74,7 @@ function renderFindings(report) {
   }
 
   els.findings.innerHTML = report.findings.map(finding => {
-    const links = finding.sourceLinks.map(link => `
+    const links = finding.sourceLinks.slice(0, 6).map(link => `
       <a href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>
     `).join("");
 
@@ -95,6 +95,11 @@ function renderFindings(report) {
         </div>
         <p class="finding-label">${escapeHtml(finding.label)}</p>
         <p><strong>Detected genotype:</strong> ${escapeHtml(finding.genotype)} <span class="text-muted">(raw: ${escapeHtml(finding.rawGenotype)})</span></p>
+        <p class="finding-meta">
+          <span>Target: ${escapeHtml(finding.targetType)}</span>
+          <span>Magnitude: ${finding.magnitude.toFixed(3)}</span>
+          <span>Certainty: ${finding.certainty.toFixed(3)}</span>
+        </p>
         <p>${escapeHtml(finding.interpretation)}</p>
         <div class="finding-grid">
           <div>

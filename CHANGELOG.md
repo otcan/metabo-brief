@@ -4,7 +4,8 @@
 
 - Pivoted core scope to local SNP analysis.
 - Added browser-only raw genotype parsing for 23andMe-style and AncestryDNA-style files.
-- Added a starter curated SNP panel with source links, limitations, and validation markers.
+- Imported the larger curated SNP panel from the previous personalized repo: 140 SNPs and 491 genotype claims.
+- Added source links, limitations, validation markers, target types, magnitude, and certainty fields to report output.
 - Added `analyze.html` local analyzer UI and JSON report export.
 - Added no-dependency parser tests and a validation workflow.
 

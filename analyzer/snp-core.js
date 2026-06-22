@@ -244,19 +244,30 @@ export function analyzeVariants(parsed, panel) {
     }
 
     const score = Number(effect.score || 0);
-    const pathway = variant.pathway || "Uncategorized";
-    pathwayTotals.set(pathway, (pathwayTotals.get(pathway) || 0) + Math.abs(score));
+    const pathways =
+      Array.isArray(variant.pathways) && variant.pathways.length
+        ? variant.pathways
+        : [variant.pathway || "Uncategorized"];
+    const pathwayLabel = pathways.join(" / ");
+    for (const pathway of pathways) {
+      pathwayTotals.set(pathway, (pathwayTotals.get(pathway) || 0) + Math.abs(score));
+    }
 
     findings.push({
       rsid: variant.rsid,
       gene: variant.gene,
-      pathway,
+      pathway: pathwayLabel,
+      pathways,
       label: variant.label,
+      aliases: variant.aliases || [],
       genotype,
       rawGenotype: parsedVariant.genotype,
       interpretation: effect.interpretation,
       direction: effect.direction || "neutral",
       score,
+      magnitude: Number(effect.magnitude || 0),
+      certainty: Number(effect.certainty || 0),
+      targetType: effect.targetType || variant.targetType || "unknown",
       evidenceLevel: variant.evidenceLevel,
       sourceLinks: variant.sourceLinks || [],
       limitations: variant.limitations || [],

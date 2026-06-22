@@ -1,8 +1,8 @@
 # Synthetic 23andMe-style file for MetaboBrief tests and demos.
 # This is not real personal genotype data.
 # rsid	chromosome	position	genotype
-rs1801133	1	0	CT
-rs1801131	1	0	AC
+rs1801133	1	0	AG
+rs1801131	1	0	GT
 rs762551	15	0	AC
 rs4988235	2	0	CT
 rs671	12	0	GG

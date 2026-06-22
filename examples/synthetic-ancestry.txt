@@ -1,8 +1,8 @@
 # Synthetic AncestryDNA-style file for MetaboBrief tests and demos.
 # This is not real personal genotype data.
 rsid	chromosome	position	allele1	allele2
-rs1801133	1	0	T	T
-rs1801131	1	0	A	A
+rs1801133	1	0	A	G
+rs1801131	1	0	G	T
 rs762551	15	0	A	A
 rs4988235	2	0	C	C
 rs671	12	0	A	G
