@@ -11,7 +11,7 @@ The current foundation is suitable for that direction:
 - Browser-only raw genotype parsing.
 - MIT-licensed application code today.
 - A bundled curated panel with 140 SNPs and 491 genotype claims.
-- Visible source links, limitations, validation markers, magnitude, and certainty fields.
+- Visible source links, limitations, validation markers, review status, effect direction, actionability, relevance, and coverage confidence.
 - Direct rsID/genotype matching with no backend upload.
 
 The current constraints are equally important:
@@ -22,7 +22,7 @@ The current constraints are equally important:
 - No genome-build or strand-orientation handling.
 - No VCF/gVCF support.
 - No REF/ALT-aware matching.
-- Current pathway totals are prototype aggregation, not validated biological scores.
+- Pathway summaries are finding counts, not validated biological scores.
 
 ## Positioning
 
@@ -123,9 +123,9 @@ Technical detail should expose:
 
 ## Scoring Policy
 
-The current engine adds absolute per-variant scores to produce pathway totals. That is acceptable for prototyping, but it should not be presented as a biological risk score or pathway-performance score.
+Legacy panel records still contain numeric score fields from the previous internal export. The analyzer should not expose those fields as biological risk, pathway performance, or treatment scores.
 
-Replace aggregate pathway scores with:
+Report findings should prioritize:
 
 - Evidence grade.
 - Actionability.
@@ -133,6 +133,8 @@ Replace aggregate pathway scores with:
 - Clinical relevance.
 - Replication status.
 - Coverage confidence.
+
+Pathway summaries should be counts of interpreted findings, not cumulative numerical scores.
 
 Only introduce numerical scores when there is a documented, validated formula with explicit population and ancestry assumptions.
 

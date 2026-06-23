@@ -35,7 +35,7 @@ Design contracts:
 - Browser-only parsing for 23andMe-style and AncestryDNA-style raw genotype files.
 - A curated SNP panel in `data/snp-panel.json` with 140 SNPs and 491 genotype claims.
 - Local SNP report rendering in `analyze.html`.
-- A report-preview layout for pathway-level hypotheses and action-plan sections.
+- A report surface that shows review status, effect direction, actionability, limitations, validation markers, and source links.
 - Short and long methodology pages for future metabolomics and digital-twin framing.
 - Privacy and use notes that emphasize synthetic data for public demos.
 - GitHub Actions for static deployment and SNP parser validation.
@@ -125,7 +125,7 @@ Near-term priorities:
 - Move from one `snp-panel.json` file to versioned annotation packs.
 - Add TypeScript parser modules, web-worker parsing, ZIP support, and provider detection.
 - Add genome-build and orientation detection before expanding report claims.
-- Replace aggregate pathway totals with evidence grade, actionability, effect direction, clinical relevance, replication status, and coverage confidence.
+- Replace the remaining prototype panel score fields with a formal evidence-grade schema.
 - Add printable HTML/PDF export and deterministic JSON export.
 - Add official static container and full Docker Compose deployment.
 - Defer metabolomics and AI interpretation until the genomics foundation is trustworthy.

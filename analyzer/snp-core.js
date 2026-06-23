@@ -131,6 +131,19 @@ function readWithoutHeader(fields) {
   return null;
 }
 
+function cleanLegacyScoreText(value) {
+  return String(value || "")
+    .replace(/\bDirection\s+[-\d.]+;\s*magnitude\s+[-\d.]+;\s*certainty\s+[-\d.]+;\s*final score\s+[-\d.]+\.?\s*/gi, "")
+    .replace(/\bis scored as\b/gi, "is recorded as")
+    .replace(/\bscored as\b/gi, "recorded as")
+    .replace(/\bstronger score for\b/gi, "stronger recorded tendency for")
+    .replace(/\bscore\b/gi, "tendency")
+    .replace(/\bscoring\b/gi, "recorded tendency")
+    .replace(/\bscored\b/gi, "recorded")
+    .replace(/\bmagnitude\b/gi, "interpretation")
+    .replace(/\bcertainty\b/gi, "confidence context");
+}
+
 export function parseRawGenotype(text) {
   const variants = new Map();
   const records = [];
@@ -218,7 +231,73 @@ export function analyzeVariants(parsed, panel) {
   const findings = [];
   const missing = [];
   const unknownGenotypes = [];
-  const pathwayTotals = new Map();
+  const pathwayCounts = new Map();
+
+  function pathwayEntry(pathway) {
+    if (!pathwayCounts.has(pathway)) {
+      pathwayCounts.set(pathway, {
+        pathway,
+        findingCount: 0,
+        relevanceCounts: {},
+        effectDirectionCounts: {},
+        reviewStatusCounts: {}
+      });
+    }
+    return pathwayCounts.get(pathway);
+  }
+
+  function addCount(target, key) {
+    target[key] = (target[key] || 0) + 1;
+  }
+
+  function classifyEffectDirection(direction) {
+    const value = String(direction || "").toLowerCase();
+    if (value.includes("increase") || value.includes("higher") || value.includes("persistence")) {
+      return "increased";
+    }
+    if (value.includes("decrease") || value.includes("lower")) {
+      return "decreased";
+    }
+    if (value.includes("mixed")) {
+      return "mixed";
+    }
+    return "uncertain";
+  }
+
+  function classifyRelevance(targetType, evidenceLevel, pathways) {
+    const target = String(targetType || "").toLowerCase();
+    const evidence = String(evidenceLevel || "").toLowerCase();
+    const pathwayText = pathways.join(" ").toLowerCase();
+    if (evidence.includes("clinical")) {
+      return "clinical";
+    }
+    if (pathwayText.includes("caffeine") || pathwayText.includes("stimulant")) {
+      return "metabolic context";
+    }
+    if (target.includes("biomarker") || evidence.includes("trait")) {
+      return "trait";
+    }
+    return "metabolic context";
+  }
+
+  function classifyActionability(validationMarkers, direction) {
+    const value = String(direction || "").toLowerCase();
+    if (value.includes("clinical")) {
+      return "discuss";
+    }
+    if (validationMarkers.length > 0) {
+      return "confirm";
+    }
+    return "informational";
+  }
+
+  function classifyReviewStatus(evidenceLevel) {
+    const value = String(evidenceLevel || "").toLowerCase();
+    if (value.includes("curated") || value.includes("established")) {
+      return "curated";
+    }
+    return "awaiting review";
+  }
 
   for (const variant of panel.variants || []) {
     const parsedVariant = parsed.variants.get(normalizeRsid(variant.rsid));
@@ -243,14 +322,26 @@ export function analyzeVariants(parsed, panel) {
       continue;
     }
 
-    const score = Number(effect.score || 0);
     const pathways =
       Array.isArray(variant.pathways) && variant.pathways.length
         ? variant.pathways
         : [variant.pathway || "Uncategorized"];
     const pathwayLabel = pathways.join(" / ");
+    const targetType = effect.targetType || variant.targetType || "unknown";
+    const evidenceLevel = variant.evidenceLevel || "unspecified";
+    const validationMarkers = variant.validationMarkers || [];
+    const effectDirection = classifyEffectDirection(effect.direction);
+    const relevance = classifyRelevance(targetType, evidenceLevel, pathways);
+    const actionability = classifyActionability(validationMarkers, effect.direction);
+    const reviewStatus = classifyReviewStatus(evidenceLevel);
+    const coverageConfidence = "directly observed";
+
     for (const pathway of pathways) {
-      pathwayTotals.set(pathway, (pathwayTotals.get(pathway) || 0) + Math.abs(score));
+      const entry = pathwayEntry(pathway);
+      entry.findingCount += 1;
+      addCount(entry.relevanceCounts, relevance);
+      addCount(entry.effectDirectionCounts, effectDirection);
+      addCount(entry.reviewStatusCounts, reviewStatus);
     }
 
     findings.push({
@@ -262,29 +353,43 @@ export function analyzeVariants(parsed, panel) {
       aliases: variant.aliases || [],
       genotype,
       rawGenotype: parsedVariant.genotype,
-      interpretation: effect.interpretation,
+      interpretation: cleanLegacyScoreText(effect.interpretation),
       direction: effect.direction || "neutral",
-      score,
-      magnitude: Number(effect.magnitude || 0),
-      certainty: Number(effect.certainty || 0),
-      targetType: effect.targetType || variant.targetType || "unknown",
-      evidenceLevel: variant.evidenceLevel,
+      effectDirection,
+      relevance,
+      actionability,
+      reviewStatus,
+      coverageConfidence,
+      targetType,
+      evidenceLevel,
       sourceLinks: variant.sourceLinks || [],
-      limitations: variant.limitations || [],
-      validationMarkers: variant.validationMarkers || []
+      limitations: (variant.limitations || []).map(cleanLegacyScoreText),
+      validationMarkers
     });
   }
 
-  findings.sort((a, b) => Math.abs(b.score) - Math.abs(a.score) || a.rsid.localeCompare(b.rsid));
+  findings.sort((a, b) =>
+    b.sourceLinks.length - a.sourceLinks.length ||
+    a.pathway.localeCompare(b.pathway) ||
+    a.rsid.localeCompare(b.rsid)
+  );
 
-  const pathwaySummary = Array.from(pathwayTotals.entries())
-    .map(([pathway, score]) => ({ pathway, score }))
-    .sort((a, b) => b.score - a.score || a.pathway.localeCompare(b.pathway));
+  const pathwaySummary = Array.from(pathwayCounts.values())
+    .sort((a, b) => b.findingCount - a.findingCount || a.pathway.localeCompare(b.pathway));
+  const presentPanelVariantCount = findings.length + unknownGenotypes.length;
 
   return {
     panelVersion: panel.version,
     generatedAt: new Date().toISOString(),
     metadata: parsed.metadata,
+    coverage: {
+      panelVariantCount: (panel.variants || []).length,
+      presentPanelVariantCount,
+      interpretedFindingCount: findings.length,
+      missingPanelVariantCount: missing.length,
+      uninterpretablePanelVariantCount: unknownGenotypes.length,
+      directlyObservedFindingCount: findings.length
+    },
     warnings: [
       ...parsed.warnings,
       "Direct rsID/genotype matching only. No strand flipping, imputation, phasing, or genome-build liftover is performed.",

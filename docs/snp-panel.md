@@ -36,9 +36,11 @@ Each genotype entry includes:
 - claim ID
 - interpretation text
 
-## Scoring status
+## Legacy score-field status
 
-The current `score`, `magnitude`, and `certainty` fields came from the legacy curated panel and are useful for sorting and prototyping. They should not be presented as validated biological risk, pathway performance, or treatment scores.
+The `score`, `magnitude`, and `certainty` fields remain in the legacy curated panel data because they came from the previous internal export. The analyzer no longer exposes them in report findings or pathway summaries.
+
+These fields should not be presented as validated biological risk, pathway performance, or treatment scores.
 
 Future reports should prioritize:
 
@@ -68,6 +70,6 @@ That means a genotype must match the panel's recorded allele orientation to prod
 
 ## Curation policy
 
-Every scored panel entry should have source links, limitations, and validation markers. The report is informational and should not be used to diagnose disease, prescribe interventions, or replace qualified clinical judgment.
+Every panel entry should have source links, limitations, and validation markers. The report is informational and should not be used to diagnose disease, prescribe interventions, or replace qualified clinical judgment.
 
 See [evidence-contract.md](evidence-contract.md) for the target annotation-pack and report contract.

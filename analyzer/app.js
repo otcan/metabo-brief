@@ -47,32 +47,32 @@ function formatNumber(value) {
 function renderSummary(report) {
   const matched = report.findings.length;
   const panelSize = state.panel.variants.length;
-  const coverage = panelSize ? Math.round((matched / panelSize) * 100) : 0;
   const headerState = report.metadata.detectedHeader ? "Detected" : "Inferred";
+  const coverage = report.coverage || {};
 
   els.summary.innerHTML = `
     <div class="analysis-stat"><span>Parsed SNPs</span><strong>${formatNumber(report.metadata.parsedVariantCount)}</strong></div>
-    <div class="analysis-stat"><span>Panel matches</span><strong>${matched}/${panelSize}</strong></div>
-    <div class="analysis-stat"><span>Panel coverage</span><strong>${coverage}%</strong></div>
+    <div class="analysis-stat"><span>Panel loci present</span><strong>${formatNumber(coverage.presentPanelVariantCount ?? matched)}/${panelSize}</strong></div>
+    <div class="analysis-stat"><span>Interpreted</span><strong>${formatNumber(coverage.interpretedFindingCount ?? matched)}</strong></div>
+    <div class="analysis-stat"><span>Not in file</span><strong>${formatNumber(coverage.missingPanelVariantCount ?? report.missing.length)}</strong></div>
+    <div class="analysis-stat"><span>Uninterpretable</span><strong>${formatNumber(coverage.uninterpretablePanelVariantCount ?? report.unknownGenotypes.length)}</strong></div>
     <div class="analysis-stat"><span>No-calls</span><strong>${formatNumber(report.metadata.noCallCount)}</strong></div>
     <div class="analysis-stat"><span>Header</span><strong>${headerState}</strong></div>
   `;
 
-  const maxPathwayScore = Math.max(...report.pathwaySummary.map(item => item.score), 0);
   const pathways = report.pathwaySummary.map(item => `
     <li>
       <div>
         <strong>${escapeHtml(item.pathway)}</strong>
-        <span>${item.score.toFixed(1)} attention score</span>
+        <span>${formatNumber(item.findingCount)} interpreted finding${item.findingCount === 1 ? "" : "s"}</span>
       </div>
-      <span class="pathway-bar"><i style="width: ${maxPathwayScore ? Math.round((item.score / maxPathwayScore) * 100) : 0}%"></i></span>
     </li>
   `).join("");
 
   if (pathways) {
     els.summary.insertAdjacentHTML("beforeend", `
       <div class="analysis-pathways">
-        <h3>Pathway signal</h3>
+        <h3>Finding groups</h3>
         <ul>${pathways}</ul>
       </div>
     `);
@@ -166,7 +166,9 @@ function renderFindings(report) {
 
     const limitations = finding.limitations.slice(0, 4).map(item => `<li>${escapeHtml(item)}</li>`).join("");
     const markers = finding.validationMarkers.slice(0, 4).map(item => `<li>${escapeHtml(item)}</li>`).join("");
-    const direction = String(finding.direction || "neutral").replace(/_/g, " ");
+    const sourceCount = finding.sourceLinks.length;
+    const effectDirection = String(finding.effectDirection || "uncertain").replace(/_/g, " ");
+    const actionability = String(finding.actionability || "informational").replace(/_/g, " ");
 
     return `
       <article class="finding-card">
@@ -175,23 +177,25 @@ function renderFindings(report) {
             <p class="finding-kicker">${escapeHtml(finding.pathway)}</p>
             <h3>${escapeHtml(finding.gene)} <span>${escapeHtml(finding.rsid)}</span></h3>
           </div>
-          <div class="finding-score" data-direction="${escapeHtml(finding.direction)}">
-            <span>Score</span>
-            <strong>${finding.score.toFixed(1)}</strong>
+          <div class="finding-status">
+            <span>Review</span>
+            <strong>${escapeHtml(finding.reviewStatus)}</strong>
           </div>
         </div>
         <p class="finding-label">${escapeHtml(finding.label)}</p>
         <div class="finding-meta">
           <span>Genotype ${escapeHtml(finding.genotype)} <small>raw ${escapeHtml(finding.rawGenotype)}</small></span>
           <span>${escapeHtml(finding.evidenceLevel)}</span>
-          <span>${escapeHtml(direction)}</span>
-          <span>${escapeHtml(finding.targetType)}</span>
+          <span>${escapeHtml(finding.relevance)}</span>
+          <span>${escapeHtml(effectDirection)}</span>
+          <span>${escapeHtml(actionability)}</span>
+          <span>${escapeHtml(finding.coverageConfidence)}</span>
         </div>
         <p class="finding-interpretation">${escapeHtml(finding.interpretation)}</p>
         <div class="metric-strip">
-          <div><span>Magnitude</span><strong>${finding.magnitude.toFixed(3)}</strong></div>
-          <div><span>Certainty</span><strong>${finding.certainty.toFixed(3)}</strong></div>
-          <div><span>Sources</span><strong>${finding.sourceLinks.length}</strong></div>
+          <div><span>Sources</span><strong>${sourceCount}</strong></div>
+          <div><span>Type</span><strong>${escapeHtml(finding.targetType)}</strong></div>
+          <div><span>Observed</span><strong>${escapeHtml(finding.coverageConfidence)}</strong></div>
         </div>
         <div class="finding-grid">
           <div>
