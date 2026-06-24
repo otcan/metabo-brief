@@ -1,17 +1,18 @@
 # Product Direction
 
-MetaboBrief should become the easiest self-hosted, open-source way to turn consumer DNA files into understandable, evidence-linked reports without uploading the DNA.
+MetaboBrief should become the easiest self-hosted, open-source way to turn consumer DNA files into transparent, evidence-linked pathway tendency scores without uploading the DNA.
 
 The product formula:
 
-> Local-first consumer DNA parsing + rigorous annotation provenance + plain-language report hierarchy, with far less operational complexity than full variant-annotation stacks.
+> Local-first consumer DNA parsing + transparent pathway scoring + rigorous annotation provenance + plain-language report hierarchy, with far less operational complexity than full variant-annotation stacks.
 
 The current foundation is suitable for that direction:
 
 - Browser-only raw genotype parsing.
 - MIT-licensed application code today.
 - A bundled curated panel with 140 SNPs and 491 genotype claims.
-- Visible source links, limitations, validation markers, review status, effect direction, actionability, relevance, and coverage confidence.
+- Visible source links, limitations, validation markers, review status, effect direction, actionability, relevance, scoring components, and coverage confidence.
+- A pure scoring engine with a first versioned caffeine-clearance pathway model.
 - Direct rsID/genotype matching with no backend upload.
 
 The current constraints are equally important:
@@ -22,12 +23,12 @@ The current constraints are equally important:
 - No genome-build or strand-orientation handling.
 - No VCF/gVCF support.
 - No REF/ALT-aware matching.
-- Pathway summaries are finding counts, not validated biological scores.
+- Only the caffeine-clearance model is currently formalized as a versioned pathway score.
 - Current validation metadata makes these limits visible, but it is not yet fail-closed build or strand normalization.
 
 ## Positioning
 
-**Upload your DNA. Understand the important parts. Keep everything under your control.**
+**Upload your DNA. Inspect pathway tendency scores. Keep everything under your control.**
 
 That creates a clear niche:
 
@@ -40,11 +41,13 @@ That creates a clear niche:
 
 1. Understandable before comprehensive.
 
-   Every result should answer:
+   Every pathway score and finding should answer:
 
    - What did MetaboBrief find?
    - What might it mean?
+   - What score did the model calculate?
    - How strong is the evidence?
+   - How much of the model was covered?
    - What are the limitations?
    - What could confirm or contextualize it?
 
@@ -78,13 +81,21 @@ The main flow should fit on one screen:
 2. Detect the provider, format, and likely genome build.
 3. Show a short validation state explaining what can and cannot be analyzed.
 4. Start annotation automatically.
-5. Open the report with the most understandable findings first.
+5. Open the report with pathway scores first, then finding contributors.
 6. Keep technical evidence behind "Show details".
 7. Export as HTML/PDF or JSON.
 
 ## Report Hierarchy
 
-The report should lead with categories, not hundreds of SNP cards:
+The report should lead with pathway tendency scores, then categories, then SNP-level contributors:
+
+- Pathway tendency score.
+- Signal strength.
+- Evidence confidence.
+- Coverage.
+- Stability.
+
+Category summaries should remain visible:
 
 - Medication response.
 - Clinically important variants.
@@ -126,9 +137,9 @@ Technical detail should expose:
 
 ## Scoring Policy
 
-Legacy panel records still contain numeric score fields from the previous internal export. The analyzer should not expose those fields as biological risk, pathway performance, or treatment scores.
+Numeric scoring is part of the product core. The analyzer should expose scores as transparent, versioned pathway tendency models, not as biological risk, pathway performance, treatment scores, or population percentiles.
 
-Report findings should prioritize:
+Report findings and pathway scores should pair:
 
 - Evidence grade.
 - Actionability.
@@ -136,10 +147,17 @@ Report findings should prioritize:
 - Clinical relevance.
 - Replication status.
 - Coverage confidence.
+- Variant contribution.
+- Pathway tendency score.
+- Signal strength.
+- Evidence confidence.
+- Score stability.
 
-Pathway summaries should be counts of interpreted findings, not cumulative numerical scores.
+The legacy variant contribution model is preserved as `metabobrief-pathway` / `legacy-v0`. Formal pathway models should be separately versioned, starting with `metabobrief-pathway-v1`.
 
-Only introduce numerical scores when there is a documented, validated formula with explicit population and ancestry assumptions.
+Pathway scores must define their negative pole, positive pole, biological question, included mechanisms, excluded mechanisms, coverage threshold, and limitations.
+
+See [scoring-architecture.md](scoring-architecture.md).
 
 ## Licensing Direction
 

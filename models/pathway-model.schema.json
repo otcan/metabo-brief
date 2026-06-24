@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://otcan.github.io/metabo-brief/models/pathway-model.schema.json",
+  "title": "MetaboBrief pathway model",
+  "type": "object",
+  "required": [
+    "pathwayId",
+    "name",
+    "pathway",
+    "modelVersion",
+    "biologicalQuestion",
+    "negativePole",
+    "positivePole",
+    "sourcePathways",
+    "eligibleTargetTypes",
+    "minimumCoverage",
+    "minimumIndependentSignals",
+    "aggregationFormula",
+    "limitations"
+  ],
+  "properties": {
+    "pathwayId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "pathway": {
+      "type": "string"
+    },
+    "modelVersion": {
+      "type": "string"
+    },
+    "biologicalQuestion": {
+      "type": "string"
+    },
+    "negativePole": {
+      "type": "string"
+    },
+    "positivePole": {
+      "type": "string"
+    },
+    "includedMechanisms": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "excludedMechanisms": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "sourcePathways": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "eligibleTargetTypes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "minimumCoverage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "minimumIndependentSignals": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "minimumEvidenceWeight": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "conservativeEvidenceFloor": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "maximumGroupContribution": {
+      "type": "number",
+      "minimum": 0
+    },
+    "independenceGroups": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "aggregationFormula": {
+      "type": "string"
+    },
+    "interpretationBands": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["min", "max", "label"],
+        "properties": {
+          "min": { "type": "number" },
+          "max": { "type": "number" },
+          "label": { "type": "string" }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

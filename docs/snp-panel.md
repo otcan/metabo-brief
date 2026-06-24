@@ -38,20 +38,38 @@ Each genotype entry includes:
 
 ## Legacy score-field status
 
-The `score`, `magnitude`, and `certainty` fields remain in the legacy curated panel data because they came from the previous internal export. The analyzer no longer exposes them in report findings or pathway summaries.
+The `score`, `direction`, `magnitude`, `certainty`, and `pathwayScoringEligible` fields remain first-class model inputs from the legacy curated panel export.
 
-These fields should not be presented as validated biological risk, pathway performance, or treatment scores.
+They are exposed as variant-level scoring components:
 
-Future reports should prioritize:
+```json
+{
+  "scoring": {
+    "eligible": true,
+    "direction": 1,
+    "magnitude": 0.35,
+    "certainty": 0.58,
+    "contribution": 0.203,
+    "modelVersion": "legacy-v0"
+  }
+}
+```
+
+These fields should not be presented as diagnosis, disease-risk percentages, measured enzyme activity, treatment recommendations, or population percentiles.
+
+Reports should pair every score with:
 
 - evidence grade
 - actionability
 - effect direction
 - clinical relevance
-- replication status
 - coverage confidence
+- signal strength
+- evidence confidence
+- score stability
+- limitations
 
-Numerical scores should only be introduced when there is a documented, validated formula with explicit population and ancestry assumptions.
+Pathway scores should only be calculated through a documented, versioned pathway model. The first model is `models/caffeine-clearance.json`.
 
 ## Important limitations
 

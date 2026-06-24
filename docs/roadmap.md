@@ -2,7 +2,7 @@
 
 This roadmap keeps SNP analysis at the core. Metabolomics and longitudinal data come later, after the genomics foundation is trustworthy.
 
-## Milestone 1 - Product and Evidence Contract
+## Milestone 1 - Product, Evidence, and Scoring Contract
 
 Define the rules before expanding annotations:
 
@@ -10,6 +10,10 @@ Define the rules before expanding annotations:
 - Informational, not diagnostic, positioning.
 - Shared report JSON schema.
 - Evidence-grading framework.
+- Scoring terminology and formula specification.
+- Pathway-axis specification.
+- Minimum scoring thresholds.
+- Missing-data and linkage-group rules.
 - Terminology and writing standard.
 - Supported data-source policy.
 - Annotation and application licensing model.
@@ -19,7 +23,9 @@ Deliverables:
 
 - Product direction document.
 - Evidence contract document.
+- Scoring architecture document.
 - Draft report JSON schema.
+- Draft pathway-model schema.
 - Licence decision for future v1 packaging.
 - Default source allowlist and restricted-source policy.
 
@@ -40,20 +46,23 @@ Upgrade the current analyzer:
 
 Keep parsing and report generation independent of the UI so the same engine can be used by a CLI or local backend.
 
-## Milestone 3 - Core Annotations Out of the Box
+## Milestone 3 - Core Annotations and Pathway Models Out of the Box
 
-Create the annotation-pack compiler and ship the first bundled pack.
+Create the annotation-pack compiler, formal pathway models, and first bundled pack.
 
-The first pack should prioritize several hundred understandable, well-supported findings, not hundreds of thousands of weak associations.
+The first pack should prioritize several hundred understandable, well-supported findings and 8-12 structured pathway models, not hundreds of thousands of weak associations.
 
 Requirements:
 
 - Versioned pack manifest.
+- Versioned pathway-model manifest.
 - Source release dates.
 - Source licences.
 - SHA-256 checksums.
 - Supported genome builds.
 - Evidence grading rules.
+- Pathway axes and scoring formulas.
+- Linkage and independence groups.
 - Reproducible build metadata.
 - Schema and content validation.
 
@@ -63,6 +72,9 @@ Deliver:
 
 - New upload and validation flow.
 - At-a-glance report.
+- Score-first pathway report.
+- Conservative and exploratory scoring profiles.
+- Score decomposition by contributor.
 - Evidence drill-down.
 - Search and filtering.
 - Coverage report.
@@ -111,6 +123,7 @@ A v1 release should satisfy all of these:
 - Default analysis makes no external network calls.
 - Raw genotype data never leaves the browser in Lite mode.
 - Every finding has a visible source, evidence grade, and limitation.
+- Every pathway score has visible signal strength, evidence confidence, coverage, stability, model version, and limitations.
 - The same file and annotation-pack version always produce the same report.
 - Unsupported builds, formats, and alleles fail visibly rather than being guessed.
 - Reports export as printable HTML/PDF and structured JSON.
@@ -125,6 +138,7 @@ Do not initially chase:
 - AI health coaching.
 - Supplement recommendations.
 - Polygenic risk scores.
+- Global health score.
 - Imputation.
 - Complex CYP2D6 calling.
 - Full clinical diagnosis.
@@ -132,4 +146,4 @@ Do not initially chase:
 - Practitioner portals.
 - Raw metabolomics pipelines.
 
-The goal is polished navigation and plain-language presentation first, not maximum report count.
+The goal is an inspectable pathway model first, not maximum report count.

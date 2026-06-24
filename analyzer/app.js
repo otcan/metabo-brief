@@ -2,6 +2,7 @@ import { analyzeVariants, parseRawGenotype } from "./snp-core.js";
 
 const state = {
   panel: null,
+  pathwayModels: [],
   latestReport: null,
   query: "",
   pathway: "all"
@@ -42,6 +43,14 @@ function escapeHtml(value) {
 
 function formatNumber(value) {
   return Number(value || 0).toLocaleString("en-US");
+}
+
+function formatPercent(value) {
+  return `${Math.round(Number(value || 0) * 100)}%`;
+}
+
+function formatScore(value) {
+  return value === null || value === undefined ? "Insufficient" : `${Math.round(value)}/100`;
 }
 
 function plural(value, singular, pluralLabel = `${singular}s`) {
@@ -220,6 +229,87 @@ function renderAtAGlance(report) {
   `;
 }
 
+function renderPathwayScores(report) {
+  const scores = report.pathwayScores || [];
+  if (!scores.length) {
+    return "";
+  }
+
+  const cards = scores.map(score => {
+    const contributors = score.contributors.slice(0, 6).map(contributor => `
+      <tr>
+        <td>${escapeHtml(contributor.gene)} <small>${escapeHtml(contributor.rsid)}</small></td>
+        <td>${escapeHtml(contributor.genotype)}</td>
+        <td>${contributor.contribution > 0 ? "+" : ""}${Number(contributor.contribution).toFixed(3)}</td>
+        <td>${escapeHtml(contributor.status)}</td>
+      </tr>
+    `).join("");
+    const limitations = score.limitations.slice(0, 4).map(item => `<li>${escapeHtml(item)}</li>`).join("");
+    const scoreAvailable = score.score !== null && score.score !== undefined;
+
+    return `
+      <article class="pathway-score-card" data-status="${escapeHtml(score.scoreStatus)}">
+        <div class="pathway-score-head">
+          <div>
+            <p class="snp-kicker">Pathway tendency score</p>
+            <h3>${escapeHtml(score.title)}</h3>
+            <p>${escapeHtml(score.biologicalQuestion || "Modelled genetic tendency within this pathway.")}</p>
+          </div>
+          <div class="pathway-score-value">
+            <strong>${escapeHtml(formatScore(score.score))}</strong>
+            <span>${escapeHtml(score.scoreLabel)}</span>
+          </div>
+        </div>
+        <div class="pathway-axis" aria-label="Pathway score axis">
+          <span>${escapeHtml(score.negativePole || "Lower model pole")}</span>
+          <strong>50</strong>
+          <span>${escapeHtml(score.positivePole || "Higher model pole")}</span>
+        </div>
+        <div class="pathway-score-metrics">
+          <div><span>Signal</span><strong>${escapeHtml(formatLabel(score.signalStrength))}</strong></div>
+          <div><span>Confidence</span><strong>${escapeHtml(formatLabel(score.evidenceConfidence))}</strong><small>weight ${Number(score.evidenceWeight || 0).toFixed(2)}</small></div>
+          <div><span>Coverage</span><strong>${escapeHtml(formatPercent(score.coverage))}</strong><small>${formatNumber(score.observedVariantCount)} of ${formatNumber(score.eligibleVariantCount)} eligible loci</small></div>
+          <div><span>Stability</span><strong>${escapeHtml(formatLabel(score.stability))}</strong></div>
+          <div><span>Independent signals</span><strong>${formatNumber(score.independentSignalCount)}</strong></div>
+          <div><span>Model</span><strong>${escapeHtml(score.modelVersion)}</strong></div>
+        </div>
+        ${scoreAvailable ? `
+          <p class="pathway-score-note">Conservative profile: ${escapeHtml(formatScore(score.conservativeScore))}. Exploratory profile: ${escapeHtml(formatScore(score.exploratoryScore))}.</p>
+        ` : `
+          <p class="pathway-score-note">This pathway did not meet the model's minimum coverage, evidence, or independent-signal threshold.</p>
+        `}
+        <details class="score-details">
+          <summary>Explore score contributors</summary>
+          <div class="score-table-wrap">
+            <table class="score-table">
+              <thead>
+                <tr>
+                  <th>Variant</th>
+                  <th>Genotype</th>
+                  <th>Contribution</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>${contributors || '<tr><td colspan="4">No observed eligible contributors.</td></tr>'}</tbody>
+            </table>
+          </div>
+          <ul class="score-limitations">${limitations || "<li>No model limitations listed.</li>"}</ul>
+        </details>
+      </article>
+    `;
+  }).join("");
+
+  return `
+    <section class="pathway-score-section" aria-label="Pathway tendency scores">
+      <div class="report-overview-heading">
+        <p class="snp-kicker">Scores</p>
+        <h3>Pathway tendency scores</h3>
+      </div>
+      ${cards}
+    </section>
+  `;
+}
+
 function renderSummary(report) {
   const matched = report.findings.length;
   const panelSize = state.panel.variants.length;
@@ -332,10 +422,12 @@ function updateFindingCount(report, visibleCount) {
 
 function renderFindings(report) {
   const overview = renderAtAGlance(report);
+  const pathwayScores = renderPathwayScores(report);
 
   if (!report.findings.length) {
     updateFindingCount(report, 0);
     els.findings.innerHTML = `
+      ${pathwayScores}
       ${overview}
       <div class="analysis-empty">
         <h3>No panel variants matched</h3>
@@ -350,6 +442,7 @@ function renderFindings(report) {
 
   if (!findings.length) {
     els.findings.innerHTML = `
+      ${pathwayScores}
       ${overview}
       <div class="analysis-empty">
         <h3>No findings match the filters</h3>
@@ -417,6 +510,12 @@ function renderFindings(report) {
             <div><span>Target type</span><strong>${escapeHtml(finding.targetType)}</strong></div>
             <div><span>Coverage</span><strong>${escapeHtml(finding.coverageConfidence)}</strong></div>
             <div><span>Sources</span><strong>${sourceCount}</strong></div>
+            <div><span>Score eligible</span><strong>${finding.scoring.eligible ? "yes" : "no"}</strong></div>
+            <div><span>Direction</span><strong>${Number(finding.scoring.direction).toFixed(0)}</strong></div>
+            <div><span>Magnitude</span><strong>${Number(finding.scoring.magnitude).toFixed(3)}</strong></div>
+            <div><span>Certainty</span><strong>${Number(finding.scoring.certainty).toFixed(3)}</strong></div>
+            <div><span>Legacy contribution</span><strong>${finding.scoring.contribution > 0 ? "+" : ""}${Number(finding.scoring.contribution).toFixed(3)}</strong></div>
+            <div><span>Scoring model</span><strong>${escapeHtml(finding.scoring.modelVersion)}</strong></div>
           </div>
           <div class="finding-grid">
             <div>
@@ -434,7 +533,7 @@ function renderFindings(report) {
     `;
   }).join("");
 
-  els.findings.innerHTML = `${overview}${cards}`;
+  els.findings.innerHTML = `${pathwayScores}${overview}${cards}`;
 }
 
 function renderReport(report) {
@@ -458,7 +557,7 @@ async function analyzeText(text, label) {
   }
 
   const parsed = parseRawGenotype(text);
-  const report = analyzeVariants(parsed, state.panel);
+  const report = analyzeVariants(parsed, state.panel, state.pathwayModels);
   renderReport(report);
   els.fileName.textContent = label;
   setStatus(`Analyzed ${label}. Everything stayed in this browser session.`, "success");
@@ -470,12 +569,17 @@ async function loadPanel() {
     throw new Error(`Could not load SNP panel (${response.status})`);
   }
   state.panel = await response.json();
+  const modelResponse = await fetch("models/caffeine-clearance.json");
+  if (!modelResponse.ok) {
+    throw new Error(`Could not load pathway model (${modelResponse.status})`);
+  }
+  state.pathwayModels = [await modelResponse.json()];
   const generatedFrom = state.panel.generatedFrom || {};
   els.panelRelease.textContent = `v${state.panel.version}`;
   els.panelVariantCount.textContent = formatNumber(state.panel.variants.length);
   els.panelClaimCount.textContent = formatNumber(generatedFrom.claimCount);
   els.panelStudyCount.textContent = formatNumber(generatedFrom.studyEvidenceCount);
-  setStatus(`Ready. SNP panel ${state.panel.version} loaded with ${state.panel.variants.length} variants.`, "success");
+  setStatus(`Ready. SNP panel ${state.panel.version} loaded with ${state.panel.variants.length} variants and ${state.pathwayModels.length} pathway model.`, "success");
 }
 
 async function loadSample() {

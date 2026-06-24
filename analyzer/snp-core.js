@@ -1,3 +1,5 @@
+import { buildPathwayScores, buildVariantScoring } from "./scoring-engine.js";
+
 const BASES = new Set(["A", "C", "G", "T"]);
 const BASE_ORDER = { A: 0, C: 1, G: 2, T: 3 };
 
@@ -170,17 +172,9 @@ function readWithoutHeader(fields) {
   return null;
 }
 
-function cleanLegacyScoreText(value) {
+function cleanLegacyPlainText(value) {
   return String(value || "")
-    .replace(/\bDirection\s+[-\d.]+;\s*magnitude\s+[-\d.]+;\s*certainty\s+[-\d.]+;\s*final score\s+[-\d.]+\.?\s*/gi, "")
-    .replace(/\bis scored as\b/gi, "is recorded as")
-    .replace(/\bscored as\b/gi, "recorded as")
-    .replace(/\bstronger score for\b/gi, "stronger recorded tendency for")
-    .replace(/\bscore\b/gi, "tendency")
-    .replace(/\bscoring\b/gi, "recorded tendency")
-    .replace(/\bscored\b/gi, "recorded")
-    .replace(/\bmagnitude\b/gi, "interpretation")
-    .replace(/\bcertainty\b/gi, "confidence context");
+    .replace(/\bDirection\s+[-\d.]+;\s*magnitude\s+[-\d.]+;\s*certainty\s+[-\d.]+;\s*final score\s+[-\d.]+\.?\s*/gi, "");
 }
 
 export function parseRawGenotype(text) {
@@ -327,7 +321,7 @@ function buildValidation(parsed, coverage) {
   };
 }
 
-export function analyzeVariants(parsed, panel) {
+export function analyzeVariants(parsed, panel, pathwayModels = []) {
   const findings = [];
   const missing = [];
   const unknownGenotypes = [];
@@ -435,6 +429,7 @@ export function analyzeVariants(parsed, panel) {
     const actionability = classifyActionability(validationMarkers, effect.direction);
     const reviewStatus = classifyReviewStatus(evidenceLevel);
     const coverageConfidence = "directly observed";
+    const scoring = buildVariantScoring(effect);
 
     for (const pathway of pathways) {
       const entry = pathwayEntry(pathway);
@@ -453,7 +448,7 @@ export function analyzeVariants(parsed, panel) {
       aliases: variant.aliases || [],
       genotype,
       rawGenotype: parsedVariant.genotype,
-      interpretation: cleanLegacyScoreText(effect.interpretation),
+      interpretation: cleanLegacyPlainText(effect.interpretation),
       direction: effect.direction || "neutral",
       effectDirection,
       relevance,
@@ -462,8 +457,9 @@ export function analyzeVariants(parsed, panel) {
       coverageConfidence,
       targetType,
       evidenceLevel,
+      scoring,
       sourceLinks: variant.sourceLinks || [],
-      limitations: (variant.limitations || []).map(cleanLegacyScoreText),
+      limitations: (variant.limitations || []).map(cleanLegacyPlainText),
       validationMarkers
     });
   }
@@ -486,6 +482,7 @@ export function analyzeVariants(parsed, panel) {
     directlyObservedFindingCount: findings.length
   };
   const validation = buildValidation(parsed, coverage);
+  const pathwayScores = buildPathwayScores({ panel, parsed, findings, pathwayModels });
 
   return {
     reportSchemaVersion: "0.2.0",
@@ -503,6 +500,7 @@ export function analyzeVariants(parsed, panel) {
     findings,
     missing,
     unknownGenotypes,
-    pathwaySummary
+    pathwaySummary,
+    pathwayScores
   };
 }

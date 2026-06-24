@@ -1,12 +1,12 @@
 # MetaboBrief
 
-**Open-source local SNP analysis and personal omics brief generation. Static-first. Privacy-aware. Evidence-attributed.**
+**Open-source local SNP pathway scoring and personal omics brief generation. Static-first. Privacy-aware. Evidence-attributed.**
 
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![pages](https://img.shields.io/badge/demo-GitHub%20Pages-success)](https://otcan.github.io/metabo-brief/)
 [![privacy: local-first](https://img.shields.io/badge/privacy-local--first-success)](#privacy-posture)
 
-MetaboBrief is a browser-first SNP analyzer and report surface. It parses raw genotype files locally, matches rsIDs against a curated JSON SNP panel, and renders an evidence-attributed personal omics brief.
+MetaboBrief is a browser-first SNP pathway-scoring engine and report surface. It parses raw genotype files locally, matches rsIDs against a curated JSON SNP panel, and renders evidence-attributed pathway tendency scores with inspectable contributors.
 
 The project is published for open-source use under `otcan/metabo-brief`.
 
@@ -16,7 +16,7 @@ The project root opens the SNP analyzer. The previous marketing-style homepage h
 
 ## Product direction
 
-MetaboBrief should become the easiest self-hosted, open-source way to turn consumer DNA files into understandable, evidence-linked reports without uploading the DNA.
+MetaboBrief should become the easiest self-hosted, open-source way to turn consumer DNA files into transparent, evidence-linked pathway tendency scores without uploading the DNA.
 
 The current repository is the Lite foundation: local browser parsing, bundled starter annotations, and static hosting. The next phase is to formalize evidence packs, provider/build detection, report schema, and self-hosted deployment.
 
@@ -25,6 +25,7 @@ Design contracts:
 - [Product direction](docs/product-direction.md)
 - [Architecture direction](docs/architecture.md)
 - [Evidence and report contract](docs/evidence-contract.md)
+- [Scoring architecture](docs/scoring-architecture.md)
 - [Roadmap](docs/roadmap.md)
 - [SNP panel notes](docs/snp-panel.md)
 - [Data safety](docs/data-safety.md)
@@ -34,9 +35,11 @@ Design contracts:
 - Static HTML/CSS/JavaScript pages with no build step.
 - Browser-only parsing for 23andMe-style and AncestryDNA-style raw genotype files.
 - A curated SNP panel in `data/snp-panel.json` with 140 SNPs and 491 genotype claims.
+- A pure scoring engine in `analyzer/scoring-engine.js`.
+- A first machine-readable pathway model in `models/caffeine-clearance.json`.
 - Local SNP report rendering in `analyze.html`.
 - Alpha file-validation metadata for provider, format, genome build, orientation, and file plausibility.
-- A report surface with at-a-glance categories, plain-language finding cards, review status, effect direction, actionability, limitations, validation markers, and source links.
+- A score-first report surface with pathway tendency scores, signal strength, evidence confidence, coverage, stability, plain-language finding cards, and source links.
 - Short and long methodology pages for future metabolomics and digital-twin framing.
 - Privacy and use notes that emphasize synthetic data for public demos.
 - GitHub Actions for static deployment and SNP parser validation.
@@ -60,7 +63,9 @@ MetaboBrief now treats SNP analysis as core. The default analyzer performs direc
 | Analyzer-first entry page | `index.html` |
 | Local SNP analyzer | `analyze.html` |
 | SNP parser and analysis engine | `analyzer/snp-core.js` |
+| Pathway scoring engine | `analyzer/scoring-engine.js` |
 | Starter SNP panel | `data/snp-panel.json` |
+| First pathway model | `models/caffeine-clearance.json` |
 | Short methodology explainer | `personalized.html` |
 | Longer methodology explainer | `personalized-full.html` |
 | Research navigation page | `research-summary.html` |
@@ -71,7 +76,7 @@ MetaboBrief now treats SNP analysis as core. The default analyzer performs direc
 - No backend, account system, checkout, analytics, or upload pipeline.
 - No strand flipping, imputation, phasing, or genome-build liftover yet. The report now exposes this as validation metadata, but genotypes must still match the panel's recorded allele orientation.
 - No VCF/gVCF parser yet.
-- No medical advice engine.
+- No medical advice engine and no global health score.
 - No bundled third-party evidence databases beyond the starter JSON panel.
 - No real personal health, genotype, metabolomics, or evidence-review payloads.
 
@@ -124,9 +129,10 @@ Near-term priorities:
 
 - Define the shared report JSON schema and evidence-grading framework.
 - Move from one `snp-panel.json` file to versioned annotation packs.
+- Formalize more pathway models with explicit axes, thresholds, linkage groups, and score decomposition.
 - Add TypeScript parser modules, web-worker parsing, ZIP support, and provider detection.
 - Add genome-build and orientation detection before expanding report claims.
-- Replace the remaining prototype panel score fields with a formal evidence-grade schema.
+- Keep scoring first-class while pairing every score with evidence grade, coverage, stability, and limitations.
 - Add printable HTML/PDF export and deterministic JSON export.
 - Add official static container and full Docker Compose deployment.
 - Defer metabolomics and AI interpretation until the genomics foundation is trustworthy.

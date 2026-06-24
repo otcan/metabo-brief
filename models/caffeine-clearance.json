@@ -1,0 +1,65 @@
+{
+  "pathwayId": "caffeine-clearance",
+  "name": "Caffeine clearance tendency",
+  "pathway": "Caffeine / stimulant sensitivity",
+  "modelVersion": "metabobrief-pathway-v1",
+  "biologicalQuestion": "Do the supported variants collectively favor faster or slower caffeine and stimulant handling within the current MetaboBrief model?",
+  "negativePole": "Tendency toward slower caffeine clearance or stronger stimulant sensitivity",
+  "positivePole": "Tendency toward faster caffeine clearance or lower stimulant sensitivity",
+  "includedMechanisms": [
+    "Caffeine metabolism enzyme activity",
+    "Stimulant sensitivity markers",
+    "Bilirubin and phase-II proxy markers already present in the starter panel"
+  ],
+  "excludedMechanisms": [
+    "Current caffeine intake",
+    "Smoking status",
+    "Pregnancy",
+    "Medication interactions",
+    "Liver function",
+    "Measured caffeine clearance"
+  ],
+  "sourcePathways": [
+    "Caffeine / stimulant sensitivity"
+  ],
+  "eligibleTargetTypes": [
+    "enzyme_activity",
+    "biomarker_tendency",
+    "unknown"
+  ],
+  "minimumCoverage": 0.2,
+  "minimumIndependentSignals": 1,
+  "minimumEvidenceWeight": 0.3,
+  "conservativeEvidenceFloor": 0.5,
+  "maximumGroupContribution": 0.5,
+  "independenceGroups": {
+    "nat2-slow-acetylation": ["rs1799930", "rs1799931"],
+    "cyp1a2-ahr-axis": ["rs762551", "rs2472297", "rs4410790", "rs6968865"],
+    "adora2a-sensitivity": ["rs2298383", "rs5751876"],
+    "comt-stimulant-context": ["rs4633", "rs4680"],
+    "ugt1a1-clearance-context": ["rs8175347", "rs887829"]
+  },
+  "aggregationFormula": "variant contribution = direction * magnitude * certainty; group contributions are capped; pathway raw score = sum grouped contributions / sum available grouped max contribution; pathway index = 50 + 50 * raw score",
+  "interpretationBands": [
+    {
+      "min": 0,
+      "max": 39,
+      "label": "toward slower caffeine clearance or stronger stimulant sensitivity"
+    },
+    {
+      "min": 40,
+      "max": 60,
+      "label": "near the model midpoint"
+    },
+    {
+      "min": 61,
+      "max": 100,
+      "label": "toward faster caffeine clearance or lower stimulant sensitivity"
+    }
+  ],
+  "limitations": [
+    "This is a relative pathway tendency within the MetaboBrief model, not a population percentile.",
+    "The model does not include current caffeine intake, smoking, pregnancy, liver function, medications, or measured caffeine clearance.",
+    "The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization."
+  ]
+}

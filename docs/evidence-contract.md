@@ -36,9 +36,23 @@ GWAS Catalog data can support trait associations, but records should be filtered
 
 SNPedia-derived content should not be included in the default unrestricted pack. If supported later, make it an explicitly optional non-commercial add-on with clear licence gating.
 
-## Evidence Grades
+## Evidence Grades and Scores
 
-Use explicit grades instead of opaque numeric scores.
+Use explicit evidence grades alongside transparent numeric scores.
+
+Scores must never be opaque. Every numeric pathway score needs:
+
+- A scoring model ID and version.
+- A defined pathway axis.
+- A visible formula.
+- Variant-level contribution components.
+- Evidence confidence.
+- Signal strength.
+- Coverage.
+- Stability.
+- Limitations.
+
+Evidence grades describe the trustworthiness of the underlying claims. They do not replace pathway tendency scores.
 
 Suggested initial scale:
 
@@ -86,9 +100,38 @@ Draft top-level shape:
     }
   ],
   "categories": [],
+  "pathwayScores": [],
   "findings": [],
   "coverage": {},
   "warnings": []
+}
+```
+
+Draft pathway score shape:
+
+```json
+{
+  "pathwayId": "caffeine-clearance",
+  "pathway": "Caffeine / stimulant sensitivity",
+  "title": "Caffeine clearance tendency",
+  "biologicalQuestion": "Do the supported variants collectively favor faster or slower caffeine handling?",
+  "negativePole": "Tendency toward slower caffeine clearance or stronger stimulant sensitivity",
+  "positivePole": "Tendency toward faster caffeine clearance or lower stimulant sensitivity",
+  "score": 72,
+  "rawScore": 0.449,
+  "scoreLabel": "toward faster caffeine clearance or lower stimulant sensitivity",
+  "signalStrength": "weak",
+  "evidenceConfidence": "strong",
+  "evidenceWeight": 0.76,
+  "coverage": 0.286,
+  "stability": "stable",
+  "eligibleVariantCount": 7,
+  "observedVariantCount": 2,
+  "independentSignalCount": 1,
+  "modelId": "metabobrief-pathway",
+  "modelVersion": "metabobrief-pathway-v1",
+  "variantModelVersion": "legacy-v0",
+  "contributors": []
 }
 ```
 
@@ -124,6 +167,17 @@ Draft finding shape:
     "conflictingEvidence": [],
     "limitations": []
   },
+  "scoring": {
+    "eligible": true,
+    "direction": 1,
+    "magnitude": 0.35,
+    "certainty": 0.58,
+    "contribution": 0.203,
+    "formulaContribution": 0.203,
+    "modelId": "metabobrief-pathway",
+    "modelVersion": "legacy-v0",
+    "formula": "direction * magnitude * certainty"
+  },
   "provenance": {
     "packId": "core",
     "packVersion": "0.1.0",
@@ -132,6 +186,29 @@ Draft finding shape:
   }
 }
 ```
+
+## Pathway Model Shape
+
+Pathway models should be machine-readable and separate from SNP annotations.
+
+```text
+models/
+  pathway-model.schema.json
+  caffeine-clearance.json
+```
+
+Each model defines:
+
+- Biological axis.
+- Included and excluded mechanisms.
+- Eligible target types.
+- Independence groups.
+- Minimum coverage.
+- Minimum independent signals.
+- Evidence floor for conservative scoring.
+- Aggregation formula.
+- Interpretation bands.
+- Limitations.
 
 ## Pack Manifest Shape
 
