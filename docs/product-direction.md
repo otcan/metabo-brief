@@ -23,6 +23,7 @@ The current constraints are equally important:
 - No VCF/gVCF support.
 - No REF/ALT-aware matching.
 - Pathway summaries are finding counts, not validated biological scores.
+- Current validation metadata makes these limits visible, but it is not yet fail-closed build or strand normalization.
 
 ## Positioning
 
@@ -91,6 +92,8 @@ The report should lead with categories, not hundreds of SNP cards:
 - Traits and tendencies.
 - Findings needing confirmation.
 - Coverage and limitations.
+
+The current analyzer has started this hierarchy with an at-a-glance section and plain-language finding cards. It still needs stronger provider, build, and orientation detection before the validation layer can fail closed.
 
 Finding cards should follow this shape:
 

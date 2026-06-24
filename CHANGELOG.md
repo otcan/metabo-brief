@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added alpha file-validation metadata to reports, including provider, format, genome-build, orientation, and file-plausibility status.
+- Added an at-a-glance report overview for medication response, clinical context, metabolism, traits, confirmation needs, and coverage.
+- Reworked finding cards around plain-language questions with expandable source and technical details.
 - Removed score-based pathway totals and score/magnitude/certainty display from analyzer reports.
 - Added count-based panel coverage and pathway finding summaries.
 - Made the project root an analyzer-first entry page that opens `analyze.html`.

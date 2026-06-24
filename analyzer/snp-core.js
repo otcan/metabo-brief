@@ -82,6 +82,45 @@ function looksLikeHeader(fields) {
   );
 }
 
+function detectProvider(commentLines) {
+  const text = commentLines.join(" ").toLowerCase();
+  if (text.includes("23andme") || text.includes("23 and me")) {
+    return { provider: "23andMe", confidence: "medium" };
+  }
+  if (text.includes("ancestrydna") || text.includes("ancestry dna")) {
+    return { provider: "AncestryDNA", confidence: "medium" };
+  }
+  if (text.includes("myheritage")) {
+    return { provider: "MyHeritage", confidence: "medium" };
+  }
+  if (text.includes("familytreedna") || text.includes("family tree dna")) {
+    return { provider: "FamilyTreeDNA", confidence: "medium" };
+  }
+  return { provider: null, confidence: "none" };
+}
+
+function detectGenomeBuild(commentLines) {
+  const text = commentLines.join(" ").toLowerCase();
+  if (/\b(grch37|hg19|build\s*37|genome\s+build\s+37)\b/.test(text)) {
+    return { genomeBuild: "GRCh37", confidence: "medium" };
+  }
+  if (/\b(grch38|hg38|build\s*38|genome\s+build\s+38)\b/.test(text)) {
+    return { genomeBuild: "GRCh38", confidence: "medium" };
+  }
+  return { genomeBuild: null, confidence: "none" };
+}
+
+function inferHeaderFormat(header) {
+  const normalized = header.map(normalizeHeader);
+  if (normalized.includes("allele1") && normalized.includes("allele2")) {
+    return "allele-column rsID table";
+  }
+  if (normalized.includes("genotype") || normalized.includes("result")) {
+    return "genotype rsID table";
+  }
+  return "header-based rsID table";
+}
+
 function readWithHeader(fields, header) {
   const rsidIndex = headerIndex(header, ["rsid", "rs#", "snp id", "snp name"]);
   const chromosomeIndex = headerIndex(header, ["chromosome", "chromosome number", "chrom"]);
@@ -150,6 +189,8 @@ export function parseRawGenotype(text) {
   const warnings = [];
   const lines = String(text || "").split(/\r?\n/);
   let header = null;
+  let inferredFormat = null;
+  const commentLines = [];
   let commentCount = 0;
   let dataLineCount = 0;
   let noCallCount = 0;
@@ -164,16 +205,23 @@ export function parseRawGenotype(text) {
 
     if (line.startsWith("#")) {
       commentCount += 1;
+      if (commentLines.length < 40) {
+        commentLines.push(line.replace(/^#+\s*/, ""));
+      }
       continue;
     }
 
     const fields = splitRow(line);
     if (!header && looksLikeHeader(fields)) {
       header = fields;
+      inferredFormat = inferHeaderFormat(fields);
       continue;
     }
 
     dataLineCount += 1;
+    if (!inferredFormat && normalizeRsid(fields[0]).startsWith("rs")) {
+      inferredFormat = fields.length >= 5 ? "allele-column rsID table" : "genotype rsID table";
+    }
     const record = header ? readWithHeader(fields, header) : readWithoutHeader(fields);
     if (!record || !record.rsid) {
       malformedCount += 1;
@@ -211,6 +259,9 @@ export function parseRawGenotype(text) {
     warnings.push(`${duplicateCount} duplicate rsID row(s) were overwritten by later rows.`);
   }
 
+  const provider = detectProvider(commentLines);
+  const build = detectGenomeBuild(commentLines);
+
   return {
     variants,
     records,
@@ -222,8 +273,57 @@ export function parseRawGenotype(text) {
       noCallCount,
       duplicateCount,
       malformedCount,
-      detectedHeader: Boolean(header)
+      detectedHeader: Boolean(header),
+      provider: provider.provider,
+      providerConfidence: provider.confidence,
+      format: inferredFormat || "unrecognized rsID table",
+      formatConfidence: inferredFormat ? "medium" : "low",
+      genomeBuild: build.genomeBuild,
+      genomeBuildConfidence: build.confidence,
+      orientation: "provider-native",
+      orientationConfidence: "limited"
     }
+  };
+}
+
+function buildValidation(parsed, coverage) {
+  const metadata = parsed.metadata;
+  const limitations = [];
+  const parsedVariantCount = metadata.parsedVariantCount || 0;
+
+  if (!metadata.provider) {
+    limitations.push("Provider was not detected from file comments or headers.");
+  }
+  if (!metadata.genomeBuild) {
+    limitations.push("Genome build was not detected; no liftover or coordinate validation was performed.");
+  }
+  if (metadata.orientationConfidence !== "high") {
+    limitations.push("Alleles are treated as provider-native direct genotype calls; strand normalization is not performed.");
+  }
+  if (parsedVariantCount < 1000) {
+    limitations.push("This file has far fewer variants than a normal consumer DNA export and may be a fixture or partial file.");
+  }
+  if (coverage.uninterpretablePanelVariantCount > 0) {
+    limitations.push(`${coverage.uninterpretablePanelVariantCount} panel loci were present but did not match a supported genotype claim.`);
+  }
+
+  return {
+    provider: metadata.provider || "not detected",
+    providerConfidence: metadata.providerConfidence || "none",
+    format: metadata.format || "unrecognized rsID table",
+    formatConfidence: metadata.formatConfidence || "low",
+    genomeBuild: metadata.genomeBuild || "not detected",
+    genomeBuildConfidence: metadata.genomeBuildConfidence || "none",
+    orientation: metadata.orientation || "provider-native",
+    orientationConfidence: metadata.orientationConfidence || "limited",
+    filePlausibility:
+      parsedVariantCount >= 100000
+        ? "plausible full consumer export"
+        : parsedVariantCount >= 1000
+          ? "small or partial genotype export"
+          : "fixture or partial file",
+    validationStatus: limitations.length ? "limited" : "pass",
+    limitations
   };
 }
 
@@ -377,21 +477,26 @@ export function analyzeVariants(parsed, panel) {
   const pathwaySummary = Array.from(pathwayCounts.values())
     .sort((a, b) => b.findingCount - a.findingCount || a.pathway.localeCompare(b.pathway));
   const presentPanelVariantCount = findings.length + unknownGenotypes.length;
+  const coverage = {
+    panelVariantCount: (panel.variants || []).length,
+    presentPanelVariantCount,
+    interpretedFindingCount: findings.length,
+    missingPanelVariantCount: missing.length,
+    uninterpretablePanelVariantCount: unknownGenotypes.length,
+    directlyObservedFindingCount: findings.length
+  };
+  const validation = buildValidation(parsed, coverage);
 
   return {
+    reportSchemaVersion: "0.2.0",
     panelVersion: panel.version,
     generatedAt: new Date().toISOString(),
     metadata: parsed.metadata,
-    coverage: {
-      panelVariantCount: (panel.variants || []).length,
-      presentPanelVariantCount,
-      interpretedFindingCount: findings.length,
-      missingPanelVariantCount: missing.length,
-      uninterpretablePanelVariantCount: unknownGenotypes.length,
-      directlyObservedFindingCount: findings.length
-    },
+    validation,
+    coverage,
     warnings: [
       ...parsed.warnings,
+      ...validation.limitations,
       "Direct rsID/genotype matching only. No strand flipping, imputation, phasing, or genome-build liftover is performed.",
       "This report is informational and does not diagnose disease or recommend treatment."
     ],

@@ -44,13 +44,209 @@ function formatNumber(value) {
   return Number(value || 0).toLocaleString("en-US");
 }
 
+function plural(value, singular, pluralLabel = `${singular}s`) {
+  return Number(value) === 1 ? singular : pluralLabel;
+}
+
+function formatLabel(value) {
+  return String(value || "unknown")
+    .replace(/_/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\b[a-z]/g, char => char.toUpperCase());
+}
+
+function primaryPathway(finding) {
+  return finding.pathways?.[0] || finding.pathway || "Genetic context";
+}
+
+function findingTitle(finding) {
+  const pathway = primaryPathway(finding);
+  const pathwayText = pathway.toLowerCase();
+  if (pathwayText.includes("caffeine") || pathwayText.includes("stimulant")) {
+    return "Caffeine and stimulant sensitivity context";
+  }
+  if (pathwayText.includes("methylation")) {
+    return "Methylation pathway context";
+  }
+  if (pathwayText.includes("b12")) {
+    return "B12 transport context";
+  }
+  if (pathwayText.includes("iron")) {
+    return "Iron handling context";
+  }
+  if (pathwayText.includes("glucose")) {
+    return "Glucose metabolism context";
+  }
+  if (pathwayText.includes("lipid")) {
+    return "Lipid metabolism context";
+  }
+  if (pathwayText.includes("histamine")) {
+    return "Histamine pathway context";
+  }
+  return `${pathway} context found`;
+}
+
+function practicalMeaning(finding) {
+  const pathway = primaryPathway(finding).toLowerCase();
+  if (finding.relevance === "clinical" || finding.actionability === "discuss") {
+    return "This may be worth discussing with a qualified professional, especially if it overlaps with symptoms, medication use, or lab results.";
+  }
+  if (finding.relevance === "trait") {
+    return "This may describe a reported tendency in some populations, but environment, ancestry, and study design can strongly affect interpretation.";
+  }
+  return `This can provide genetic context for ${pathway}, but it does not measure your current biology or prove that the pathway is impaired.`;
+}
+
+function limitationSummary(finding) {
+  if (finding.limitations?.length) {
+    return finding.limitations[0];
+  }
+  return "This does not diagnose a condition, estimate total risk, or replace confirmatory clinical testing.";
+}
+
+function nextStep(finding) {
+  if (finding.actionability === "discuss") {
+    return "Use this as a discussion point with a qualified professional before making health or medication decisions.";
+  }
+  if (finding.actionability === "confirm") {
+    return "Confirm the context with source studies, measured biomarkers, or professional review before acting on it.";
+  }
+  return "Treat this as informational context and compare it with lived response, lifestyle factors, and measured labs where relevant.";
+}
+
+function findingMatchesCategory(finding, category) {
+  const text = [
+    finding.gene,
+    finding.rsid,
+    finding.pathway,
+    finding.targetType,
+    finding.evidenceLevel,
+    finding.relevance,
+    finding.actionability
+  ].join(" ").toLowerCase();
+
+  if (category === "medication") {
+    return /caffeine|stimulant|cyp|nat2|ugt|adora|ahr|aldh|adh/.test(text);
+  }
+  if (category === "clinical") {
+    return /clinical|discuss|deficiency|requires confirmation/.test(text);
+  }
+  if (category === "metabolism") {
+    return /methylation|b12|iron|glucose|lipid|histamine|choline|sulfur|oxidative|mitochondrial|estrogen|nitric|carbohydrate/.test(text);
+  }
+  if (category === "traits") {
+    return finding.relevance === "trait" || /trait|tendency|biomarker/.test(text);
+  }
+  if (category === "confirmation") {
+    return finding.actionability === "confirm" || finding.actionability === "discuss" || finding.reviewStatus !== "curated";
+  }
+  return false;
+}
+
+function buildAtAGlance(report) {
+  const categories = [
+    {
+      id: "medication",
+      title: "Medication response",
+      description: "Drug, caffeine, stimulant, or detoxification-adjacent variants represented in the current panel."
+    },
+    {
+      id: "clinical",
+      title: "Clinically important context",
+      description: "Findings that should be treated as professional-review context, not diagnosis."
+    },
+    {
+      id: "metabolism",
+      title: "Metabolism and nutrition",
+      description: "Methylation, nutrient transport, glucose, lipid, histamine, and related pathway context."
+    },
+    {
+      id: "traits",
+      title: "Traits and tendencies",
+      description: "Reported tendencies that may vary by ancestry, environment, and study design."
+    },
+    {
+      id: "confirmation",
+      title: "Findings needing confirmation",
+      description: "Items where the current report should be confirmed or contextualized before action."
+    }
+  ];
+
+  const items = categories.map(category => {
+    const matches = report.findings.filter(finding => findingMatchesCategory(finding, category.id));
+    return {
+      ...category,
+      count: matches.length,
+      examples: matches.slice(0, 3).map(finding => `${finding.gene} ${finding.rsid}`)
+    };
+  });
+
+  const coverage = report.coverage || {};
+  items.push({
+    id: "coverage",
+    title: "Coverage and limitations",
+    description: "How much of the starter panel was callable from this file.",
+    count: coverage.presentPanelVariantCount || 0,
+    examples: [
+      `${formatNumber(coverage.presentPanelVariantCount)} of ${formatNumber(coverage.panelVariantCount)} panel loci present`,
+      `${formatNumber(report.validation?.limitations?.length)} validation ${plural(report.validation?.limitations?.length, "limit")}`
+    ]
+  });
+
+  return items;
+}
+
+function renderAtAGlance(report) {
+  const cards = buildAtAGlance(report).map(item => `
+    <article class="glance-card" data-category="${escapeHtml(item.id)}">
+      <div>
+        <span>${formatNumber(item.count)}</span>
+        <strong>${escapeHtml(item.title)}</strong>
+      </div>
+      <p>${escapeHtml(item.description)}</p>
+      <small>${item.examples.length ? escapeHtml(item.examples.join(" / ")) : "No matching findings in this run."}</small>
+    </article>
+  `).join("");
+
+  return `
+    <section class="report-overview" aria-label="At a glance">
+      <div class="report-overview-heading">
+        <p class="snp-kicker">At a glance</p>
+        <h3>Report overview</h3>
+      </div>
+      <div class="glance-grid">${cards}</div>
+    </section>
+  `;
+}
+
 function renderSummary(report) {
   const matched = report.findings.length;
   const panelSize = state.panel.variants.length;
   const headerState = report.metadata.detectedHeader ? "Detected" : "Inferred";
   const coverage = report.coverage || {};
+  const validation = report.validation || {};
+  const validationRows = [
+    ["Provider", `${validation.provider || "not detected"} (${validation.providerConfidence || "none"})`],
+    ["Format", `${validation.format || "unrecognized"} (${validation.formatConfidence || "low"})`],
+    ["Genome build", `${validation.genomeBuild || "not detected"} (${validation.genomeBuildConfidence || "none"})`],
+    ["Orientation", `${validation.orientation || "provider-native"} (${validation.orientationConfidence || "limited"})`],
+    ["File plausibility", validation.filePlausibility || "not assessed"]
+  ].map(([label, value]) => `
+    <div class="validation-row">
+      <span>${escapeHtml(label)}</span>
+      <strong>${escapeHtml(value)}</strong>
+    </div>
+  `).join("");
 
   els.summary.innerHTML = `
+    <div class="analysis-validation" data-status="${escapeHtml(validation.validationStatus || "limited")}">
+      <div class="validation-heading">
+        <span>Validation</span>
+        <strong>${escapeHtml(formatLabel(validation.validationStatus || "limited"))}</strong>
+      </div>
+      ${validationRows}
+    </div>
     <div class="analysis-stat"><span>Parsed SNPs</span><strong>${formatNumber(report.metadata.parsedVariantCount)}</strong></div>
     <div class="analysis-stat"><span>Panel loci present</span><strong>${formatNumber(coverage.presentPanelVariantCount ?? matched)}/${panelSize}</strong></div>
     <div class="analysis-stat"><span>Interpreted</span><strong>${formatNumber(coverage.interpretedFindingCount ?? matched)}</strong></div>
@@ -135,9 +331,12 @@ function updateFindingCount(report, visibleCount) {
 }
 
 function renderFindings(report) {
+  const overview = renderAtAGlance(report);
+
   if (!report.findings.length) {
     updateFindingCount(report, 0);
     els.findings.innerHTML = `
+      ${overview}
       <div class="analysis-empty">
         <h3>No panel variants matched</h3>
         <p>The file parsed successfully, but none of the current panel rsIDs were present.</p>
@@ -151,6 +350,7 @@ function renderFindings(report) {
 
   if (!findings.length) {
     els.findings.innerHTML = `
+      ${overview}
       <div class="analysis-empty">
         <h3>No findings match the filters</h3>
         <p>Clear search or choose all pathways to return to the full report.</p>
@@ -159,7 +359,7 @@ function renderFindings(report) {
     return;
   }
 
-  els.findings.innerHTML = findings.map(finding => {
+  const cards = findings.map(finding => {
     const links = finding.sourceLinks.slice(0, 6).map(link => `
       <a href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>
     `).join("");
@@ -169,48 +369,72 @@ function renderFindings(report) {
     const sourceCount = finding.sourceLinks.length;
     const effectDirection = String(finding.effectDirection || "uncertain").replace(/_/g, " ");
     const actionability = String(finding.actionability || "informational").replace(/_/g, " ");
+    const title = findingTitle(finding);
 
     return `
       <article class="finding-card">
         <div class="finding-topline">
           <div>
             <p class="finding-kicker">${escapeHtml(finding.pathway)}</p>
-            <h3>${escapeHtml(finding.gene)} <span>${escapeHtml(finding.rsid)}</span></h3>
+            <h3>${escapeHtml(title)}</h3>
           </div>
           <div class="finding-status">
             <span>Review</span>
             <strong>${escapeHtml(finding.reviewStatus)}</strong>
           </div>
         </div>
-        <p class="finding-label">${escapeHtml(finding.label)}</p>
+        <p class="finding-label">Your file contains ${escapeHtml(finding.gene)} ${escapeHtml(finding.rsid)} ${escapeHtml(finding.genotype)}.</p>
         <div class="finding-meta">
-          <span>Genotype ${escapeHtml(finding.genotype)} <small>raw ${escapeHtml(finding.rawGenotype)}</small></span>
-          <span>${escapeHtml(finding.evidenceLevel)}</span>
-          <span>${escapeHtml(finding.relevance)}</span>
-          <span>${escapeHtml(effectDirection)}</span>
-          <span>${escapeHtml(actionability)}</span>
-          <span>${escapeHtml(finding.coverageConfidence)}</span>
+          <span>Evidence: ${escapeHtml(finding.evidenceLevel)}</span>
+          <span>Meaning: ${escapeHtml(finding.relevance)}</span>
+          <span>Direction: ${escapeHtml(effectDirection)}</span>
+          <span>Action: ${escapeHtml(actionability)}</span>
         </div>
-        <p class="finding-interpretation">${escapeHtml(finding.interpretation)}</p>
-        <div class="metric-strip">
-          <div><span>Sources</span><strong>${sourceCount}</strong></div>
-          <div><span>Type</span><strong>${escapeHtml(finding.targetType)}</strong></div>
-          <div><span>Observed</span><strong>${escapeHtml(finding.coverageConfidence)}</strong></div>
-        </div>
-        <div class="finding-grid">
+        <div class="finding-answer-grid">
           <div>
-            <h4>Validation markers</h4>
-            <ul>${markers || "<li>None specified.</li>"}</ul>
+            <span>What did we find?</span>
+            <p>${escapeHtml(finding.interpretation)}</p>
           </div>
           <div>
-            <h4>Limitations</h4>
-            <ul>${limitations || "<li>Interpret in context.</li>"}</ul>
+            <span>Why it might matter</span>
+            <p>${escapeHtml(practicalMeaning(finding))}</p>
+          </div>
+          <div>
+            <span>What this does not mean</span>
+            <p>${escapeHtml(limitationSummary(finding))}</p>
+          </div>
+          <div>
+            <span>Next step</span>
+            <p>${escapeHtml(nextStep(finding))}</p>
           </div>
         </div>
-        <div class="finding-links">${links || '<span class="finding-link-muted">No source links listed.</span>'}</div>
+        <details class="technical-details">
+          <summary>Source and technical details</summary>
+          <div class="technical-grid">
+            <div><span>Gene</span><strong>${escapeHtml(finding.gene)}</strong></div>
+            <div><span>rsID</span><strong>${escapeHtml(finding.rsid)}</strong></div>
+            <div><span>Observed genotype</span><strong>${escapeHtml(finding.genotype)} <small>raw ${escapeHtml(finding.rawGenotype)}</small></strong></div>
+            <div><span>Target type</span><strong>${escapeHtml(finding.targetType)}</strong></div>
+            <div><span>Coverage</span><strong>${escapeHtml(finding.coverageConfidence)}</strong></div>
+            <div><span>Sources</span><strong>${sourceCount}</strong></div>
+          </div>
+          <div class="finding-grid">
+            <div>
+              <h4>Validation markers</h4>
+              <ul>${markers || "<li>None specified.</li>"}</ul>
+            </div>
+            <div>
+              <h4>Limitations</h4>
+              <ul>${limitations || "<li>Interpret in context.</li>"}</ul>
+            </div>
+          </div>
+          <div class="finding-links">${links || '<span class="finding-link-muted">No source links listed.</span>'}</div>
+        </details>
       </article>
     `;
   }).join("");
+
+  els.findings.innerHTML = `${overview}${cards}`;
 }
 
 function renderReport(report) {

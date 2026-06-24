@@ -35,7 +35,8 @@ Design contracts:
 - Browser-only parsing for 23andMe-style and AncestryDNA-style raw genotype files.
 - A curated SNP panel in `data/snp-panel.json` with 140 SNPs and 491 genotype claims.
 - Local SNP report rendering in `analyze.html`.
-- A report surface that shows review status, effect direction, actionability, limitations, validation markers, and source links.
+- Alpha file-validation metadata for provider, format, genome build, orientation, and file plausibility.
+- A report surface with at-a-glance categories, plain-language finding cards, review status, effect direction, actionability, limitations, validation markers, and source links.
 - Short and long methodology pages for future metabolomics and digital-twin framing.
 - Privacy and use notes that emphasize synthetic data for public demos.
 - GitHub Actions for static deployment and SNP parser validation.
@@ -68,7 +69,7 @@ MetaboBrief now treats SNP analysis as core. The default analyzer performs direc
 ## What is not included
 
 - No backend, account system, checkout, analytics, or upload pipeline.
-- No strand flipping, imputation, phasing, or genome-build liftover yet. Genotypes must match the panel's recorded allele orientation.
+- No strand flipping, imputation, phasing, or genome-build liftover yet. The report now exposes this as validation metadata, but genotypes must still match the panel's recorded allele orientation.
 - No VCF/gVCF parser yet.
 - No medical advice engine.
 - No bundled third-party evidence databases beyond the starter JSON panel.

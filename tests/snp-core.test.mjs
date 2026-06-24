@@ -18,11 +18,19 @@ const parsed23 = parseRawGenotype(sample23);
 assert.equal(parsed23.metadata.dataLineCount, 11);
 assert.equal(parsed23.metadata.parsedVariantCount, 10);
 assert.equal(parsed23.metadata.noCallCount, 1);
+assert.equal(parsed23.metadata.provider, "23andMe");
+assert.equal(parsed23.metadata.format, "genotype rsID table");
+assert.equal(parsed23.metadata.genomeBuild, null);
 assert.equal(parsed23.variants.get("rs1801133").normalizedGenotype, "AG");
 
 const report23 = analyzeVariants(parsed23, panel);
+assert.equal(report23.reportSchemaVersion, "0.2.0");
 assert.equal(report23.findings.length, 10);
 assert.equal(report23.missing.length, 130);
+assert.equal(report23.validation.provider, "23andMe");
+assert.equal(report23.validation.genomeBuild, "not detected");
+assert.equal(report23.validation.validationStatus, "limited");
+assert.ok(report23.validation.limitations.some(item => item.includes("Genome build was not detected")));
 assert.equal(report23.coverage.panelVariantCount, 140);
 assert.equal(report23.coverage.presentPanelVariantCount, 10);
 assert.equal(report23.coverage.interpretedFindingCount, 10);
@@ -39,6 +47,8 @@ assert.ok(!report23.findings.some(finding => finding.limitations.some(item => /\
 const parsedAncestry = parseRawGenotype(sampleAncestry);
 assert.equal(parsedAncestry.metadata.detectedHeader, true);
 assert.equal(parsedAncestry.metadata.parsedVariantCount, 10);
+assert.equal(parsedAncestry.metadata.provider, "AncestryDNA");
+assert.equal(parsedAncestry.metadata.format, "allele-column rsID table");
 assert.equal(parsedAncestry.variants.get("rs1801133").normalizedGenotype, "AG");
 
 const reportAncestry = analyzeVariants(parsedAncestry, panel);
