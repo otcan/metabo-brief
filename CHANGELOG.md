@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added static Docker packaging with Nginx security headers, `/healthz`, Docker Compose, and a GHCR build workflow.
 - Added local ZIP and gzip genotype-file reading for the analyzer, including MyHeritage CSV detection.
 - Added file validation metadata for imported filename, selected ZIP entry, compression type, and conflicting duplicate calls.
 - Added a CDP browser no-network smoke test for local file analysis.

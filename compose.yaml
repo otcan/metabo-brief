@@ -1,0 +1,21 @@
+services:
+  metabo-brief:
+    image: ghcr.io/otcan/metabo-brief:latest
+    build:
+      context: .
+    ports:
+      - "${METABOBRIEF_PORT:-8080}:8080"
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/cache/nginx
+      - /var/run
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:8080/healthz | grep -q '^ok$'"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+

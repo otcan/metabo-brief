@@ -47,6 +47,7 @@ Design contracts:
 - Short and long methodology pages for future metabolomics and digital-twin framing.
 - Privacy and use notes that emphasize synthetic data for public demos.
 - GitHub Actions for static deployment, semantic model validation, scoring invariants, regression tests, and SNP parser validation.
+- Static Docker packaging with an Nginx health endpoint for one-command self-hosting.
 
 ## Supported inputs
 
@@ -106,6 +107,27 @@ Then visit:
 - `http://127.0.0.1:8080/` for the analyzer-first entry page.
 - `http://127.0.0.1:8080/analyze.html` for the SNP analyzer directly.
 
+Or run the static container:
+
+```bash
+docker run --rm -p 8080:8080 ghcr.io/otcan/metabo-brief:latest
+```
+
+For local development before a published image is available:
+
+```bash
+docker build -t metabo-brief:local .
+docker run --rm -p 8080:8080 metabo-brief:local
+```
+
+Docker Compose is also supported:
+
+```bash
+docker compose up --build
+```
+
+The container serves only the static browser application and bundled JSON assets. It does not add a backend, database, account system, upload service, or external API dependency. Health checks are available at `http://127.0.0.1:8080/healthz`.
+
 Run the parser tests:
 
 ```bash
@@ -123,6 +145,7 @@ npm run test:no-network
 - Raw genotype files are read locally with browser file APIs.
 - No data leaves the browser in the default template.
 - `npm run test:no-network` verifies that analysis of a local file does not trigger network requests after the static app assets are loaded.
+- The Docker image is a static file server for the same browser-only application; genotype files are still read by the browser from the user's device.
 - No telemetry, analytics, uploads, checkout, or contact form is included.
 - The demo uses local storage only for cookie-banner preference.
 - Public examples should be synthetic or explicitly consented and de-identified.

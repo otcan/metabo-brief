@@ -84,8 +84,8 @@ Deliver:
 - Coverage report.
 - Local report library.
 - HTML/PDF/JSON export.
-- Official container image.
-- Docker Compose deployment.
+- Official container image. Initial static Docker packaging is present; release publishing and versioned image policy still need hardening.
+- Docker Compose deployment. Initial static Compose support is present; full local annotation mode remains future work.
 - Offline documentation.
 - Signed versioned releases.
 - Software bill of materials.
