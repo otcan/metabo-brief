@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Added deterministic JSON report export with replay metadata, panel/model hashes, and timestamp separation.
+- Added printable standalone HTML export and browser print/PDF flow with a sensitive-data warning.
 - Added static Docker packaging with Nginx security headers, `/healthz`, Docker Compose, and a GHCR build workflow.
 - Added local ZIP and gzip genotype-file reading for the analyzer, including MyHeritage CSV detection.
 - Added file validation metadata for imported filename, selected ZIP entry, compression type, and conflicting duplicate calls.

@@ -83,7 +83,7 @@ Deliver:
 - Search and filtering.
 - Coverage report.
 - Local report library.
-- HTML/PDF/JSON export.
+- HTML/PDF/JSON export. Initial deterministic JSON, standalone HTML, and browser print/PDF export are present; schema publication and import/replay UI remain future work.
 - Official container image. Initial static Docker packaging is present; release publishing and versioned image policy still need hardening.
 - Docker Compose deployment. Initial static Compose support is present; full local annotation mode remains future work.
 - Offline documentation.

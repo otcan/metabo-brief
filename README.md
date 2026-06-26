@@ -44,6 +44,8 @@ Design contracts:
 - Local SNP report rendering in `analyze.html`.
 - Alpha file-validation metadata for provider, format, genome build, orientation, and file plausibility.
 - A score-first report surface with pathway tendency scores, signal strength, evidence quality, result support, directional consistency, coverage, stability, contributor dominance, leave-one-group-out sensitivity, plain-language finding cards, and source links.
+- Deterministic JSON export with replay metadata, panel/model hashes, and a separate run timestamp.
+- Printable standalone HTML export and a browser print/PDF path.
 - Short and long methodology pages for future metabolomics and digital-twin framing.
 - Privacy and use notes that emphasize synthetic data for public demos.
 - GitHub Actions for static deployment, semantic model validation, scoring invariants, regression tests, and SNP parser validation.
@@ -73,6 +75,7 @@ MetaboBrief now treats SNP analysis as core. The default analyzer performs direc
 | SNP parser and analysis engine | `analyzer/snp-core.js` |
 | Local compressed-file reader | `analyzer/file-reader.js` |
 | Pathway scoring engine | `analyzer/scoring-engine.js` |
+| Deterministic report export helpers | `analyzer/report-export.js` |
 | Starter SNP panel | `data/snp-panel.json` |
 | Pathway definitions | `data/pathway-definitions.json` |
 | Pathway model manifest | `models/manifest.json` |
@@ -140,12 +143,23 @@ Run the browser no-network smoke test when Chrome/Chromium is available:
 npm run test:no-network
 ```
 
+## Export reports
+
+After analysis, the browser report can be exported three ways:
+
+- `Export JSON` downloads a replay envelope with `deterministicReport`, panel hash, pathway-model hashes, validation metadata, coverage, and run timestamps kept outside the deterministic report body.
+- `Export HTML` downloads a standalone printable report with the same replay metadata embedded as JSON.
+- `Print / PDF` opens the printable report in the browser print dialog.
+
+Exports contain sensitive genetic findings and should be stored carefully. The app still does not upload genotype files or exported reports.
+
 ## Privacy posture
 
 - Raw genotype files are read locally with browser file APIs.
 - No data leaves the browser in the default template.
 - `npm run test:no-network` verifies that analysis of a local file does not trigger network requests after the static app assets are loaded.
 - The Docker image is a static file server for the same browser-only application; genotype files are still read by the browser from the user's device.
+- Report exports are generated locally in the browser and include a visible sensitive-data warning.
 - No telemetry, analytics, uploads, checkout, or contact form is included.
 - The demo uses local storage only for cookie-banner preference.
 - Public examples should be synthetic or explicitly consented and de-identified.

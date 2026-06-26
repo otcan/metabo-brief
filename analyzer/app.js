@@ -1,4 +1,5 @@
 import { readGenotypeFile } from "./file-reader.js";
+import { SENSITIVE_EXPORT_WARNING, buildJsonExportPayload, buildPrintableReportHtml, stableStringify } from "./report-export.js";
 import { APPLICATION_VERSION, REPORT_SCHEMA_VERSION, analyzeVariants, parseRawGenotype } from "./snp-core.js";
 
 const state = {
@@ -16,6 +17,8 @@ const els = {
   fileName: document.getElementById("selected-file-name"),
   sample: document.getElementById("load-sample"),
   exportJson: document.getElementById("export-json"),
+  exportHtml: document.getElementById("export-html"),
+  printReport: document.getElementById("print-report"),
   status: document.getElementById("analyzer-status"),
   panelRelease: document.getElementById("panel-release"),
   panelVariantCount: document.getElementById("panel-variant-count"),
@@ -32,6 +35,12 @@ const els = {
 function setStatus(message, stateName = "neutral") {
   els.status.textContent = message;
   els.status.dataset.state = stateName;
+}
+
+function setExportButtonsDisabled(disabled) {
+  els.exportJson.disabled = disabled;
+  els.exportHtml.disabled = disabled;
+  els.printReport.disabled = disabled;
 }
 
 function escapeHtml(value) {
@@ -637,7 +646,7 @@ function renderReport(report) {
   renderSummary(report);
   renderWarnings(report);
   renderFindings(report);
-  els.exportJson.disabled = false;
+  setExportButtonsDisabled(false);
 }
 
 async function analyzeText(text, label, inputMetadata = {}) {
@@ -712,17 +721,74 @@ async function loadSample() {
   await analyzeText(await response.text(), "synthetic 23andMe-style sample");
 }
 
-function exportJson() {
-  if (!state.latestReport) {
-    return;
-  }
-  const blob = new Blob([JSON.stringify(state.latestReport, null, 2)], { type: "application/json" });
+function confirmSensitiveExport(actionLabel) {
+  return window.confirm(`${SENSITIVE_EXPORT_WARNING}\n\nContinue with ${actionLabel}?`);
+}
+
+function downloadTextFile({ text, filename, type }) {
+  const blob = new Blob([text], { type });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = "metabobrief-snp-report.json";
+  link.download = filename;
+  link.style.display = "none";
+  document.body.appendChild(link);
   link.click();
+  link.remove();
   URL.revokeObjectURL(url);
+}
+
+async function exportJson() {
+  if (!state.latestReport) {
+    return;
+  }
+  if (!confirmSensitiveExport("JSON export")) {
+    return;
+  }
+  const payload = await buildJsonExportPayload(state.latestReport);
+  downloadTextFile({
+    text: stableStringify(payload),
+    filename: "metabobrief-snp-report.json",
+    type: "application/json"
+  });
+  setStatus("Exported deterministic JSON report with replay metadata.", "success");
+}
+
+async function exportHtml() {
+  if (!state.latestReport) {
+    return;
+  }
+  if (!confirmSensitiveExport("HTML export")) {
+    return;
+  }
+  downloadTextFile({
+    text: await buildPrintableReportHtml(state.latestReport),
+    filename: "metabobrief-snp-report.html",
+    type: "text/html"
+  });
+  setStatus("Exported printable HTML report with embedded replay metadata.", "success");
+}
+
+async function printReport() {
+  if (!state.latestReport) {
+    return;
+  }
+  if (!confirmSensitiveExport("printing or PDF export")) {
+    return;
+  }
+  const html = await buildPrintableReportHtml(state.latestReport);
+  const reportWindow = window.open("", "_blank");
+  if (!reportWindow) {
+    setStatus("Could not open the print report window. Export HTML instead.", "error");
+    return;
+  }
+  reportWindow.opener = null;
+  reportWindow.document.open();
+  reportWindow.document.write(html);
+  reportWindow.document.close();
+  reportWindow.focus();
+  setTimeout(() => reportWindow.print(), 250);
+  setStatus("Opened printable report. Use the browser dialog to save as PDF.", "success");
 }
 
 els.file.addEventListener("change", async event => {
@@ -738,7 +804,17 @@ els.sample.addEventListener("click", () => {
   loadSample().catch(error => setStatus(error.message, "error"));
 });
 
-els.exportJson.addEventListener("click", exportJson);
+els.exportJson.addEventListener("click", () => {
+  exportJson().catch(error => setStatus(error.message, "error"));
+});
+
+els.exportHtml.addEventListener("click", () => {
+  exportHtml().catch(error => setStatus(error.message, "error"));
+});
+
+els.printReport.addEventListener("click", () => {
+  printReport().catch(error => setStatus(error.message, "error"));
+});
 
 els.findingSearch.addEventListener("input", event => {
   state.query = event.target.value;
