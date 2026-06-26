@@ -11,7 +11,7 @@
     "version": "1.0.0"
   },
   "variantContributionModelVersion": "legacy-v0",
-  "compatiblePanelVersion": "0.2.0",
+  "compatiblePanelVersion": "0.3.0",
   "biologicalQuestion": "Do the explicitly supported variants favor lower or higher experiential caffeine and stimulant sensitivity?",
   "negativePole": "Tendency toward lower caffeine or stimulant sensitivity",
   "positivePole": "Tendency toward higher caffeine or stimulant sensitivity",

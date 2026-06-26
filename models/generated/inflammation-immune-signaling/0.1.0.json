@@ -1,0 +1,133 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelId": "inflammation-immune-signaling",
+  "modelVersion": "0.1.0",
+  "name": "Inflammation and immune signalling tendency",
+  "pathway": "Inflammation / immune signaling",
+  "profileGroup": "MetaboBrief starter pathway profile",
+  "status": "experimental",
+  "algorithm": {
+    "id": "group-capped-normalized-sum",
+    "version": "1.0.0"
+  },
+  "variantContributionModelVersion": "legacy-v0",
+  "compatiblePanelVersion": "0.3.0",
+  "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled inflammatory signalling burden?",
+  "negativePole": "Lower modelled inflammatory signalling burden",
+  "positivePole": "Higher modelled inflammatory signalling burden",
+  "includedMechanisms": [
+    "Cytokine signalling",
+    "CRP tendency",
+    "NF-kB context",
+    "oxidative immune context"
+  ],
+  "excludedMechanisms": [
+    "Measured CRP",
+    "infection status",
+    "autoimmune diagnosis",
+    "medications",
+    "clinical diagnosis"
+  ],
+  "defaultProfile": "conservative",
+  "minimumCoverage": 0.25,
+  "minimumIndependentSignals": 2,
+  "minimumEvidenceQuality": 0.3,
+  "maximumGroupContribution": 0.5,
+  "inputs": [
+    {
+      "rsid": "rs1205",
+      "claimIds": [
+        "rs1205_CC_biomarker_tendency",
+        "rs1205_CT_biomarker_tendency",
+        "rs1205_TT_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs1205_CC_biomarker_tendency": "supported_baseline",
+        "rs1205_CT_biomarker_tendency": "scored",
+        "rs1205_TT_biomarker_tendency": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "crp-biomarker-tendency",
+      "independenceGroup": "crp-biomarker-tendency",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1205_CC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1205_CT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1205_TT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns CRP rs1205 to Inflammation / immune signaling with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs4648068",
+      "claimIds": [
+        "rs4648068_AA_expression",
+        "rs4648068_AG_expression",
+        "rs4648068_GG_expression"
+      ],
+      "contributionStates": {
+        "rs4648068_AA_expression": "supported_baseline",
+        "rs4648068_AG_expression": "scored",
+        "rs4648068_GG_expression": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "nfkb1-expression",
+      "independenceGroup": "nfkb1-expression",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs4648068_AA_expression": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs4648068_AG_expression": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs4648068_GG_expression": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns NFKB1 rs4648068 to Inflammation / immune signaling with explicit genotype contribution components."
+    }
+  ],
+  "interpretationBands": [
+    {
+      "min": 0,
+      "max": 39,
+      "label": "toward lower modelled inflammatory signalling burden"
+    },
+    {
+      "min": 40,
+      "max": 60,
+      "label": "near the model midpoint"
+    },
+    {
+      "min": 61,
+      "max": 100,
+      "label": "toward higher modelled inflammatory signalling burden"
+    }
+  ],
+  "limitations": [
+    "This is a relative pathway tendency within the MetaboBrief starter model, not a population percentile.",
+    "This model combines curated SNP contribution components assigned to this pathway; it does not measure current pathway activity.",
+    "The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization.",
+    "Not included: Measured CRP, infection status, autoimmune diagnosis, medications, clinical diagnosis."
+  ]
+}

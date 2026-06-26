@@ -1,0 +1,237 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelId": "methylation",
+  "modelVersion": "0.1.0",
+  "name": "Methylation-cycle tendency",
+  "pathway": "Methylation",
+  "profileGroup": "MetaboBrief starter pathway profile",
+  "status": "experimental",
+  "algorithm": {
+    "id": "group-capped-normalized-sum",
+    "version": "1.0.0"
+  },
+  "variantContributionModelVersion": "legacy-v0",
+  "compatiblePanelVersion": "0.3.0",
+  "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled one-carbon and methylation-cycle constraint?",
+  "negativePole": "Lower modelled methylation-cycle constraint",
+  "positivePole": "Higher modelled methylation-cycle constraint",
+  "includedMechanisms": [
+    "Folate cycle",
+    "methionine cycle",
+    "B12 context",
+    "choline and betaine context"
+  ],
+  "excludedMechanisms": [
+    "Measured homocysteine",
+    "folate",
+    "B12",
+    "diet",
+    "supplement use",
+    "clinical diagnosis"
+  ],
+  "defaultProfile": "conservative",
+  "minimumCoverage": 0.25,
+  "minimumIndependentSignals": 2,
+  "minimumEvidenceQuality": 0.3,
+  "maximumGroupContribution": 0.5,
+  "inputs": [
+    {
+      "rsid": "rs12325817",
+      "claimIds": [
+        "rs12325817_CC_expression",
+        "rs12325817_CG_expression",
+        "rs12325817_GG_expression"
+      ],
+      "contributionStates": {
+        "rs12325817_CC_expression": "scored",
+        "rs12325817_CG_expression": "scored",
+        "rs12325817_GG_expression": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "pemt-expression",
+      "independenceGroup": "pemt-expression",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs12325817_CC_expression": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs12325817_CG_expression": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs12325817_GG_expression": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns PEMT rs12325817 to Methylation with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs1801131",
+      "claimIds": [
+        "rs1801131_GG_enzyme_activity",
+        "rs1801131_GT_enzyme_activity",
+        "rs1801131_TT_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs1801131_GG_enzyme_activity": "scored",
+        "rs1801131_GT_enzyme_activity": "insufficient_evidence",
+        "rs1801131_TT_enzyme_activity": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "mthfr-enzyme-activity",
+      "independenceGroup": "mthfr-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1801131_GG_enzyme_activity": [
+          "exploratory"
+        ],
+        "rs1801131_GT_enzyme_activity": [
+          "exploratory"
+        ],
+        "rs1801131_TT_enzyme_activity": [
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns MTHFR rs1801131 to Methylation with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs1801133",
+      "claimIds": [
+        "rs1801133_AA_enzyme_activity",
+        "rs1801133_AG_enzyme_activity",
+        "rs1801133_GG_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs1801133_AA_enzyme_activity": "scored",
+        "rs1801133_AG_enzyme_activity": "insufficient_evidence",
+        "rs1801133_GG_enzyme_activity": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "mthfr-enzyme-activity",
+      "independenceGroup": "mthfr-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1801133_AA_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1801133_AG_enzyme_activity": [
+          "exploratory"
+        ],
+        "rs1801133_GG_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns MTHFR rs1801133 to Methylation with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs4680",
+      "claimIds": [
+        "rs4680_AA_enzyme_activity",
+        "rs4680_AG_enzyme_activity",
+        "rs4680_GG_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs4680_AA_enzyme_activity": "scored",
+        "rs4680_AG_enzyme_activity": "scored",
+        "rs4680_GG_enzyme_activity": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "comt-enzyme-activity",
+      "independenceGroup": "comt-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs4680_AA_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs4680_AG_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs4680_GG_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns COMT rs4680 to Methylation with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs7946",
+      "claimIds": [
+        "rs7946_CC_enzyme_activity",
+        "rs7946_CT_enzyme_activity",
+        "rs7946_TT_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs7946_CC_enzyme_activity": "supported_baseline",
+        "rs7946_CT_enzyme_activity": "scored",
+        "rs7946_TT_enzyme_activity": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "pemt-enzyme-activity",
+      "independenceGroup": "pemt-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs7946_CC_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs7946_CT_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs7946_TT_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns PEMT rs7946 to Methylation with explicit genotype contribution components."
+    }
+  ],
+  "interpretationBands": [
+    {
+      "min": 0,
+      "max": 39,
+      "label": "toward lower modelled methylation-cycle constraint"
+    },
+    {
+      "min": 40,
+      "max": 60,
+      "label": "near the model midpoint"
+    },
+    {
+      "min": 61,
+      "max": 100,
+      "label": "toward higher modelled methylation-cycle constraint"
+    }
+  ],
+  "limitations": [
+    "This is a relative pathway tendency within the MetaboBrief starter model, not a population percentile.",
+    "This model combines curated SNP contribution components assigned to this pathway; it does not measure current pathway activity.",
+    "The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization.",
+    "Not included: Measured homocysteine, folate, B12, diet, supplement use, clinical diagnosis."
+  ]
+}

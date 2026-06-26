@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelId": "carbohydrate-digestion",
+  "modelVersion": "0.1.0",
+  "name": "Carbohydrate digestion tendency",
+  "pathway": "Carbohydrate digestion",
+  "profileGroup": "MetaboBrief starter pathway profile",
+  "status": "experimental",
+  "algorithm": {
+    "id": "group-capped-normalized-sum",
+    "version": "1.0.0"
+  },
+  "variantContributionModelVersion": "legacy-v0",
+  "compatiblePanelVersion": "0.3.0",
+  "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled lactose digestion limitation?",
+  "negativePole": "Lower modelled lactose digestion limitation",
+  "positivePole": "Higher modelled lactose digestion limitation",
+  "includedMechanisms": [
+    "Lactase persistence context"
+  ],
+  "excludedMechanisms": [
+    "Current diet",
+    "gut microbiome",
+    "digestive disease",
+    "breath testing",
+    "clinical diagnosis"
+  ],
+  "defaultProfile": "conservative",
+  "minimumCoverage": 0.25,
+  "minimumIndependentSignals": 1,
+  "minimumEvidenceQuality": 0.3,
+  "maximumGroupContribution": 0.5,
+  "inputs": [
+    {
+      "rsid": "rs4988235",
+      "claimIds": [
+        "rs4988235_CC_trait_association",
+        "rs4988235_CT_trait_association",
+        "rs4988235_TT_trait_association"
+      ],
+      "contributionStates": {
+        "rs4988235_CC_trait_association": "scored",
+        "rs4988235_CT_trait_association": "supported_baseline",
+        "rs4988235_TT_trait_association": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "mcm6-lct-trait-association",
+      "independenceGroup": "mcm6-lct-trait-association",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs4988235_CC_trait_association": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs4988235_CT_trait_association": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs4988235_TT_trait_association": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns MCM6/LCT rs4988235 to Carbohydrate digestion with explicit genotype contribution components."
+    }
+  ],
+  "interpretationBands": [
+    {
+      "min": 0,
+      "max": 39,
+      "label": "toward lower modelled lactose digestion limitation"
+    },
+    {
+      "min": 40,
+      "max": 60,
+      "label": "near the model midpoint"
+    },
+    {
+      "min": 61,
+      "max": 100,
+      "label": "toward higher modelled lactose digestion limitation"
+    }
+  ],
+  "limitations": [
+    "This is a relative pathway tendency within the MetaboBrief starter model, not a population percentile.",
+    "This model combines curated SNP contribution components assigned to this pathway; it does not measure current pathway activity.",
+    "The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization.",
+    "Not included: Current diet, gut microbiome, digestive disease, breath testing, clinical diagnosis."
+  ]
+}

@@ -10,9 +10,10 @@ The current foundation is suitable for that direction:
 
 - Browser-only raw genotype parsing.
 - MIT-licensed application code today.
-- A bundled curated panel with 140 SNPs and 491 genotype claims.
+- A bundled curated panel with 140 SNPs and 494 genotype claims.
 - Visible source links, limitations, validation markers, review status, effect direction, actionability, relevance, scoring components, and coverage confidence.
-- A pure scoring engine with manifest-backed caffeine-clearance and caffeine-sensitivity pathway models.
+- A pure scoring engine with manifest-backed pathway models covering every current panel pathway family.
+- Clear pathway-axis definitions in `data/pathway-definitions.json`.
 - Direct rsID/genotype matching with no backend upload.
 
 The current constraints are equally important:
@@ -23,7 +24,7 @@ The current constraints are equally important:
 - No genome-build or strand-orientation handling.
 - No VCF/gVCF support.
 - No REF/ALT-aware matching.
-- Only the caffeine response profile is currently formalized, split into caffeine-clearance and caffeine-sensitivity models.
+- Starter pathway scores are now available for every current panel pathway family, but most non-caffeine models remain experimental generated models awaiting deeper biology-specific review.
 - Current validation metadata makes these limits visible, but it is not yet fail-closed build or strand normalization.
 
 ## Positioning

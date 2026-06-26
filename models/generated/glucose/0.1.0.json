@@ -1,0 +1,376 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelId": "glucose",
+  "modelVersion": "0.1.0",
+  "name": "Glucose regulation tendency",
+  "pathway": "Glucose",
+  "profileGroup": "MetaboBrief starter pathway profile",
+  "status": "experimental",
+  "algorithm": {
+    "id": "group-capped-normalized-sum",
+    "version": "1.0.0"
+  },
+  "variantContributionModelVersion": "legacy-v0",
+  "compatiblePanelVersion": "0.3.0",
+  "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled glucose-regulation burden?",
+  "negativePole": "Lower modelled glucose-regulation burden",
+  "positivePole": "Higher modelled glucose-regulation burden",
+  "includedMechanisms": [
+    "Fasting glucose tendency",
+    "insulin signalling context",
+    "transport and secretion context"
+  ],
+  "excludedMechanisms": [
+    "Measured glucose",
+    "HbA1c",
+    "diet",
+    "body composition",
+    "medication use",
+    "clinical diagnosis"
+  ],
+  "defaultProfile": "conservative",
+  "minimumCoverage": 0.25,
+  "minimumIndependentSignals": 2,
+  "minimumEvidenceQuality": 0.3,
+  "maximumGroupContribution": 0.5,
+  "inputs": [
+    {
+      "rsid": "rs10830963",
+      "claimIds": [
+        "rs10830963_CC_biomarker_tendency",
+        "rs10830963_CG_biomarker_tendency",
+        "rs10830963_GG_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs10830963_CC_biomarker_tendency": "supported_baseline",
+        "rs10830963_CG_biomarker_tendency": "scored",
+        "rs10830963_GG_biomarker_tendency": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "mtnr1b-biomarker-tendency",
+      "independenceGroup": "mtnr1b-biomarker-tendency",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs10830963_CC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs10830963_CG_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs10830963_GG_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns MTNR1B rs10830963 to Glucose with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs1260326",
+      "claimIds": [
+        "rs1260326_CC_biomarker_tendency",
+        "rs1260326_CT_biomarker_tendency",
+        "rs1260326_TT_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs1260326_CC_biomarker_tendency": "supported_baseline",
+        "rs1260326_CT_biomarker_tendency": "scored",
+        "rs1260326_TT_biomarker_tendency": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "gckr-biomarker-tendency",
+      "independenceGroup": "gckr-biomarker-tendency",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1260326_CC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1260326_CT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1260326_TT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns GCKR rs1260326 to Glucose with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs13266634",
+      "claimIds": [
+        "rs13266634_CC_transport_activity",
+        "rs13266634_CT_transport_activity",
+        "rs13266634_TT_transport_activity"
+      ],
+      "contributionStates": {
+        "rs13266634_CC_transport_activity": "scored",
+        "rs13266634_CT_transport_activity": "insufficient_evidence",
+        "rs13266634_TT_transport_activity": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "slc30a8-transport-activity",
+      "independenceGroup": "slc30a8-transport-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs13266634_CC_transport_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs13266634_CT_transport_activity": [
+          "exploratory"
+        ],
+        "rs13266634_TT_transport_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns SLC30A8 rs13266634 to Glucose with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs1387153",
+      "claimIds": [
+        "rs1387153_CC_biomarker_tendency",
+        "rs1387153_CT_biomarker_tendency",
+        "rs1387153_TT_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs1387153_CC_biomarker_tendency": "supported_baseline",
+        "rs1387153_CT_biomarker_tendency": "scored",
+        "rs1387153_TT_biomarker_tendency": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "mtnr1b-biomarker-tendency",
+      "independenceGroup": "mtnr1b-biomarker-tendency",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1387153_CC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1387153_CT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1387153_TT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns MTNR1B rs1387153 to Glucose with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs1421085",
+      "claimIds": [
+        "rs1421085_CC_expression",
+        "rs1421085_CT_expression",
+        "rs1421085_TT_expression"
+      ],
+      "contributionStates": {
+        "rs1421085_CC_expression": "scored",
+        "rs1421085_CT_expression": "scored",
+        "rs1421085_TT_expression": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "irx3-irx5-expression",
+      "independenceGroup": "irx3-irx5-expression",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1421085_CC_expression": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1421085_CT_expression": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1421085_TT_expression": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns IRX3/IRX5 rs1421085 to Glucose with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs5219",
+      "claimIds": [
+        "rs5219_CC_transport_activity",
+        "rs5219_CT_transport_activity",
+        "rs5219_TT_transport_activity"
+      ],
+      "contributionStates": {
+        "rs5219_CC_transport_activity": "supported_baseline",
+        "rs5219_CT_transport_activity": "insufficient_evidence",
+        "rs5219_TT_transport_activity": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "kcnj11-transport-activity",
+      "independenceGroup": "kcnj11-transport-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs5219_CC_transport_activity": [
+          "exploratory"
+        ],
+        "rs5219_CT_transport_activity": [
+          "exploratory"
+        ],
+        "rs5219_TT_transport_activity": [
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns KCNJ11 rs5219 to Glucose with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs7578326",
+      "claimIds": [
+        "rs7578326_AA_expression",
+        "rs7578326_AG_expression",
+        "rs7578326_GG_expression"
+      ],
+      "contributionStates": {
+        "rs7578326_AA_expression": "scored",
+        "rs7578326_AG_expression": "insufficient_evidence",
+        "rs7578326_GG_expression": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "irs1-expression",
+      "independenceGroup": "irs1-expression",
+      "modelWeight": 1,
+      "profiles": [
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs7578326_AA_expression": [
+          "exploratory"
+        ],
+        "rs7578326_AG_expression": [
+          "exploratory"
+        ],
+        "rs7578326_GG_expression": [
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns IRS1 rs7578326 to Glucose with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs780094",
+      "claimIds": [
+        "rs780094_CC_biomarker_tendency",
+        "rs780094_CT_biomarker_tendency",
+        "rs780094_TT_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs780094_CC_biomarker_tendency": "supported_baseline",
+        "rs780094_CT_biomarker_tendency": "scored",
+        "rs780094_TT_biomarker_tendency": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "gckr-biomarker-tendency",
+      "independenceGroup": "gckr-biomarker-tendency",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs780094_CC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs780094_CT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs780094_TT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns GCKR rs780094 to Glucose with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs7903146",
+      "claimIds": [
+        "rs7903146_CC_biomarker_tendency",
+        "rs7903146_CT_biomarker_tendency",
+        "rs7903146_TT_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs7903146_CC_biomarker_tendency": "supported_baseline",
+        "rs7903146_CT_biomarker_tendency": "scored",
+        "rs7903146_TT_biomarker_tendency": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "tcf7l2-biomarker-tendency",
+      "independenceGroup": "tcf7l2-biomarker-tendency",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs7903146_CC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs7903146_CT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs7903146_TT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns TCF7L2 rs7903146 to Glucose with explicit genotype contribution components."
+    }
+  ],
+  "interpretationBands": [
+    {
+      "min": 0,
+      "max": 39,
+      "label": "toward lower modelled glucose-regulation burden"
+    },
+    {
+      "min": 40,
+      "max": 60,
+      "label": "near the model midpoint"
+    },
+    {
+      "min": 61,
+      "max": 100,
+      "label": "toward higher modelled glucose-regulation burden"
+    }
+  ],
+  "limitations": [
+    "This is a relative pathway tendency within the MetaboBrief starter model, not a population percentile.",
+    "This model combines curated SNP contribution components assigned to this pathway; it does not measure current pathway activity.",
+    "The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization.",
+    "Not included: Measured glucose, HbA1c, diet, body composition, medication use, clinical diagnosis."
+  ]
+}

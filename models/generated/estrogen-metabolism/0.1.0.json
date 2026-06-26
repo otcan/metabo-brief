@@ -1,0 +1,236 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelId": "estrogen-metabolism",
+  "modelVersion": "0.1.0",
+  "name": "Estrogen metabolism tendency",
+  "pathway": "Estrogen metabolism",
+  "profileGroup": "MetaboBrief starter pathway profile",
+  "status": "experimental",
+  "algorithm": {
+    "id": "group-capped-normalized-sum",
+    "version": "1.0.0"
+  },
+  "variantContributionModelVersion": "legacy-v0",
+  "compatiblePanelVersion": "0.3.0",
+  "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled estrogen metabolism handling demand?",
+  "negativePole": "Lower modelled estrogen handling demand",
+  "positivePole": "Higher modelled estrogen handling demand",
+  "includedMechanisms": [
+    "Phase I transformation",
+    "conjugation context",
+    "COMT and UGT context"
+  ],
+  "excludedMechanisms": [
+    "Measured hormones",
+    "cycle timing",
+    "medication use",
+    "pregnancy",
+    "liver function",
+    "clinical diagnosis"
+  ],
+  "defaultProfile": "conservative",
+  "minimumCoverage": 0.25,
+  "minimumIndependentSignals": 2,
+  "minimumEvidenceQuality": 0.3,
+  "maximumGroupContribution": 0.5,
+  "inputs": [
+    {
+      "rsid": "rs1801131",
+      "claimIds": [
+        "rs1801131_GG_enzyme_activity",
+        "rs1801131_GT_enzyme_activity",
+        "rs1801131_TT_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs1801131_GG_enzyme_activity": "scored",
+        "rs1801131_GT_enzyme_activity": "insufficient_evidence",
+        "rs1801131_TT_enzyme_activity": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "mthfr-enzyme-activity",
+      "independenceGroup": "mthfr-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1801131_GG_enzyme_activity": [
+          "exploratory"
+        ],
+        "rs1801131_GT_enzyme_activity": [
+          "exploratory"
+        ],
+        "rs1801131_TT_enzyme_activity": [
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns MTHFR rs1801131 to Estrogen metabolism with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs1801133",
+      "claimIds": [
+        "rs1801133_AA_enzyme_activity",
+        "rs1801133_AG_enzyme_activity",
+        "rs1801133_GG_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs1801133_AA_enzyme_activity": "scored",
+        "rs1801133_AG_enzyme_activity": "insufficient_evidence",
+        "rs1801133_GG_enzyme_activity": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "mthfr-enzyme-activity",
+      "independenceGroup": "mthfr-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1801133_AA_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1801133_AG_enzyme_activity": [
+          "exploratory"
+        ],
+        "rs1801133_GG_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns MTHFR rs1801133 to Estrogen metabolism with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs4680",
+      "claimIds": [
+        "rs4680_AA_enzyme_activity",
+        "rs4680_AG_enzyme_activity",
+        "rs4680_GG_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs4680_AA_enzyme_activity": "scored",
+        "rs4680_AG_enzyme_activity": "scored",
+        "rs4680_GG_enzyme_activity": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "comt-enzyme-activity",
+      "independenceGroup": "comt-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs4680_AA_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs4680_AG_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs4680_GG_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns COMT rs4680 to Estrogen metabolism with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs8175347",
+      "claimIds": [
+        "rs8175347_66_enzyme_activity",
+        "rs8175347_67_enzyme_activity",
+        "rs8175347_77_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs8175347_66_enzyme_activity": "supported_baseline",
+        "rs8175347_67_enzyme_activity": "scored",
+        "rs8175347_77_enzyme_activity": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "ugt1a1-enzyme-activity",
+      "independenceGroup": "ugt1a1-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs8175347_66_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs8175347_67_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs8175347_77_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns UGT1A1 rs8175347 to Estrogen metabolism with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs887829",
+      "claimIds": [
+        "rs887829_CC_biomarker_tendency",
+        "rs887829_CT_biomarker_tendency",
+        "rs887829_TT_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs887829_CC_biomarker_tendency": "supported_baseline",
+        "rs887829_CT_biomarker_tendency": "scored",
+        "rs887829_TT_biomarker_tendency": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "ugt1a1-biomarker-tendency",
+      "independenceGroup": "ugt1a1-biomarker-tendency",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs887829_CC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs887829_CT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs887829_TT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns UGT1A1 rs887829 to Estrogen metabolism with explicit genotype contribution components."
+    }
+  ],
+  "interpretationBands": [
+    {
+      "min": 0,
+      "max": 39,
+      "label": "toward lower modelled estrogen handling demand"
+    },
+    {
+      "min": 40,
+      "max": 60,
+      "label": "near the model midpoint"
+    },
+    {
+      "min": 61,
+      "max": 100,
+      "label": "toward higher modelled estrogen handling demand"
+    }
+  ],
+  "limitations": [
+    "This is a relative pathway tendency within the MetaboBrief starter model, not a population percentile.",
+    "This model combines curated SNP contribution components assigned to this pathway; it does not measure current pathway activity.",
+    "The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization.",
+    "Not included: Measured hormones, cycle timing, medication use, pregnancy, liver function, clinical diagnosis."
+  ]
+}

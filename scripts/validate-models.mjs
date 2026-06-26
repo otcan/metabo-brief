@@ -202,6 +202,15 @@ export async function validateModels(root = repoRoot()) {
 
   validatePanelScoring(panel, errors);
 
+  if (!manifest.pathwayDefinitions) {
+    errors.push("manifest missing pathwayDefinitions metadata");
+  } else {
+    const definitionsSha = await sha256(root, manifest.pathwayDefinitions.path);
+    if (definitionsSha !== manifest.pathwayDefinitions.sha256) {
+      errors.push("pathway definitions manifest checksum mismatch");
+    }
+  }
+
   if (!manifest.annotationPack) {
     errors.push("manifest missing annotationPack metadata");
   } else {

@@ -1,0 +1,482 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelId": "iron-handling",
+  "modelVersion": "0.1.0",
+  "name": "Iron handling tendency",
+  "pathway": "Iron handling",
+  "profileGroup": "MetaboBrief starter pathway profile",
+  "status": "experimental",
+  "algorithm": {
+    "id": "group-capped-normalized-sum",
+    "version": "1.0.0"
+  },
+  "variantContributionModelVersion": "legacy-v0",
+  "compatiblePanelVersion": "0.3.0",
+  "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled iron-handling burden?",
+  "negativePole": "Lower modelled iron-handling burden",
+  "positivePole": "Higher modelled iron-handling burden",
+  "includedMechanisms": [
+    "Iron transport",
+    "storage tendency",
+    "inflammation-linked iron context"
+  ],
+  "excludedMechanisms": [
+    "Ferritin",
+    "transferrin saturation",
+    "CBC",
+    "diet",
+    "blood donation",
+    "clinical diagnosis"
+  ],
+  "defaultProfile": "conservative",
+  "minimumCoverage": 0.25,
+  "minimumIndependentSignals": 2,
+  "minimumEvidenceQuality": 0.3,
+  "maximumGroupContribution": 0.5,
+  "inputs": [
+    {
+      "rsid": "rs1205",
+      "claimIds": [
+        "rs1205_CC_biomarker_tendency",
+        "rs1205_CT_biomarker_tendency",
+        "rs1205_TT_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs1205_CC_biomarker_tendency": "supported_baseline",
+        "rs1205_CT_biomarker_tendency": "scored",
+        "rs1205_TT_biomarker_tendency": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "crp-biomarker-tendency",
+      "independenceGroup": "crp-biomarker-tendency",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1205_CC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1205_CT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1205_TT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns CRP rs1205 to Iron handling with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs1799852",
+      "claimIds": [
+        "rs1799852_AA_biomarker_tendency",
+        "rs1799852_AC_biomarker_tendency",
+        "rs1799852_AT_biomarker_tendency",
+        "rs1799852_CC_biomarker_tendency",
+        "rs1799852_CT_biomarker_tendency",
+        "rs1799852_TT_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs1799852_AA_biomarker_tendency": "supported_baseline",
+        "rs1799852_AC_biomarker_tendency": "supported_baseline",
+        "rs1799852_AT_biomarker_tendency": "supported_baseline",
+        "rs1799852_CC_biomarker_tendency": "supported_baseline",
+        "rs1799852_CT_biomarker_tendency": "insufficient_evidence",
+        "rs1799852_TT_biomarker_tendency": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "tf-biomarker-tendency",
+      "independenceGroup": "tf-biomarker-tendency",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1799852_AA_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1799852_AC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1799852_AT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1799852_CC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1799852_CT_biomarker_tendency": [
+          "exploratory"
+        ],
+        "rs1799852_TT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns TF rs1799852 to Iron handling with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs1799945",
+      "claimIds": [
+        "rs1799945_CC_biomarker_tendency",
+        "rs1799945_CG_biomarker_tendency",
+        "rs1799945_GG_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs1799945_CC_biomarker_tendency": "supported_baseline",
+        "rs1799945_CG_biomarker_tendency": "insufficient_evidence",
+        "rs1799945_GG_biomarker_tendency": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "hfe-biomarker-tendency",
+      "independenceGroup": "hfe-biomarker-tendency",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1799945_CC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1799945_CG_biomarker_tendency": [
+          "exploratory"
+        ],
+        "rs1799945_GG_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns HFE rs1799945 to Iron handling with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs1800562",
+      "claimIds": [
+        "rs1800562_AA_biomarker_tendency",
+        "rs1800562_AG_biomarker_tendency",
+        "rs1800562_GG_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs1800562_AA_biomarker_tendency": "scored",
+        "rs1800562_AG_biomarker_tendency": "scored",
+        "rs1800562_GG_biomarker_tendency": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "hfe-biomarker-tendency",
+      "independenceGroup": "hfe-biomarker-tendency",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1800562_AA_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1800562_AG_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1800562_GG_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns HFE rs1800562 to Iron handling with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs3811647",
+      "claimIds": [
+        "rs3811647_AA_biomarker_tendency",
+        "rs3811647_AC_biomarker_tendency",
+        "rs3811647_AG_biomarker_tendency",
+        "rs3811647_CC_biomarker_tendency",
+        "rs3811647_CG_biomarker_tendency",
+        "rs3811647_GG_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs3811647_AA_biomarker_tendency": "scored",
+        "rs3811647_AC_biomarker_tendency": "supported_baseline",
+        "rs3811647_AG_biomarker_tendency": "scored",
+        "rs3811647_CC_biomarker_tendency": "supported_baseline",
+        "rs3811647_CG_biomarker_tendency": "supported_baseline",
+        "rs3811647_GG_biomarker_tendency": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "tf-biomarker-tendency",
+      "independenceGroup": "tf-biomarker-tendency",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs3811647_AA_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs3811647_AC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs3811647_AG_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs3811647_CC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs3811647_CG_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs3811647_GG_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns TF rs3811647 to Iron handling with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs4820268",
+      "claimIds": [
+        "rs4820268_AA_biomarker_tendency",
+        "rs4820268_AC_biomarker_tendency",
+        "rs4820268_AG_biomarker_tendency",
+        "rs4820268_AT_biomarker_tendency",
+        "rs4820268_CC_biomarker_tendency",
+        "rs4820268_CG_biomarker_tendency",
+        "rs4820268_CT_biomarker_tendency",
+        "rs4820268_GG_biomarker_tendency",
+        "rs4820268_GT_biomarker_tendency",
+        "rs4820268_TT_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs4820268_AA_biomarker_tendency": "supported_baseline",
+        "rs4820268_AC_biomarker_tendency": "supported_baseline",
+        "rs4820268_AG_biomarker_tendency": "insufficient_evidence",
+        "rs4820268_AT_biomarker_tendency": "supported_baseline",
+        "rs4820268_CC_biomarker_tendency": "supported_baseline",
+        "rs4820268_CG_biomarker_tendency": "supported_baseline",
+        "rs4820268_CT_biomarker_tendency": "supported_baseline",
+        "rs4820268_GG_biomarker_tendency": "scored",
+        "rs4820268_GT_biomarker_tendency": "supported_baseline",
+        "rs4820268_TT_biomarker_tendency": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "tmprss6-biomarker-tendency",
+      "independenceGroup": "tmprss6-biomarker-tendency",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs4820268_AA_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs4820268_AC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs4820268_AG_biomarker_tendency": [
+          "exploratory"
+        ],
+        "rs4820268_AT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs4820268_CC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs4820268_CG_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs4820268_CT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs4820268_GG_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs4820268_GT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs4820268_TT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns TMPRSS6 rs4820268 to Iron handling with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs7385804",
+      "claimIds": [
+        "rs7385804_AA_biomarker_tendency",
+        "rs7385804_AC_biomarker_tendency",
+        "rs7385804_AG_biomarker_tendency",
+        "rs7385804_CC_biomarker_tendency",
+        "rs7385804_CG_biomarker_tendency",
+        "rs7385804_GG_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs7385804_AA_biomarker_tendency": "scored",
+        "rs7385804_AC_biomarker_tendency": "insufficient_evidence",
+        "rs7385804_AG_biomarker_tendency": "supported_baseline",
+        "rs7385804_CC_biomarker_tendency": "supported_baseline",
+        "rs7385804_CG_biomarker_tendency": "supported_baseline",
+        "rs7385804_GG_biomarker_tendency": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "tfr2-biomarker-tendency",
+      "independenceGroup": "tfr2-biomarker-tendency",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs7385804_AA_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs7385804_AC_biomarker_tendency": [
+          "exploratory"
+        ],
+        "rs7385804_AG_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs7385804_CC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs7385804_CG_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs7385804_GG_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns TFR2 rs7385804 to Iron handling with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs855791",
+      "claimIds": [
+        "rs855791_AA_biomarker_tendency",
+        "rs855791_AC_biomarker_tendency",
+        "rs855791_AG_biomarker_tendency",
+        "rs855791_AT_biomarker_tendency",
+        "rs855791_CC_biomarker_tendency",
+        "rs855791_CG_biomarker_tendency",
+        "rs855791_CT_biomarker_tendency",
+        "rs855791_GG_biomarker_tendency",
+        "rs855791_GT_biomarker_tendency",
+        "rs855791_TT_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs855791_AA_biomarker_tendency": "scored",
+        "rs855791_AC_biomarker_tendency": "supported_baseline",
+        "rs855791_AG_biomarker_tendency": "insufficient_evidence",
+        "rs855791_AT_biomarker_tendency": "supported_baseline",
+        "rs855791_CC_biomarker_tendency": "supported_baseline",
+        "rs855791_CG_biomarker_tendency": "supported_baseline",
+        "rs855791_CT_biomarker_tendency": "supported_baseline",
+        "rs855791_GG_biomarker_tendency": "supported_baseline",
+        "rs855791_GT_biomarker_tendency": "supported_baseline",
+        "rs855791_TT_biomarker_tendency": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "tmprss6-biomarker-tendency",
+      "independenceGroup": "tmprss6-biomarker-tendency",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs855791_AA_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs855791_AC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs855791_AG_biomarker_tendency": [
+          "exploratory"
+        ],
+        "rs855791_AT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs855791_CC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs855791_CG_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs855791_CT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs855791_GG_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs855791_GT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs855791_TT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns TMPRSS6 rs855791 to Iron handling with explicit genotype contribution components."
+    }
+  ],
+  "interpretationBands": [
+    {
+      "min": 0,
+      "max": 39,
+      "label": "toward lower modelled iron-handling burden"
+    },
+    {
+      "min": 40,
+      "max": 60,
+      "label": "near the model midpoint"
+    },
+    {
+      "min": 61,
+      "max": 100,
+      "label": "toward higher modelled iron-handling burden"
+    }
+  ],
+  "limitations": [
+    "This is a relative pathway tendency within the MetaboBrief starter model, not a population percentile.",
+    "This model combines curated SNP contribution components assigned to this pathway; it does not measure current pathway activity.",
+    "The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization.",
+    "Not included: Ferritin, transferrin saturation, CBC, diet, blood donation, clinical diagnosis."
+  ]
+}

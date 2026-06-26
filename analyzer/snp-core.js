@@ -1,6 +1,6 @@
 import { buildPathwayScores, buildVariantScoring } from "./scoring-engine.js";
 
-export const APPLICATION_VERSION = "0.3.0";
+export const APPLICATION_VERSION = "0.4.0";
 export const REPORT_SCHEMA_VERSION = "0.3.0";
 
 const BASES = new Set(["A", "C", "G", "T"]);

@@ -2,9 +2,16 @@
 
 ## Unreleased
 
+- Added starter pathway score models for every current panel pathway family.
+- Added `data/pathway-definitions.json` as the clear source for pathway axes, questions, included mechanisms, and exclusions.
+- Added generated explicit model files under `models/generated/` and refreshed the manifest/model lock to 16 enabled score models.
+- Converted the lactase persistence marker into explicit scoring components so carbohydrate digestion is represented by the same model contract.
+- Replaced the tiny synthetic demo file with full-panel synthetic 23andMe and Ancestry fixtures that render all pathway score cards.
+- Added generators for pathway models and synthetic examples.
+- Tightened validation to check pathway-definition checksums and full-pathway regression output.
 - Restored scoring as a first-class report output with variant-level scoring components.
-- Added a pure pathway scoring engine and the first versioned pathway model for caffeine clearance.
-- Added a score-first report section with pathway tendency score, signal strength, evidence confidence, coverage, stability, and contributor drill-down.
+- Added a pure pathway scoring engine and versioned pathway model files.
+- Added a score-first report section with pathway tendency score, signal strength, evidence quality, result support, coverage, stability, and contributor drill-down.
 - Added alpha file-validation metadata to reports, including provider, format, genome-build, orientation, and file-plausibility status.
 - Added an at-a-glance report overview for medication response, clinical context, metabolism, traits, confirmation needs, and coverage.
 - Reworked finding cards around plain-language questions with expandable source and technical details.

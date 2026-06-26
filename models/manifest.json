@@ -5,24 +5,45 @@
     "path": "models/pathway-model.schema.json",
     "sha256": "9d15f896b936b4ed72abad55d1c2bc438b8ac0bd8ea6d77baf7b30f68ac6c338"
   },
+  "pathwayDefinitions": {
+    "path": "data/pathway-definitions.json",
+    "sha256": "49e7653d7ce9d5b100bd8eb4ebd11f41a202530cc81a5d39722c4a4a8f704844"
+  },
   "annotationPack": {
     "id": "starter-snp-panel",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "path": "data/snp-panel.json",
-    "sha256": "0f7b04c65bfcb4eb2269e1f9b6647b5c209c1f5f8e5134398d8ef1c8c55dbbd7",
+    "sha256": "95866e4c17cbc45e50a09bcbc79305ba0cfbc6ef2c0e3ac476ffcdc63065e313",
     "recordCount": 140,
-    "claimCount": 491
+    "claimCount": 494
   },
   "models": [
+    {
+      "modelId": "b12-transport",
+      "modelVersion": "0.1.0",
+      "path": "models/generated/b12-transport/0.1.0.json",
+      "sha256": "148c5f49ae53d303572572ac326e13b76d8fab416b61b865be0385dad6e6a882",
+      "status": "experimental",
+      "defaultEnabled": true,
+      "compatibleAnnotationPack": "0.3.0",
+      "requiredEngineVersion": "0.4.0",
+      "requiredSchemaVersion": "1.0.0",
+      "algorithm": {
+        "id": "group-capped-normalized-sum",
+        "version": "1.0.0"
+      },
+      "variantContributionModelVersion": "legacy-v0",
+      "modelCard": "docs/scoring-architecture.md"
+    },
     {
       "modelId": "caffeine-clearance",
       "modelVersion": "0.2.0",
       "path": "models/caffeine-clearance/0.2.0.json",
-      "sha256": "4fff68a89901e4eedcb55b70a6bcd71d5ab8ef4c1b76d57b16813d9a1a0faf96",
+      "sha256": "3bdfed6c0d0fef54a7926fa7f8e4ce752455f712dc81c9b053611c56c4be9d03",
       "status": "experimental",
       "defaultEnabled": true,
-      "compatibleAnnotationPack": "0.2.0",
-      "requiredEngineVersion": "0.3.0",
+      "compatibleAnnotationPack": "0.3.0",
+      "requiredEngineVersion": "0.4.0",
       "requiredSchemaVersion": "1.0.0",
       "algorithm": {
         "id": "group-capped-normalized-sum",
@@ -35,11 +56,232 @@
       "modelId": "caffeine-sensitivity",
       "modelVersion": "0.1.0",
       "path": "models/caffeine-sensitivity/0.1.0.json",
-      "sha256": "5c25c71c7a7b0eb838cfc7c15fa760beb6def186861a5e053b42f84a112bc5ca",
+      "sha256": "f72c9b23ae6b4215553db586366155e8429cc449a283eedae506dffe866b06dc",
       "status": "experimental",
       "defaultEnabled": true,
-      "compatibleAnnotationPack": "0.2.0",
-      "requiredEngineVersion": "0.3.0",
+      "compatibleAnnotationPack": "0.3.0",
+      "requiredEngineVersion": "0.4.0",
+      "requiredSchemaVersion": "1.0.0",
+      "algorithm": {
+        "id": "group-capped-normalized-sum",
+        "version": "1.0.0"
+      },
+      "variantContributionModelVersion": "legacy-v0",
+      "modelCard": "docs/scoring-architecture.md"
+    },
+    {
+      "modelId": "carbohydrate-digestion",
+      "modelVersion": "0.1.0",
+      "path": "models/generated/carbohydrate-digestion/0.1.0.json",
+      "sha256": "0013a7ae4b9ccb93c19da87f25e495b3bbca1b6a19b335d8dd90fac8095f2cde",
+      "status": "experimental",
+      "defaultEnabled": true,
+      "compatibleAnnotationPack": "0.3.0",
+      "requiredEngineVersion": "0.4.0",
+      "requiredSchemaVersion": "1.0.0",
+      "algorithm": {
+        "id": "group-capped-normalized-sum",
+        "version": "1.0.0"
+      },
+      "variantContributionModelVersion": "legacy-v0",
+      "modelCard": "docs/scoring-architecture.md"
+    },
+    {
+      "modelId": "choline-support",
+      "modelVersion": "0.1.0",
+      "path": "models/generated/choline-support/0.1.0.json",
+      "sha256": "0662bfded9a9fdbe631a773c52c46a9ad7eeadfebf8427118a0c061f33c68d96",
+      "status": "experimental",
+      "defaultEnabled": true,
+      "compatibleAnnotationPack": "0.3.0",
+      "requiredEngineVersion": "0.4.0",
+      "requiredSchemaVersion": "1.0.0",
+      "algorithm": {
+        "id": "group-capped-normalized-sum",
+        "version": "1.0.0"
+      },
+      "variantContributionModelVersion": "legacy-v0",
+      "modelCard": "docs/scoring-architecture.md"
+    },
+    {
+      "modelId": "estrogen-metabolism",
+      "modelVersion": "0.1.0",
+      "path": "models/generated/estrogen-metabolism/0.1.0.json",
+      "sha256": "3473c4ac44b43684ce61d9b5b5056a73d5d66767b41d831a88b4934cd3b67d11",
+      "status": "experimental",
+      "defaultEnabled": true,
+      "compatibleAnnotationPack": "0.3.0",
+      "requiredEngineVersion": "0.4.0",
+      "requiredSchemaVersion": "1.0.0",
+      "algorithm": {
+        "id": "group-capped-normalized-sum",
+        "version": "1.0.0"
+      },
+      "variantContributionModelVersion": "legacy-v0",
+      "modelCard": "docs/scoring-architecture.md"
+    },
+    {
+      "modelId": "glucose",
+      "modelVersion": "0.1.0",
+      "path": "models/generated/glucose/0.1.0.json",
+      "sha256": "ed19cbe7a58ebfc75b8c96cf11575e0abed47f2892d1909e4d8dd025c9432a59",
+      "status": "experimental",
+      "defaultEnabled": true,
+      "compatibleAnnotationPack": "0.3.0",
+      "requiredEngineVersion": "0.4.0",
+      "requiredSchemaVersion": "1.0.0",
+      "algorithm": {
+        "id": "group-capped-normalized-sum",
+        "version": "1.0.0"
+      },
+      "variantContributionModelVersion": "legacy-v0",
+      "modelCard": "docs/scoring-architecture.md"
+    },
+    {
+      "modelId": "histamine",
+      "modelVersion": "0.1.0",
+      "path": "models/generated/histamine/0.1.0.json",
+      "sha256": "0bd9c63acafbb5fe68142cf3afaad3994e5037f62dc50d29f497136ef7f4873b",
+      "status": "experimental",
+      "defaultEnabled": true,
+      "compatibleAnnotationPack": "0.3.0",
+      "requiredEngineVersion": "0.4.0",
+      "requiredSchemaVersion": "1.0.0",
+      "algorithm": {
+        "id": "group-capped-normalized-sum",
+        "version": "1.0.0"
+      },
+      "variantContributionModelVersion": "legacy-v0",
+      "modelCard": "docs/scoring-architecture.md"
+    },
+    {
+      "modelId": "inflammation-immune-signaling",
+      "modelVersion": "0.1.0",
+      "path": "models/generated/inflammation-immune-signaling/0.1.0.json",
+      "sha256": "3281164b90a58ecb409932fddb24167b0e38193ec0d61a1561a461924c4c2fc5",
+      "status": "experimental",
+      "defaultEnabled": true,
+      "compatibleAnnotationPack": "0.3.0",
+      "requiredEngineVersion": "0.4.0",
+      "requiredSchemaVersion": "1.0.0",
+      "algorithm": {
+        "id": "group-capped-normalized-sum",
+        "version": "1.0.0"
+      },
+      "variantContributionModelVersion": "legacy-v0",
+      "modelCard": "docs/scoring-architecture.md"
+    },
+    {
+      "modelId": "iron-handling",
+      "modelVersion": "0.1.0",
+      "path": "models/generated/iron-handling/0.1.0.json",
+      "sha256": "c59f2fb88f39d76dba24ed97e6b13e5f1ca0369b9478db291433920cc1eaeb91",
+      "status": "experimental",
+      "defaultEnabled": true,
+      "compatibleAnnotationPack": "0.3.0",
+      "requiredEngineVersion": "0.4.0",
+      "requiredSchemaVersion": "1.0.0",
+      "algorithm": {
+        "id": "group-capped-normalized-sum",
+        "version": "1.0.0"
+      },
+      "variantContributionModelVersion": "legacy-v0",
+      "modelCard": "docs/scoring-architecture.md"
+    },
+    {
+      "modelId": "lipids",
+      "modelVersion": "0.1.0",
+      "path": "models/generated/lipids/0.1.0.json",
+      "sha256": "d07d92dd2eeb3f511b8e9956cdad52fca28a037c32f3eb7ca63fa9c27c7a3e31",
+      "status": "experimental",
+      "defaultEnabled": true,
+      "compatibleAnnotationPack": "0.3.0",
+      "requiredEngineVersion": "0.4.0",
+      "requiredSchemaVersion": "1.0.0",
+      "algorithm": {
+        "id": "group-capped-normalized-sum",
+        "version": "1.0.0"
+      },
+      "variantContributionModelVersion": "legacy-v0",
+      "modelCard": "docs/scoring-architecture.md"
+    },
+    {
+      "modelId": "methylation",
+      "modelVersion": "0.1.0",
+      "path": "models/generated/methylation/0.1.0.json",
+      "sha256": "1ac1bd8dc596dd54dd2083e80de1cd42a11f4cf58284fc3cb5fa6ca7eb02c107",
+      "status": "experimental",
+      "defaultEnabled": true,
+      "compatibleAnnotationPack": "0.3.0",
+      "requiredEngineVersion": "0.4.0",
+      "requiredSchemaVersion": "1.0.0",
+      "algorithm": {
+        "id": "group-capped-normalized-sum",
+        "version": "1.0.0"
+      },
+      "variantContributionModelVersion": "legacy-v0",
+      "modelCard": "docs/scoring-architecture.md"
+    },
+    {
+      "modelId": "mitochondrial-energy",
+      "modelVersion": "0.1.0",
+      "path": "models/generated/mitochondrial-energy/0.1.0.json",
+      "sha256": "928d9f8edf6eb0de1c16a7fca9738a6a9961a8d1d2582b132d5a2ca8778196d4",
+      "status": "experimental",
+      "defaultEnabled": true,
+      "compatibleAnnotationPack": "0.3.0",
+      "requiredEngineVersion": "0.4.0",
+      "requiredSchemaVersion": "1.0.0",
+      "algorithm": {
+        "id": "group-capped-normalized-sum",
+        "version": "1.0.0"
+      },
+      "variantContributionModelVersion": "legacy-v0",
+      "modelCard": "docs/scoring-architecture.md"
+    },
+    {
+      "modelId": "nitric-oxide-vascular-tone",
+      "modelVersion": "0.1.0",
+      "path": "models/generated/nitric-oxide-vascular-tone/0.1.0.json",
+      "sha256": "936fd1cf1bd7f5a4386cd1cf24c8666a530fe2add7894a710761f29a421f5328",
+      "status": "experimental",
+      "defaultEnabled": true,
+      "compatibleAnnotationPack": "0.3.0",
+      "requiredEngineVersion": "0.4.0",
+      "requiredSchemaVersion": "1.0.0",
+      "algorithm": {
+        "id": "group-capped-normalized-sum",
+        "version": "1.0.0"
+      },
+      "variantContributionModelVersion": "legacy-v0",
+      "modelCard": "docs/scoring-architecture.md"
+    },
+    {
+      "modelId": "oxidative-stress",
+      "modelVersion": "0.1.0",
+      "path": "models/generated/oxidative-stress/0.1.0.json",
+      "sha256": "e7c10e2243660b5a1f03ff5df8e492bdd353321f6c15d1667918e555a0a998c6",
+      "status": "experimental",
+      "defaultEnabled": true,
+      "compatibleAnnotationPack": "0.3.0",
+      "requiredEngineVersion": "0.4.0",
+      "requiredSchemaVersion": "1.0.0",
+      "algorithm": {
+        "id": "group-capped-normalized-sum",
+        "version": "1.0.0"
+      },
+      "variantContributionModelVersion": "legacy-v0",
+      "modelCard": "docs/scoring-architecture.md"
+    },
+    {
+      "modelId": "sulfur-transsulfuration",
+      "modelVersion": "0.1.0",
+      "path": "models/generated/sulfur-transsulfuration/0.1.0.json",
+      "sha256": "1136078766f2c589799359c6cae8928cfdbbf5be4e549fc0ed2df605e0c44b9a",
+      "status": "experimental",
+      "defaultEnabled": true,
+      "compatibleAnnotationPack": "0.3.0",
+      "requiredEngineVersion": "0.4.0",
       "requiredSchemaVersion": "1.0.0",
       "algorithm": {
         "id": "group-capped-normalized-sum",
@@ -52,11 +294,11 @@
       "modelId": "caffeine-response-legacy",
       "modelVersion": "1.0.0",
       "path": "models/archived/caffeine-response-legacy-v1.json",
-      "sha256": "4677b101e605313da6feb860caf7c4766621c046e6c4dc5712cf258f61cafd64",
+      "sha256": "9e9a2ab5f4bf6d25e63a07370aaf2ff94e2f37d328895688c453a5a35c1fa067",
       "status": "archived",
       "defaultEnabled": false,
-      "compatibleAnnotationPack": "0.2.0",
-      "requiredEngineVersion": "0.3.0",
+      "compatibleAnnotationPack": "0.3.0",
+      "requiredEngineVersion": "0.4.0",
       "requiredSchemaVersion": "1.0.0",
       "algorithm": {
         "id": "group-capped-normalized-sum",

@@ -83,9 +83,10 @@ The current model files are loaded through `models/manifest.json`:
 
 - `models/caffeine-clearance/0.2.0.json`
 - `models/caffeine-sensitivity/0.1.0.json`
+- `models/generated/*/0.1.0.json`
 - `models/archived/caffeine-response-legacy-v1.json`
 
-The archived caffeine-response model is not enabled by default. It preserves old broad-score reproducibility after the split into clearance and sensitivity.
+The generated starter models cover every current non-caffeine panel pathway family using the axes in `data/pathway-definitions.json`. They are explicit model files, not runtime label matching. The archived caffeine-response model is not enabled by default. It preserves old broad-score reproducibility after the split into clearance and sensitivity.
 
 ## Contribution States
 
@@ -161,7 +162,7 @@ Reports keep these versions separately:
 - `algorithmVersion`
 - `variantContributionModelVersion`
 
-The model manifest also records the starter annotation-pack checksum. CI validates model checksums, model-lock entries, explicit claim membership, interpretation bands, panel compatibility, and scoring invariants.
+The model manifest also records the starter annotation-pack checksum and pathway-definition checksum. CI validates model checksums, model-lock entries, explicit claim membership, interpretation bands, panel compatibility, definition drift, and scoring invariants.
 
 ## No Global Score
 

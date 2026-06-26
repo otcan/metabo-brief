@@ -10,15 +10,16 @@ const manifest = await loadJson("models/manifest.json");
 assert.equal(manifest.schemaVersion, "1.0.0");
 assert.deepEqual(manifest.annotationPack, {
   id: "starter-snp-panel",
-  version: "0.2.0",
+  version: "0.3.0",
   path: "data/snp-panel.json",
-  sha256: "0f7b04c65bfcb4eb2269e1f9b6647b5c209c1f5f8e5134398d8ef1c8c55dbbd7",
+  sha256: "95866e4c17cbc45e50a09bcbc79305ba0cfbc6ef2c0e3ac476ffcdc63065e313",
   recordCount: 140,
-  claimCount: 491
+  claimCount: 494
 });
+assert.match(manifest.pathwayDefinitions.sha256, /^[a-f0-9]{64}$/);
 assert.ok(Array.isArray(manifest.models));
-assert.ok(manifest.models.length >= 3);
-assert.equal(manifest.models.filter(model => model.defaultEnabled).length, 2);
+assert.equal(manifest.models.length, 17);
+assert.equal(manifest.models.filter(model => model.defaultEnabled).length, 16);
 
 for (const entry of manifest.models) {
   assert.match(entry.sha256, /^[a-f0-9]{64}$/);

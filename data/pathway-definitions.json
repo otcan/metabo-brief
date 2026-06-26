@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelVersion": "0.1.0",
+  "profileGroup": "MetaboBrief starter pathway profile",
+  "definitions": [
+    {
+      "sourcePathway": "B12 transport",
+      "modelId": "b12-transport",
+      "name": "B12 transport tendency",
+      "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled B12 transport and handling demand?",
+      "negativePole": "Lower modelled B12 transport constraint",
+      "positivePole": "Higher modelled B12 transport constraint",
+      "includedMechanisms": ["B12 transport", "one-carbon cofactor context"],
+      "excludedMechanisms": ["Measured B12", "methylmalonic acid", "homocysteine", "dietary intake", "supplement use", "clinical deficiency diagnosis"]
+    },
+    {
+      "sourcePathway": "Carbohydrate digestion",
+      "modelId": "carbohydrate-digestion",
+      "name": "Carbohydrate digestion tendency",
+      "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled lactose digestion limitation?",
+      "negativePole": "Lower modelled lactose digestion limitation",
+      "positivePole": "Higher modelled lactose digestion limitation",
+      "includedMechanisms": ["Lactase persistence context"],
+      "excludedMechanisms": ["Current diet", "gut microbiome", "digestive disease", "breath testing", "clinical diagnosis"],
+      "minimumIndependentSignals": 1
+    },
+    {
+      "sourcePathway": "Choline support",
+      "modelId": "choline-support",
+      "name": "Choline support tendency",
+      "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled choline and phosphatidylcholine support demand?",
+      "negativePole": "Lower modelled choline support demand",
+      "positivePole": "Higher modelled choline support demand",
+      "includedMechanisms": ["Choline synthesis", "methylation-linked choline demand", "transport context"],
+      "excludedMechanisms": ["Dietary choline", "liver imaging", "measured phosphatidylcholine", "pregnancy status", "clinical diagnosis"]
+    },
+    {
+      "sourcePathway": "Estrogen metabolism",
+      "modelId": "estrogen-metabolism",
+      "name": "Estrogen metabolism tendency",
+      "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled estrogen metabolism handling demand?",
+      "negativePole": "Lower modelled estrogen handling demand",
+      "positivePole": "Higher modelled estrogen handling demand",
+      "includedMechanisms": ["Phase I transformation", "conjugation context", "COMT and UGT context"],
+      "excludedMechanisms": ["Measured hormones", "cycle timing", "medication use", "pregnancy", "liver function", "clinical diagnosis"]
+    },
+    {
+      "sourcePathway": "Glucose",
+      "modelId": "glucose",
+      "name": "Glucose regulation tendency",
+      "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled glucose-regulation burden?",
+      "negativePole": "Lower modelled glucose-regulation burden",
+      "positivePole": "Higher modelled glucose-regulation burden",
+      "includedMechanisms": ["Fasting glucose tendency", "insulin signalling context", "transport and secretion context"],
+      "excludedMechanisms": ["Measured glucose", "HbA1c", "diet", "body composition", "medication use", "clinical diagnosis"]
+    },
+    {
+      "sourcePathway": "Histamine",
+      "modelId": "histamine",
+      "name": "Histamine burden tendency",
+      "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled histamine burden?",
+      "negativePole": "Lower modelled histamine burden",
+      "positivePole": "Higher modelled histamine burden",
+      "includedMechanisms": ["Histamine degradation", "immune signalling context", "gut and secretor context"],
+      "excludedMechanisms": ["Measured histamine", "dietary histamine", "mast-cell diagnosis", "medications", "current symptoms"]
+    },
+    {
+      "sourcePathway": "Inflammation / immune signaling",
+      "modelId": "inflammation-immune-signaling",
+      "name": "Inflammation and immune signalling tendency",
+      "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled inflammatory signalling burden?",
+      "negativePole": "Lower modelled inflammatory signalling burden",
+      "positivePole": "Higher modelled inflammatory signalling burden",
+      "includedMechanisms": ["Cytokine signalling", "CRP tendency", "NF-kB context", "oxidative immune context"],
+      "excludedMechanisms": ["Measured CRP", "infection status", "autoimmune diagnosis", "medications", "clinical diagnosis"]
+    },
+    {
+      "sourcePathway": "Iron handling",
+      "modelId": "iron-handling",
+      "name": "Iron handling tendency",
+      "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled iron-handling burden?",
+      "negativePole": "Lower modelled iron-handling burden",
+      "positivePole": "Higher modelled iron-handling burden",
+      "includedMechanisms": ["Iron transport", "storage tendency", "inflammation-linked iron context"],
+      "excludedMechanisms": ["Ferritin", "transferrin saturation", "CBC", "diet", "blood donation", "clinical diagnosis"]
+    },
+    {
+      "sourcePathway": "Lipids",
+      "modelId": "lipids",
+      "name": "Lipid handling tendency",
+      "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled lipid-handling burden?",
+      "negativePole": "Lower modelled lipid-handling burden",
+      "positivePole": "Higher modelled lipid-handling burden",
+      "includedMechanisms": ["Triglyceride context", "LDL and HDL context", "lipoprotein transport", "adiponectin context"],
+      "excludedMechanisms": ["Measured lipids", "diet", "body composition", "medication use", "cardiovascular diagnosis"]
+    },
+    {
+      "sourcePathway": "Methylation",
+      "modelId": "methylation",
+      "name": "Methylation-cycle tendency",
+      "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled one-carbon and methylation-cycle constraint?",
+      "negativePole": "Lower modelled methylation-cycle constraint",
+      "positivePole": "Higher modelled methylation-cycle constraint",
+      "includedMechanisms": ["Folate cycle", "methionine cycle", "B12 context", "choline and betaine context"],
+      "excludedMechanisms": ["Measured homocysteine", "folate", "B12", "diet", "supplement use", "clinical diagnosis"]
+    },
+    {
+      "sourcePathway": "Mitochondrial energy",
+      "modelId": "mitochondrial-energy",
+      "name": "Mitochondrial energy tendency",
+      "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled mitochondrial energy-handling burden?",
+      "negativePole": "Lower modelled mitochondrial energy burden",
+      "positivePole": "Higher modelled mitochondrial energy burden",
+      "includedMechanisms": ["Mitochondrial antioxidant context", "energy signalling context", "uncoupling context"],
+      "excludedMechanisms": ["Measured lactate", "exercise testing", "mitochondrial disease diagnosis", "medications"]
+    },
+    {
+      "sourcePathway": "Nitric oxide / vascular tone",
+      "modelId": "nitric-oxide-vascular-tone",
+      "name": "Nitric oxide and vascular tone tendency",
+      "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled nitric-oxide and vascular-tone constraint?",
+      "negativePole": "Lower modelled nitric-oxide or vascular-tone constraint",
+      "positivePole": "Higher modelled nitric-oxide or vascular-tone constraint",
+      "includedMechanisms": ["NOS context", "arginine pathway context", "vascular signalling context"],
+      "excludedMechanisms": ["Blood pressure readings", "endothelial testing", "medications", "cardiovascular diagnosis"]
+    },
+    {
+      "sourcePathway": "Oxidative stress",
+      "modelId": "oxidative-stress",
+      "name": "Oxidative stress handling tendency",
+      "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled oxidative-stress handling burden?",
+      "negativePole": "Lower modelled oxidative-stress burden",
+      "positivePole": "Higher modelled oxidative-stress burden",
+      "includedMechanisms": ["Catalase", "glutathione enzymes", "NQO1", "SOD2", "redox context"],
+      "excludedMechanisms": ["Measured oxidative-stress markers", "selenium status", "inflammation status", "clinical diagnosis"]
+    },
+    {
+      "sourcePathway": "Sulfur / transsulfuration",
+      "modelId": "sulfur-transsulfuration",
+      "name": "Sulfur and transsulfuration tendency",
+      "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled sulfur and transsulfuration constraint?",
+      "negativePole": "Lower modelled sulfur-pathway constraint",
+      "positivePole": "Higher modelled sulfur-pathway constraint",
+      "includedMechanisms": ["CBS context", "glutathione synthesis context", "sulfite handling context"],
+      "excludedMechanisms": ["Measured sulfate or sulfite", "dietary sulfur", "molybdenum status", "clinical diagnosis"]
+    }
+  ]
+}

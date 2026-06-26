@@ -215,6 +215,11 @@ models/
   pathway-model.schema.json
   manifest.json
   model-lock.json
+  generated/
+    methylation/
+      0.1.0.json
+    oxidative-stress/
+      0.1.0.json
   caffeine-clearance/
     0.2.0.json
   caffeine-sensitivity/
@@ -222,6 +227,8 @@ models/
   archived/
     caffeine-response-legacy-v1.json
 ```
+
+The generated starter models are built from `data/pathway-definitions.json` and the explicit genotype claims in `data/snp-panel.json`.
 
 Each model defines:
 

@@ -2,12 +2,11 @@ import assert from "node:assert/strict";
 
 import { buildVariantScoring, scorePathwayModel } from "../analyzer/scoring-engine.js";
 import { analyzeVariants, parseRawGenotype } from "../analyzer/snp-core.js";
-import { loadModelWithManifest, loadPanel, loadText } from "./helpers.mjs";
+import { genotypeText, loadModelWithManifest, loadPanel } from "./helpers.mjs";
 
 const panel = await loadPanel();
 const clearanceModel = await loadModelWithManifest("caffeine-clearance", "0.2.0");
 const archivedModel = await loadModelWithManifest("caffeine-response-legacy", "1.0.0");
-const sample23 = await loadText("examples/synthetic-23andme.txt");
 
 const variantScore = buildVariantScoring({
   score: 0.203,
@@ -37,7 +36,7 @@ assert.equal(legacyAttentionScore.contribution, 0);
 assert.equal(legacyAttentionScore.formulaContribution, 0);
 assert.equal(legacyAttentionScore.legacyScore, 1.5);
 
-const parsed = parseRawGenotype(sample23);
+const parsed = parseRawGenotype(genotypeText([["rs762551", "AC"], ["rs887829", "CT"]]));
 const report = analyzeVariants(parsed, panel, [clearanceModel]);
 const pathwayScore = report.pathwayScores[0];
 

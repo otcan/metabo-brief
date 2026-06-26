@@ -2,13 +2,13 @@
 
 This directory contains synthetic files that demonstrate MetaboBrief without exposing personal data.
 
-## Planned examples
+## Included examples
 
-- `synthetic-23andme.txt`: synthetic 23andMe-style raw SNP file.
-- `synthetic-ancestry.txt`: synthetic AncestryDNA-style raw SNP file.
+- `synthetic-23andme.txt`: synthetic 23andMe-style raw SNP file with broad starter-panel coverage.
+- `synthetic-ancestry.txt`: synthetic AncestryDNA-style raw SNP file with the same synthetic calls.
 - A matching machine-readable JSON report export is planned.
 
-The synthetic examples use the allele orientation expected by the current curated panel. The analyzer does not yet perform strand flipping.
+The synthetic examples use the allele orientation expected by the current curated panel and are generated with `node scripts/build-synthetic-examples.mjs`. The analyzer does not yet perform strand flipping.
 
 ## Example rules
 

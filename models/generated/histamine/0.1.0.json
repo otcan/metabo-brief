@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelId": "histamine",
+  "modelVersion": "0.1.0",
+  "name": "Histamine burden tendency",
+  "pathway": "Histamine",
+  "profileGroup": "MetaboBrief starter pathway profile",
+  "status": "experimental",
+  "algorithm": {
+    "id": "group-capped-normalized-sum",
+    "version": "1.0.0"
+  },
+  "variantContributionModelVersion": "legacy-v0",
+  "compatiblePanelVersion": "0.3.0",
+  "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled histamine burden?",
+  "negativePole": "Lower modelled histamine burden",
+  "positivePole": "Higher modelled histamine burden",
+  "includedMechanisms": [
+    "Histamine degradation",
+    "immune signalling context",
+    "gut and secretor context"
+  ],
+  "excludedMechanisms": [
+    "Measured histamine",
+    "dietary histamine",
+    "mast-cell diagnosis",
+    "medications",
+    "current symptoms"
+  ],
+  "defaultProfile": "conservative",
+  "minimumCoverage": 0.25,
+  "minimumIndependentSignals": 1,
+  "minimumEvidenceQuality": 0.3,
+  "maximumGroupContribution": 0.5,
+  "inputs": [
+    {
+      "rsid": "rs1049793",
+      "claimIds": [
+        "rs1049793_CC_enzyme_activity",
+        "rs1049793_CG_enzyme_activity",
+        "rs1049793_GG_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs1049793_CC_enzyme_activity": "supported_baseline",
+        "rs1049793_CG_enzyme_activity": "scored",
+        "rs1049793_GG_enzyme_activity": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "aoc1-enzyme-activity",
+      "independenceGroup": "aoc1-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1049793_CC_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1049793_CG_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1049793_GG_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns AOC1 rs1049793 to Histamine with explicit genotype contribution components."
+    }
+  ],
+  "interpretationBands": [
+    {
+      "min": 0,
+      "max": 39,
+      "label": "toward lower modelled histamine burden"
+    },
+    {
+      "min": 40,
+      "max": 60,
+      "label": "near the model midpoint"
+    },
+    {
+      "min": 61,
+      "max": 100,
+      "label": "toward higher modelled histamine burden"
+    }
+  ],
+  "limitations": [
+    "This is a relative pathway tendency within the MetaboBrief starter model, not a population percentile.",
+    "This model combines curated SNP contribution components assigned to this pathway; it does not measure current pathway activity.",
+    "The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization.",
+    "Not included: Measured histamine, dietary histamine, mast-cell diagnosis, medications, current symptoms."
+  ]
+}

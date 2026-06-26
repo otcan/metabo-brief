@@ -50,7 +50,7 @@ Keep parsing and report generation independent of the UI so the same engine can 
 
 Create the annotation-pack compiler, formal pathway models, and first bundled pack.
 
-The first pack should prioritize several hundred understandable, well-supported findings and 8-12 structured pathway models, not hundreds of thousands of weak associations.
+The first reviewed pack should prioritize several hundred understandable, well-supported findings and a smaller set of reviewed pathway models, not hundreds of thousands of weak associations. Generated starter models can cover the full current panel earlier, but each should remain marked experimental until reviewed.
 
 Requirements:
 

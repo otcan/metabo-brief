@@ -1,0 +1,289 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelId": "choline-support",
+  "modelVersion": "0.1.0",
+  "name": "Choline support tendency",
+  "pathway": "Choline support",
+  "profileGroup": "MetaboBrief starter pathway profile",
+  "status": "experimental",
+  "algorithm": {
+    "id": "group-capped-normalized-sum",
+    "version": "1.0.0"
+  },
+  "variantContributionModelVersion": "legacy-v0",
+  "compatiblePanelVersion": "0.3.0",
+  "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled choline and phosphatidylcholine support demand?",
+  "negativePole": "Lower modelled choline support demand",
+  "positivePole": "Higher modelled choline support demand",
+  "includedMechanisms": [
+    "Choline synthesis",
+    "methylation-linked choline demand",
+    "transport context"
+  ],
+  "excludedMechanisms": [
+    "Dietary choline",
+    "liver imaging",
+    "measured phosphatidylcholine",
+    "pregnancy status",
+    "clinical diagnosis"
+  ],
+  "defaultProfile": "conservative",
+  "minimumCoverage": 0.25,
+  "minimumIndependentSignals": 2,
+  "minimumEvidenceQuality": 0.3,
+  "maximumGroupContribution": 0.5,
+  "inputs": [
+    {
+      "rsid": "rs12325817",
+      "claimIds": [
+        "rs12325817_CC_expression",
+        "rs12325817_CG_expression",
+        "rs12325817_GG_expression"
+      ],
+      "contributionStates": {
+        "rs12325817_CC_expression": "scored",
+        "rs12325817_CG_expression": "scored",
+        "rs12325817_GG_expression": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "pemt-expression",
+      "independenceGroup": "pemt-expression",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs12325817_CC_expression": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs12325817_CG_expression": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs12325817_GG_expression": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns PEMT rs12325817 to Choline support with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs12676",
+      "claimIds": [
+        "rs12676_AA_enzyme_activity",
+        "rs12676_AC_enzyme_activity",
+        "rs12676_CC_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs12676_AA_enzyme_activity": "scored",
+        "rs12676_AC_enzyme_activity": "scored",
+        "rs12676_CC_enzyme_activity": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "chdh-enzyme-activity",
+      "independenceGroup": "chdh-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs12676_AA_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs12676_AC_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs12676_CC_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns CHDH rs12676 to Choline support with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs1801131",
+      "claimIds": [
+        "rs1801131_GG_enzyme_activity",
+        "rs1801131_GT_enzyme_activity",
+        "rs1801131_TT_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs1801131_GG_enzyme_activity": "scored",
+        "rs1801131_GT_enzyme_activity": "insufficient_evidence",
+        "rs1801131_TT_enzyme_activity": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "mthfr-enzyme-activity",
+      "independenceGroup": "mthfr-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1801131_GG_enzyme_activity": [
+          "exploratory"
+        ],
+        "rs1801131_GT_enzyme_activity": [
+          "exploratory"
+        ],
+        "rs1801131_TT_enzyme_activity": [
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns MTHFR rs1801131 to Choline support with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs1801133",
+      "claimIds": [
+        "rs1801133_AA_enzyme_activity",
+        "rs1801133_AG_enzyme_activity",
+        "rs1801133_GG_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs1801133_AA_enzyme_activity": "scored",
+        "rs1801133_AG_enzyme_activity": "insufficient_evidence",
+        "rs1801133_GG_enzyme_activity": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "mthfr-enzyme-activity",
+      "independenceGroup": "mthfr-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1801133_AA_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1801133_AG_enzyme_activity": [
+          "exploratory"
+        ],
+        "rs1801133_GG_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns MTHFR rs1801133 to Choline support with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs3810141",
+      "claimIds": [
+        "rs3810141_AA_expression",
+        "rs3810141_AC_expression",
+        "rs3810141_AT_expression",
+        "rs3810141_CC_expression",
+        "rs3810141_CT_expression",
+        "rs3810141_TT_expression"
+      ],
+      "contributionStates": {
+        "rs3810141_AA_expression": "scored",
+        "rs3810141_AC_expression": "scored",
+        "rs3810141_AT_expression": "scored",
+        "rs3810141_CC_expression": "supported_baseline",
+        "rs3810141_CT_expression": "supported_baseline",
+        "rs3810141_TT_expression": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "bcam-expression",
+      "independenceGroup": "bcam-expression",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs3810141_AA_expression": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs3810141_AC_expression": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs3810141_AT_expression": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs3810141_CC_expression": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs3810141_CT_expression": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs3810141_TT_expression": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns BCAM rs3810141 to Choline support with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs7946",
+      "claimIds": [
+        "rs7946_CC_enzyme_activity",
+        "rs7946_CT_enzyme_activity",
+        "rs7946_TT_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs7946_CC_enzyme_activity": "supported_baseline",
+        "rs7946_CT_enzyme_activity": "scored",
+        "rs7946_TT_enzyme_activity": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "pemt-enzyme-activity",
+      "independenceGroup": "pemt-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs7946_CC_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs7946_CT_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs7946_TT_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns PEMT rs7946 to Choline support with explicit genotype contribution components."
+    }
+  ],
+  "interpretationBands": [
+    {
+      "min": 0,
+      "max": 39,
+      "label": "toward lower modelled choline support demand"
+    },
+    {
+      "min": 40,
+      "max": 60,
+      "label": "near the model midpoint"
+    },
+    {
+      "min": 61,
+      "max": 100,
+      "label": "toward higher modelled choline support demand"
+    }
+  ],
+  "limitations": [
+    "This is a relative pathway tendency within the MetaboBrief starter model, not a population percentile.",
+    "This model combines curated SNP contribution components assigned to this pathway; it does not measure current pathway activity.",
+    "The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization.",
+    "Not included: Dietary choline, liver imaging, measured phosphatidylcholine, pregnancy status, clinical diagnosis."
+  ]
+}

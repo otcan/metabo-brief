@@ -1,0 +1,272 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelId": "oxidative-stress",
+  "modelVersion": "0.1.0",
+  "name": "Oxidative stress handling tendency",
+  "pathway": "Oxidative stress",
+  "profileGroup": "MetaboBrief starter pathway profile",
+  "status": "experimental",
+  "algorithm": {
+    "id": "group-capped-normalized-sum",
+    "version": "1.0.0"
+  },
+  "variantContributionModelVersion": "legacy-v0",
+  "compatiblePanelVersion": "0.3.0",
+  "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled oxidative-stress handling burden?",
+  "negativePole": "Lower modelled oxidative-stress burden",
+  "positivePole": "Higher modelled oxidative-stress burden",
+  "includedMechanisms": [
+    "Catalase",
+    "glutathione enzymes",
+    "NQO1",
+    "SOD2",
+    "redox context"
+  ],
+  "excludedMechanisms": [
+    "Measured oxidative-stress markers",
+    "selenium status",
+    "inflammation status",
+    "clinical diagnosis"
+  ],
+  "defaultProfile": "conservative",
+  "minimumCoverage": 0.25,
+  "minimumIndependentSignals": 2,
+  "minimumEvidenceQuality": 0.3,
+  "maximumGroupContribution": 0.5,
+  "inputs": [
+    {
+      "rsid": "rs1001179",
+      "claimIds": [
+        "rs1001179_CC_expression",
+        "rs1001179_CT_expression",
+        "rs1001179_TT_expression"
+      ],
+      "contributionStates": {
+        "rs1001179_CC_expression": "supported_baseline",
+        "rs1001179_CT_expression": "scored",
+        "rs1001179_TT_expression": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "cat-expression",
+      "independenceGroup": "cat-expression",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1001179_CC_expression": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1001179_CT_expression": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1001179_TT_expression": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns CAT rs1001179 to Oxidative stress with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs1050828",
+      "claimIds": [
+        "rs1050828_CC_enzyme_activity",
+        "rs1050828_CT_enzyme_activity",
+        "rs1050828_TT_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs1050828_CC_enzyme_activity": "supported_baseline",
+        "rs1050828_CT_enzyme_activity": "scored",
+        "rs1050828_TT_enzyme_activity": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "g6pd-enzyme-activity",
+      "independenceGroup": "g6pd-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1050828_CC_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1050828_CT_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1050828_TT_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns G6PD rs1050828 to Oxidative stress with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs17883901",
+      "claimIds": [
+        "rs17883901_AA_expression",
+        "rs17883901_AG_expression",
+        "rs17883901_GG_expression"
+      ],
+      "contributionStates": {
+        "rs17883901_AA_expression": "scored",
+        "rs17883901_AG_expression": "scored",
+        "rs17883901_GG_expression": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "gclc-expression",
+      "independenceGroup": "gclc-expression",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs17883901_AA_expression": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs17883901_AG_expression": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs17883901_GG_expression": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns GCLC rs17883901 to Oxidative stress with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs1799983",
+      "claimIds": [
+        "rs1799983_GG_enzyme_activity",
+        "rs1799983_GT_enzyme_activity",
+        "rs1799983_TT_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs1799983_GG_enzyme_activity": "supported_baseline",
+        "rs1799983_GT_enzyme_activity": "insufficient_evidence",
+        "rs1799983_TT_enzyme_activity": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "nos3-enzyme-activity",
+      "independenceGroup": "nos3-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1799983_GG_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1799983_GT_enzyme_activity": [
+          "exploratory"
+        ],
+        "rs1799983_TT_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns NOS3 rs1799983 to Oxidative stress with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs1800566",
+      "claimIds": [
+        "rs1800566_AA_enzyme_activity",
+        "rs1800566_AG_enzyme_activity",
+        "rs1800566_GG_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs1800566_AA_enzyme_activity": "scored",
+        "rs1800566_AG_enzyme_activity": "scored",
+        "rs1800566_GG_enzyme_activity": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "nqo1-enzyme-activity",
+      "independenceGroup": "nqo1-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1800566_AA_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1800566_AG_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1800566_GG_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns NQO1 rs1800566 to Oxidative stress with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs769217",
+      "claimIds": [
+        "rs769217_CC_enzyme_activity",
+        "rs769217_CT_enzyme_activity",
+        "rs769217_TT_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs769217_CC_enzyme_activity": "supported_baseline",
+        "rs769217_CT_enzyme_activity": "insufficient_evidence",
+        "rs769217_TT_enzyme_activity": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "cat-enzyme-activity",
+      "independenceGroup": "cat-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs769217_CC_enzyme_activity": [
+          "exploratory"
+        ],
+        "rs769217_CT_enzyme_activity": [
+          "exploratory"
+        ],
+        "rs769217_TT_enzyme_activity": [
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns CAT rs769217 to Oxidative stress with explicit genotype contribution components."
+    }
+  ],
+  "interpretationBands": [
+    {
+      "min": 0,
+      "max": 39,
+      "label": "toward lower modelled oxidative-stress burden"
+    },
+    {
+      "min": 40,
+      "max": 60,
+      "label": "near the model midpoint"
+    },
+    {
+      "min": 61,
+      "max": 100,
+      "label": "toward higher modelled oxidative-stress burden"
+    }
+  ],
+  "limitations": [
+    "This is a relative pathway tendency within the MetaboBrief starter model, not a population percentile.",
+    "This model combines curated SNP contribution components assigned to this pathway; it does not measure current pathway activity.",
+    "The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization.",
+    "Not included: Measured oxidative-stress markers, selenium status, inflammation status, clinical diagnosis."
+  ]
+}

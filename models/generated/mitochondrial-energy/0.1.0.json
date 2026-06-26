@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelId": "mitochondrial-energy",
+  "modelVersion": "0.1.0",
+  "name": "Mitochondrial energy tendency",
+  "pathway": "Mitochondrial energy",
+  "profileGroup": "MetaboBrief starter pathway profile",
+  "status": "experimental",
+  "algorithm": {
+    "id": "group-capped-normalized-sum",
+    "version": "1.0.0"
+  },
+  "variantContributionModelVersion": "legacy-v0",
+  "compatiblePanelVersion": "0.3.0",
+  "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled mitochondrial energy-handling burden?",
+  "negativePole": "Lower modelled mitochondrial energy burden",
+  "positivePole": "Higher modelled mitochondrial energy burden",
+  "includedMechanisms": [
+    "Mitochondrial antioxidant context",
+    "energy signalling context",
+    "uncoupling context"
+  ],
+  "excludedMechanisms": [
+    "Measured lactate",
+    "exercise testing",
+    "mitochondrial disease diagnosis",
+    "medications"
+  ],
+  "defaultProfile": "conservative",
+  "minimumCoverage": 0.25,
+  "minimumIndependentSignals": 1,
+  "minimumEvidenceQuality": 0.3,
+  "maximumGroupContribution": 0.5,
+  "inputs": [
+    {
+      "rsid": "rs1799983",
+      "claimIds": [
+        "rs1799983_GG_enzyme_activity",
+        "rs1799983_GT_enzyme_activity",
+        "rs1799983_TT_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs1799983_GG_enzyme_activity": "supported_baseline",
+        "rs1799983_GT_enzyme_activity": "insufficient_evidence",
+        "rs1799983_TT_enzyme_activity": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "nos3-enzyme-activity",
+      "independenceGroup": "nos3-enzyme-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs1799983_GG_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs1799983_GT_enzyme_activity": [
+          "exploratory"
+        ],
+        "rs1799983_TT_enzyme_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns NOS3 rs1799983 to Mitochondrial energy with explicit genotype contribution components."
+    }
+  ],
+  "interpretationBands": [
+    {
+      "min": 0,
+      "max": 39,
+      "label": "toward lower modelled mitochondrial energy burden"
+    },
+    {
+      "min": 40,
+      "max": 60,
+      "label": "near the model midpoint"
+    },
+    {
+      "min": 61,
+      "max": 100,
+      "label": "toward higher modelled mitochondrial energy burden"
+    }
+  ],
+  "limitations": [
+    "This is a relative pathway tendency within the MetaboBrief starter model, not a population percentile.",
+    "This model combines curated SNP contribution components assigned to this pathway; it does not measure current pathway activity.",
+    "The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization.",
+    "Not included: Measured lactate, exercise testing, mitochondrial disease diagnosis, medications."
+  ]
+}

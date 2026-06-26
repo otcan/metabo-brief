@@ -5,7 +5,7 @@
 ## Current size
 
 - 140 SNPs
-- 491 genotype claims
+- 494 genotype claims
 - 1,403 study-evidence rows summarized into source links and curation metadata
 
 ## Record shape
@@ -72,6 +72,8 @@ Reports should pair every score with:
 - limitations
 
 Pathway scores are calculated only through documented, versioned pathway models listed in `models/manifest.json`. A panel claim does not enter a model unless the model explicitly lists its rsID, accepted claim IDs, axis mapping, contribution state, and independence group.
+
+The starter release includes generated models for every current panel pathway family. Their user-facing axes live in `data/pathway-definitions.json`, and their generated explicit model files live under `models/generated/`.
 
 Legacy attention-style fields that do not have a claim ID, magnitude, and certainty are not treated as pathway contributions.
 

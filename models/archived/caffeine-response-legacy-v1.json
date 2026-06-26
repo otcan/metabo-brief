@@ -11,7 +11,7 @@
     "version": "1.0.0"
   },
   "variantContributionModelVersion": "legacy-v0",
-  "compatiblePanelVersion": "0.2.0",
+  "compatiblePanelVersion": "0.3.0",
   "biologicalQuestion": "Archived broad caffeine and stimulant response score preserved for reproducibility of reports created before the caffeine model split.",
   "negativePole": "Tendency toward slower clearance or stronger stimulant sensitivity",
   "positivePole": "Tendency toward faster clearance or lower stimulant sensitivity",

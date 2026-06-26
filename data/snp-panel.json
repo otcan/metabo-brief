@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "name": "MetaboBrief curated SNP panel",
   "license": "MIT for panel structure and curation metadata; external sources retain their own terms",
   "sourcePolicy": "Panel records summarize public scientific sources and legacy curated claims. They are informational and are not clinical classifications.",
@@ -7,7 +7,7 @@
     "legacyExport": "legacy-personalized-snp-evidence-20260427",
     "generatedAt": "2026-06-22T12:41:27.483Z",
     "variantCount": 140,
-    "claimCount": 491,
+    "claimCount": 494,
     "studyEvidenceCount": 1403
   },
   "variants": [
@@ -8525,22 +8525,34 @@
       "genotypes": {
         "CC": {
           "legacyAttentionScore": 1.5,
-          "direction": "higher_attention",
+          "score": 0.638,
+          "direction": "possible_increase",
+          "magnitude": 0.75,
+          "certainty": 0.85,
           "targetType": "trait_association",
-          "pathwayScoringEligible": false,
-          "interpretation": "In many European-ancestry studies, CC is associated with lactase non-persistence tendency. Symptoms and ancestry context matter."
+          "claimId": "rs4988235_CC_trait_association",
+          "pathwayScoringEligible": true,
+          "interpretation": "In many European-ancestry studies, CC is associated with lactase non-persistence tendency. Direction 1; magnitude 0.750; certainty 0.850; final score 0.638. Symptoms and ancestry context matter."
         },
         "CT": {
-          "direction": "persistence_tendency",
+          "score": 0,
+          "direction": "neutral_or_unscored",
+          "magnitude": 0,
+          "certainty": 0.85,
           "targetType": "trait_association",
+          "claimId": "rs4988235_CT_trait_association",
           "pathwayScoringEligible": false,
-          "interpretation": "One T allele is commonly associated with lactase persistence in European-ancestry contexts."
+          "interpretation": "One T allele is commonly associated with lactase persistence in European-ancestry contexts. Direction 0; magnitude 0.000; certainty 0.850; final score 0.000."
         },
         "TT": {
-          "direction": "persistence_tendency",
+          "score": 0,
+          "direction": "neutral_or_unscored",
+          "magnitude": 0,
+          "certainty": 0.85,
           "targetType": "trait_association",
+          "claimId": "rs4988235_TT_trait_association",
           "pathwayScoringEligible": false,
-          "interpretation": "Two T alleles are commonly associated with lactase persistence in European-ancestry contexts."
+          "interpretation": "Two T alleles are commonly associated with lactase persistence in European-ancestry contexts. Direction 0; magnitude 0.000; certainty 0.850; final score 0.000."
         }
       },
       "validationMarkers": [

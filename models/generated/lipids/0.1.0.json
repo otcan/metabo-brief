@@ -1,0 +1,241 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelId": "lipids",
+  "modelVersion": "0.1.0",
+  "name": "Lipid handling tendency",
+  "pathway": "Lipids",
+  "profileGroup": "MetaboBrief starter pathway profile",
+  "status": "experimental",
+  "algorithm": {
+    "id": "group-capped-normalized-sum",
+    "version": "1.0.0"
+  },
+  "variantContributionModelVersion": "legacy-v0",
+  "compatiblePanelVersion": "0.3.0",
+  "biologicalQuestion": "Do the curated SNP findings favor lower or higher modelled lipid-handling burden?",
+  "negativePole": "Lower modelled lipid-handling burden",
+  "positivePole": "Higher modelled lipid-handling burden",
+  "includedMechanisms": [
+    "Triglyceride context",
+    "LDL and HDL context",
+    "lipoprotein transport",
+    "adiponectin context"
+  ],
+  "excludedMechanisms": [
+    "Measured lipids",
+    "diet",
+    "body composition",
+    "medication use",
+    "cardiovascular diagnosis"
+  ],
+  "defaultProfile": "conservative",
+  "minimumCoverage": 0.25,
+  "minimumIndependentSignals": 2,
+  "minimumEvidenceQuality": 0.3,
+  "maximumGroupContribution": 0.5,
+  "inputs": [
+    {
+      "rsid": "rs429358",
+      "claimIds": [
+        "rs429358_CC_biomarker_tendency",
+        "rs429358_CT_biomarker_tendency",
+        "rs429358_TT_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs429358_CC_biomarker_tendency": "scored",
+        "rs429358_CT_biomarker_tendency": "scored",
+        "rs429358_TT_biomarker_tendency": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "apoe-biomarker-tendency",
+      "independenceGroup": "apoe-biomarker-tendency",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs429358_CC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs429358_CT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs429358_TT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns APOE rs429358 to Lipids with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs5882",
+      "claimIds": [
+        "rs5882_AA_transport_activity",
+        "rs5882_AG_transport_activity",
+        "rs5882_GG_transport_activity"
+      ],
+      "contributionStates": {
+        "rs5882_AA_transport_activity": "supported_baseline",
+        "rs5882_AG_transport_activity": "scored",
+        "rs5882_GG_transport_activity": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "cetp-transport-activity",
+      "independenceGroup": "cetp-transport-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs5882_AA_transport_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs5882_AG_transport_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs5882_GG_transport_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns CETP rs5882 to Lipids with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs688",
+      "claimIds": [
+        "rs688_CC_transport_activity",
+        "rs688_CT_transport_activity",
+        "rs688_TT_transport_activity"
+      ],
+      "contributionStates": {
+        "rs688_CC_transport_activity": "supported_baseline",
+        "rs688_CT_transport_activity": "scored",
+        "rs688_TT_transport_activity": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "ldlr-transport-activity",
+      "independenceGroup": "ldlr-transport-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs688_CC_transport_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs688_CT_transport_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs688_TT_transport_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns LDLR rs688 to Lipids with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs708272",
+      "claimIds": [
+        "rs708272_AA_transport_activity",
+        "rs708272_AG_transport_activity",
+        "rs708272_GG_transport_activity"
+      ],
+      "contributionStates": {
+        "rs708272_AA_transport_activity": "scored",
+        "rs708272_AG_transport_activity": "scored",
+        "rs708272_GG_transport_activity": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "cetp-transport-activity",
+      "independenceGroup": "cetp-transport-activity",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs708272_AA_transport_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs708272_AG_transport_activity": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs708272_GG_transport_activity": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns CETP rs708272 to Lipids with explicit genotype contribution components."
+    },
+    {
+      "rsid": "rs7412",
+      "claimIds": [
+        "rs7412_CC_biomarker_tendency",
+        "rs7412_CT_biomarker_tendency",
+        "rs7412_TT_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs7412_CC_biomarker_tendency": "supported_baseline",
+        "rs7412_CT_biomarker_tendency": "scored",
+        "rs7412_TT_biomarker_tendency": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "apoe-biomarker-tendency",
+      "independenceGroup": "apoe-biomarker-tendency",
+      "modelWeight": 1,
+      "profiles": [
+        "conservative",
+        "exploratory"
+      ],
+      "profilesByClaimId": {
+        "rs7412_CC_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs7412_CT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ],
+        "rs7412_TT_biomarker_tendency": [
+          "conservative",
+          "exploratory"
+        ]
+      },
+      "inclusionRationale": "Included because the starter SNP panel assigns APOE rs7412 to Lipids with explicit genotype contribution components."
+    }
+  ],
+  "interpretationBands": [
+    {
+      "min": 0,
+      "max": 39,
+      "label": "toward lower modelled lipid-handling burden"
+    },
+    {
+      "min": 40,
+      "max": 60,
+      "label": "near the model midpoint"
+    },
+    {
+      "min": 61,
+      "max": 100,
+      "label": "toward higher modelled lipid-handling burden"
+    }
+  ],
+  "limitations": [
+    "This is a relative pathway tendency within the MetaboBrief starter model, not a population percentile.",
+    "This model combines curated SNP contribution components assigned to this pathway; it does not measure current pathway activity.",
+    "The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization.",
+    "Not included: Measured lipids, diet, body composition, medication use, cardiovascular diagnosis."
+  ]
+}
