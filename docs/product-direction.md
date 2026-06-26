@@ -20,7 +20,7 @@ The current constraints are equally important:
 
 - Direct rsID matching only.
 - Limited input formats.
-- No ZIP handling.
+- Initial ZIP/gzip handling is present, but parser fixtures and provider-specific validation still need expansion.
 - No genome-build or strand-orientation handling.
 - No VCF/gVCF support.
 - No REF/ALT-aware matching.

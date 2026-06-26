@@ -1,3 +1,4 @@
+import { readGenotypeFile } from "./file-reader.js";
 import { APPLICATION_VERSION, REPORT_SCHEMA_VERSION, analyzeVariants, parseRawGenotype } from "./snp-core.js";
 
 const state = {
@@ -404,6 +405,8 @@ function renderSummary(report) {
   const coverage = report.coverage || {};
   const validation = report.validation || {};
   const validationRows = [
+    ["Input", validation.importedFrom || validation.fileName || "not recorded"],
+    ["Compression", validation.compression || "none"],
     ["Provider", `${validation.provider || "not detected"} (${validation.providerConfidence || "none"})`],
     ["Format", `${validation.format || "unrecognized"} (${validation.formatConfidence || "low"})`],
     ["Genome build", `${validation.genomeBuild || "not detected"} (${validation.genomeBuildConfidence || "none"})`],
@@ -637,13 +640,13 @@ function renderReport(report) {
   els.exportJson.disabled = false;
 }
 
-async function analyzeText(text, label) {
+async function analyzeText(text, label, inputMetadata = {}) {
   if (!state.panel) {
     setStatus("SNP panel is still loading. Try again in a moment.", "error");
     return;
   }
 
-  const parsed = parseRawGenotype(text);
+  const parsed = parseRawGenotype(text, inputMetadata);
   const report = analyzeVariants(parsed, state.panel, state.pathwayModels, {
     applicationVersion: APPLICATION_VERSION,
     reportSchemaVersion: REPORT_SCHEMA_VERSION,
@@ -652,6 +655,16 @@ async function analyzeText(text, label) {
   renderReport(report);
   els.fileName.textContent = label;
   setStatus(`Analyzed ${label}. Everything stayed in this browser session.`, "success");
+}
+
+async function analyzeFile(file) {
+  setStatus(`Reading ${file.name} locally...`, "neutral");
+  const decoded = await readGenotypeFile(file);
+  setStatus(`Parsing ${decoded.label} locally...`, "neutral");
+  await analyzeText(decoded.text, decoded.label, {
+    ...decoded.metadata,
+    warnings: decoded.warnings
+  });
 }
 
 async function loadPanel() {
@@ -718,7 +731,7 @@ els.file.addEventListener("change", async event => {
     return;
   }
   els.fileName.textContent = file.name;
-  await analyzeText(await file.text(), file.name);
+  await analyzeFile(file).catch(error => setStatus(error.message, "error"));
 });
 
 els.sample.addEventListener("click", () => {

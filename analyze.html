@@ -40,7 +40,7 @@
                         <div>
                             <span>01</span>
                             <strong>Parse raw SNP file</strong>
-                            <p>Accepts tab, CSV, and common allele-column exports.</p>
+                            <p>Accepts TXT, CSV, TSV, ZIP, and gzip consumer exports.</p>
                         </div>
                         <div>
                             <span>02</span>
@@ -64,10 +64,10 @@
                         <span class="local-badge">Browser only</span>
                     </div>
 
-                    <input id="snp-file" class="upload-native" type="file" accept=".txt,.csv,.tsv"/>
+                    <input id="snp-file" class="upload-native" type="file" accept=".txt,.csv,.tsv,.zip,.gz"/>
                     <label class="upload-dropzone" for="snp-file">
                         <span class="upload-label">Raw genotype file</span>
-                        <strong>Choose .txt, .csv, or .tsv</strong>
+                        <strong>Choose .txt, .csv, .tsv, .zip, or .gz</strong>
                         <span>Data is read with browser APIs. This app has no upload endpoint.</span>
                     </label>
                     <p id="selected-file-name" class="selected-file-name">No file selected</p>

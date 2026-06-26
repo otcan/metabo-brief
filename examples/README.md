@@ -10,6 +10,8 @@ This directory contains synthetic files that demonstrate MetaboBrief without exp
 
 The synthetic examples use the allele orientation expected by the current curated panel and are generated with `node scripts/build-synthetic-examples.mjs`. The analyzer does not yet perform strand flipping.
 
+Compressed ZIP/gzip parser coverage is tested by generating in-memory synthetic archives in `tests/file-reader.test.mjs`; do not commit raw personal genotype archives as fixtures.
+
 ## Example rules
 
 - Use synthetic data by default.

@@ -87,8 +87,8 @@ function looksLikeHeader(fields) {
   );
 }
 
-function detectProvider(commentLines) {
-  const text = commentLines.join(" ").toLowerCase();
+function detectProvider(commentLines, sourceNames = []) {
+  const text = [...commentLines, ...sourceNames].join(" ").toLowerCase();
   if (text.includes("23andme") || text.includes("23 and me")) {
     return { provider: "23andMe", confidence: "medium" };
   }
@@ -104,13 +104,16 @@ function detectProvider(commentLines) {
   return { provider: null, confidence: "none" };
 }
 
-function detectGenomeBuild(commentLines) {
+function detectGenomeBuild(commentLines, provider = null) {
   const text = commentLines.join(" ").toLowerCase();
   if (/\b(grch37|hg19|build\s*37|genome\s+build\s+37)\b/.test(text)) {
     return { genomeBuild: "GRCh37", confidence: "medium" };
   }
   if (/\b(grch38|hg38|build\s*38|genome\s+build\s+38)\b/.test(text)) {
     return { genomeBuild: "GRCh38", confidence: "medium" };
+  }
+  if (provider === "MyHeritage") {
+    return { genomeBuild: "GRCh37", confidence: "provider-default" };
   }
   return { genomeBuild: null, confidence: "none" };
 }
@@ -180,10 +183,11 @@ function cleanLegacyPlainText(value) {
     .replace(/\bDirection\s+[-\d.]+;\s*magnitude\s+[-\d.]+;\s*certainty\s+[-\d.]+;\s*final score\s+[-\d.]+\.?\s*/gi, "");
 }
 
-export function parseRawGenotype(text) {
+export function parseRawGenotype(text, inputMetadata = {}) {
   const variants = new Map();
   const records = [];
   const warnings = [];
+  const inputWarnings = Array.isArray(inputMetadata.warnings) ? inputMetadata.warnings : [];
   const lines = String(text || "").split(/\r?\n/);
   let header = null;
   let inferredFormat = null;
@@ -192,6 +196,7 @@ export function parseRawGenotype(text) {
   let dataLineCount = 0;
   let noCallCount = 0;
   let duplicateCount = 0;
+  let conflictingDuplicateCount = 0;
   let malformedCount = 0;
 
   for (const rawLine of lines) {
@@ -243,6 +248,9 @@ export function parseRawGenotype(text) {
 
     if (variants.has(normalizedRsid)) {
       duplicateCount += 1;
+      if (variants.get(normalizedRsid).normalizedGenotype !== normalizedGenotype) {
+        conflictingDuplicateCount += 1;
+      }
     }
 
     variants.set(normalizedRsid, parsedRecord);
@@ -255,20 +263,37 @@ export function parseRawGenotype(text) {
   if (duplicateCount > 0) {
     warnings.push(`${duplicateCount} duplicate rsID row(s) were overwritten by later rows.`);
   }
+  if (conflictingDuplicateCount > 0) {
+    warnings.push(`${conflictingDuplicateCount} duplicate rsID row(s) had conflicting genotype calls.`);
+  }
 
-  const provider = detectProvider(commentLines);
-  const build = detectGenomeBuild(commentLines);
+  const sourceNames = [
+    inputMetadata.fileName,
+    inputMetadata.sourceName,
+    inputMetadata.containerName,
+    inputMetadata.selectedZipEntry,
+    inputMetadata.importedFrom
+  ].filter(Boolean);
+  const provider = detectProvider(commentLines, sourceNames);
+  const build = detectGenomeBuild(commentLines, provider.provider);
 
   return {
     variants,
     records,
-    warnings,
+    warnings: [...inputWarnings, ...warnings],
     metadata: {
+      fileName: inputMetadata.fileName || inputMetadata.sourceName || null,
+      sourceName: inputMetadata.sourceName || inputMetadata.fileName || null,
+      containerName: inputMetadata.containerName || null,
+      selectedZipEntry: inputMetadata.selectedZipEntry || null,
+      compression: inputMetadata.compression || "none",
+      importedFrom: inputMetadata.importedFrom || inputMetadata.sourceName || inputMetadata.fileName || null,
       commentCount,
       dataLineCount,
       parsedVariantCount: variants.size,
       noCallCount,
       duplicateCount,
+      conflictingDuplicateCount,
       malformedCount,
       detectedHeader: Boolean(header),
       provider: provider.provider,
@@ -303,8 +328,15 @@ function buildValidation(parsed, coverage) {
   if (coverage.uninterpretablePanelVariantCount > 0) {
     limitations.push(`${coverage.uninterpretablePanelVariantCount} panel loci were present but did not match a supported genotype claim.`);
   }
+  if (metadata.conflictingDuplicateCount > 0) {
+    limitations.push(`${metadata.conflictingDuplicateCount} duplicated rsID call(s) conflicted; later rows were used.`);
+  }
 
   return {
+    fileName: metadata.fileName || null,
+    importedFrom: metadata.importedFrom || null,
+    selectedZipEntry: metadata.selectedZipEntry || null,
+    compression: metadata.compression || "none",
     provider: metadata.provider || "not detected",
     providerConfidence: metadata.providerConfidence || "none",
     format: metadata.format || "unrecognized rsID table",

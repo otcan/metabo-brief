@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added local ZIP and gzip genotype-file reading for the analyzer, including MyHeritage CSV detection.
+- Added file validation metadata for imported filename, selected ZIP entry, compression type, and conflicting duplicate calls.
+- Added a CDP browser no-network smoke test for local file analysis.
 - Added starter-reviewed release metadata and model cards for every enabled pathway score.
 - Added UI grouping for reviewed versus experimental pathway scores with review status, release-use text, known weaknesses, and model-card links.
 - Tightened model validation and tests so default-enabled models require review metadata and model-card coverage.

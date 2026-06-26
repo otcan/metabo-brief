@@ -33,7 +33,8 @@ Design contracts:
 ## What is included
 
 - Static HTML/CSS/JavaScript pages with no build step.
-- Browser-only parsing for 23andMe-style and AncestryDNA-style raw genotype files.
+- Browser-only parsing for 23andMe-style, AncestryDNA-style, MyHeritage, and generic raw genotype files.
+- Local `.zip` and `.gz` genotype file reading without a backend upload.
 - A curated SNP panel in `data/snp-panel.json` with 140 SNPs and 494 genotype claims.
 - A pure scoring engine in `analyzer/scoring-engine.js`.
 - Manifest-backed pathway models in `models/manifest.json`, with 16 enabled scores covering every current panel pathway family.
@@ -55,6 +56,9 @@ MetaboBrief now treats SNP analysis as core. The default analyzer performs direc
 |---|---|---|
 | 23andMe-style raw SNP text | Supported | Four-column `rsid/chromosome/position/genotype` rows. |
 | AncestryDNA-style raw SNP text | Supported | Five-column `rsid/chromosome/position/allele1/allele2` rows. |
+| MyHeritage raw DNA CSV | Supported | Header-based `RSID/CHROMOSOME/POSITION/RESULT` parsing; MyHeritage defaults to GRCh37 when comments do not state a build. |
+| FamilyTreeDNA-style raw text | Initial detection | Provider detection is present; fixtures and stricter parsing are still being expanded. |
+| ZIP and gzip exports | Supported | The browser selects a parseable `.txt`, `.csv`, `.tsv`, or `.gz` genotype file inside ZIP archives. |
 | Generic rsID + genotype TSV/CSV | Partially supported | Header-based parsing handles common column names. |
 | Raw VCF / gVCF | Not yet supported | Planned separately; no liftover or REF/ALT modeling yet. |
 | Raw metabolomics files | Later | Metabolomics panel support is deferred. |
@@ -66,6 +70,7 @@ MetaboBrief now treats SNP analysis as core. The default analyzer performs direc
 | Analyzer-first entry page | `index.html` |
 | Local SNP analyzer | `analyze.html` |
 | SNP parser and analysis engine | `analyzer/snp-core.js` |
+| Local compressed-file reader | `analyzer/file-reader.js` |
 | Pathway scoring engine | `analyzer/scoring-engine.js` |
 | Starter SNP panel | `data/snp-panel.json` |
 | Pathway definitions | `data/pathway-definitions.json` |
@@ -107,10 +112,17 @@ Run the parser tests:
 npm test
 ```
 
+Run the browser no-network smoke test when Chrome/Chromium is available:
+
+```bash
+npm run test:no-network
+```
+
 ## Privacy posture
 
 - Raw genotype files are read locally with browser file APIs.
 - No data leaves the browser in the default template.
+- `npm run test:no-network` verifies that analysis of a local file does not trigger network requests after the static app assets are loaded.
 - No telemetry, analytics, uploads, checkout, or contact form is included.
 - The demo uses local storage only for cookie-banner preference.
 - Public examples should be synthetic or explicitly consented and de-identified.
