@@ -12,7 +12,7 @@ The current foundation is suitable for that direction:
 - MIT-licensed application code today.
 - A bundled curated panel with 140 SNPs and 491 genotype claims.
 - Visible source links, limitations, validation markers, review status, effect direction, actionability, relevance, scoring components, and coverage confidence.
-- A pure scoring engine with a first versioned caffeine-clearance pathway model.
+- A pure scoring engine with manifest-backed caffeine-clearance and caffeine-sensitivity pathway models.
 - Direct rsID/genotype matching with no backend upload.
 
 The current constraints are equally important:
@@ -23,7 +23,7 @@ The current constraints are equally important:
 - No genome-build or strand-orientation handling.
 - No VCF/gVCF support.
 - No REF/ALT-aware matching.
-- Only the caffeine-clearance model is currently formalized as a versioned pathway score.
+- Only the caffeine response profile is currently formalized, split into caffeine-clearance and caffeine-sensitivity models.
 - Current validation metadata makes these limits visible, but it is not yet fail-closed build or strand normalization.
 
 ## Positioning
@@ -91,7 +91,9 @@ The report should lead with pathway tendency scores, then categories, then SNP-l
 
 - Pathway tendency score.
 - Signal strength.
-- Evidence confidence.
+- Evidence quality.
+- Directional consistency.
+- Result support.
 - Coverage.
 - Stability.
 
@@ -150,12 +152,14 @@ Report findings and pathway scores should pair:
 - Variant contribution.
 - Pathway tendency score.
 - Signal strength.
-- Evidence confidence.
+- Evidence quality.
+- Directional consistency.
+- Result support.
 - Score stability.
 
-The legacy variant contribution model is preserved as `metabobrief-pathway` / `legacy-v0`. Formal pathway models should be separately versioned, starting with `metabobrief-pathway-v1`.
+The legacy variant contribution model is preserved as `metabobrief-variant-contribution` / `legacy-v0`. Formal pathway models carry separate schema, model, algorithm, variant-contribution, and compatible-panel versions.
 
-Pathway scores must define their negative pole, positive pole, biological question, included mechanisms, excluded mechanisms, coverage threshold, and limitations.
+Pathway scores must define their negative pole, positive pole, biological question, included mechanisms, excluded mechanisms, explicit accepted claim IDs, axis mappings, contribution states, coverage threshold, and limitations.
 
 See [scoring-architecture.md](scoring-architecture.md).
 

@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelId": "caffeine-sensitivity",
+  "modelVersion": "0.1.0",
+  "name": "Caffeine sensitivity tendency",
+  "pathway": "Caffeine / stimulant sensitivity",
+  "profileGroup": "Caffeine response profile",
+  "status": "experimental",
+  "algorithm": {
+    "id": "group-capped-normalized-sum",
+    "version": "1.0.0"
+  },
+  "variantContributionModelVersion": "legacy-v0",
+  "compatiblePanelVersion": "0.2.0",
+  "biologicalQuestion": "Do the explicitly supported variants favor lower or higher experiential caffeine and stimulant sensitivity?",
+  "negativePole": "Tendency toward lower caffeine or stimulant sensitivity",
+  "positivePole": "Tendency toward higher caffeine or stimulant sensitivity",
+  "includedMechanisms": [
+    "Adenosine receptor response context",
+    "COMT stimulant-response context"
+  ],
+  "excludedMechanisms": [
+    "Caffeine clearance speed",
+    "Current caffeine intake",
+    "Sleep debt",
+    "Anxiety history",
+    "Medication interactions",
+    "Measured caffeine response"
+  ],
+  "defaultProfile": "conservative",
+  "minimumCoverage": 0.4,
+  "minimumIndependentSignals": 1,
+  "minimumEvidenceQuality": 0.3,
+  "maximumGroupContribution": 0.5,
+  "inputs": [
+    {
+      "rsid": "rs5751876",
+      "claimIds": [
+        "rs5751876_CC_biomarker_tendency",
+        "rs5751876_CT_biomarker_tendency",
+        "rs5751876_TT_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs5751876_CC_biomarker_tendency": "supported_baseline",
+        "rs5751876_CT_biomarker_tendency": "supported_baseline",
+        "rs5751876_TT_biomarker_tendency": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "adenosine-receptor-response",
+      "independenceGroup": "adora2a-response",
+      "modelWeight": 1,
+      "profiles": ["conservative", "exploratory"],
+      "inclusionRationale": "ADORA2A is used as the primary stimulant-response marker represented in the starter panel."
+    },
+    {
+      "rsid": "rs4680",
+      "claimIds": [
+        "rs4680_AA_enzyme_activity",
+        "rs4680_AG_enzyme_activity",
+        "rs4680_GG_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs4680_AA_enzyme_activity": "scored",
+        "rs4680_AG_enzyme_activity": "scored",
+        "rs4680_GG_enzyme_activity": "supported_baseline"
+      },
+      "axisMultiplier": -1,
+      "mechanism": "comt-stimulant-response-context",
+      "independenceGroup": "comt-response",
+      "modelWeight": 0.75,
+      "profiles": ["conservative", "exploratory"],
+      "inclusionRationale": "Lower COMT activity is mapped toward the higher-sensitivity pole in this model."
+    }
+  ],
+  "interpretationBands": [
+    {
+      "min": 0,
+      "max": 39,
+      "label": "toward lower caffeine or stimulant sensitivity"
+    },
+    {
+      "min": 40,
+      "max": 60,
+      "label": "near the model midpoint"
+    },
+    {
+      "min": 61,
+      "max": 100,
+      "label": "toward higher caffeine or stimulant sensitivity"
+    }
+  ],
+  "limitations": [
+    "This model estimates experiential stimulant sensitivity tendency, not caffeine clearance.",
+    "Sleep, anxiety, caffeine dose, tolerance, medications, and context can dominate real-world response.",
+    "The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization."
+  ]
+}

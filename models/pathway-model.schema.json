@@ -1,27 +1,40 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://otcan.github.io/metabo-brief/models/pathway-model.schema.json",
-  "title": "MetaboBrief pathway model",
+  "title": "MetaboBrief explicit pathway model",
   "type": "object",
   "required": [
-    "pathwayId",
+    "schemaVersion",
+    "modelId",
+    "modelVersion",
     "name",
     "pathway",
-    "modelVersion",
+    "profileGroup",
+    "algorithm",
+    "variantContributionModelVersion",
+    "compatiblePanelVersion",
     "biologicalQuestion",
     "negativePole",
     "positivePole",
-    "sourcePathways",
-    "eligibleTargetTypes",
+    "defaultProfile",
     "minimumCoverage",
     "minimumIndependentSignals",
-    "aggregationFormula",
+    "minimumEvidenceQuality",
+    "maximumGroupContribution",
+    "inputs",
+    "interpretationBands",
     "limitations"
   ],
   "properties": {
-    "pathwayId": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "modelId": {
       "type": "string",
       "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "modelVersion": {
+      "type": "string"
     },
     "name": {
       "type": "string"
@@ -29,7 +42,30 @@
     "pathway": {
       "type": "string"
     },
-    "modelVersion": {
+    "profileGroup": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["experimental", "reviewed", "deprecated", "archived"]
+    },
+    "algorithm": {
+      "type": "object",
+      "required": ["id", "version"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "variantContributionModelVersion": {
+      "type": "string"
+    },
+    "compatiblePanelVersion": {
       "type": "string"
     },
     "biologicalQuestion": {
@@ -49,15 +85,9 @@
       "type": "array",
       "items": { "type": "string" }
     },
-    "sourcePathways": {
-      "type": "array",
-      "minItems": 1,
-      "items": { "type": "string" }
-    },
-    "eligibleTargetTypes": {
-      "type": "array",
-      "minItems": 1,
-      "items": { "type": "string" }
+    "defaultProfile": {
+      "type": "string",
+      "enum": ["conservative", "exploratory"]
     },
     "minimumCoverage": {
       "type": "number",
@@ -68,12 +98,7 @@
       "type": "integer",
       "minimum": 1
     },
-    "minimumEvidenceWeight": {
-      "type": "number",
-      "minimum": 0,
-      "maximum": 1
-    },
-    "conservativeEvidenceFloor": {
+    "minimumEvidenceQuality": {
       "type": "number",
       "minimum": 0,
       "maximum": 1
@@ -82,15 +107,85 @@
       "type": "number",
       "minimum": 0
     },
-    "independenceGroups": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "array",
-        "items": { "type": "string" }
+    "inputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "rsid",
+          "claimIds",
+          "contributionStates",
+          "axisMultiplier",
+          "mechanism",
+          "independenceGroup",
+          "modelWeight",
+          "profiles",
+          "inclusionRationale"
+        ],
+        "properties": {
+          "rsid": {
+            "type": "string",
+            "pattern": "^rs[0-9]+$"
+          },
+          "claimIds": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string" }
+          },
+          "contributionStates": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "enum": [
+                "scored",
+                "supported_baseline",
+                "insufficient_evidence",
+                "unsupported_genotype",
+                "excluded"
+              ]
+            }
+          },
+          "axisMultiplier": {
+            "type": "number"
+          },
+          "mechanism": {
+            "type": "string"
+          },
+          "independenceGroup": {
+            "type": "string"
+          },
+          "modelWeight": {
+            "type": "number",
+            "minimum": 0
+          },
+          "profiles": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "enum": ["conservative", "exploratory"]
+            }
+          },
+          "profilesByClaimId": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["conservative", "exploratory"]
+              }
+            }
+          },
+          "evidenceConflict": {
+            "type": "boolean"
+          },
+          "inclusionRationale": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
       }
-    },
-    "aggregationFormula": {
-      "type": "string"
     },
     "interpretationBands": {
       "type": "array",
@@ -101,7 +196,8 @@
           "min": { "type": "number" },
           "max": { "type": "number" },
           "label": { "type": "string" }
-        }
+        },
+        "additionalProperties": false
       }
     },
     "limitations": {

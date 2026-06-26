@@ -1,0 +1,209 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelId": "caffeine-response-legacy",
+  "modelVersion": "1.0.0",
+  "name": "Caffeine response legacy tendency",
+  "pathway": "Caffeine / stimulant sensitivity",
+  "profileGroup": "Caffeine response profile",
+  "status": "archived",
+  "algorithm": {
+    "id": "group-capped-normalized-sum",
+    "version": "1.0.0"
+  },
+  "variantContributionModelVersion": "legacy-v0",
+  "compatiblePanelVersion": "0.2.0",
+  "biologicalQuestion": "Archived broad caffeine and stimulant response score preserved for reproducibility of reports created before the caffeine model split.",
+  "negativePole": "Tendency toward slower clearance or stronger stimulant sensitivity",
+  "positivePole": "Tendency toward faster clearance or lower stimulant sensitivity",
+  "includedMechanisms": [
+    "NAT2 acetylation context",
+    "CYP1A2 regulatory context",
+    "ADORA2A response context",
+    "COMT response context",
+    "UGT1A1 proxy context"
+  ],
+  "excludedMechanisms": [
+    "Current caffeine intake",
+    "Smoking status",
+    "Pregnancy",
+    "Medication interactions",
+    "Liver function",
+    "Measured caffeine clearance"
+  ],
+  "defaultProfile": "exploratory",
+  "minimumCoverage": 0.2,
+  "minimumIndependentSignals": 1,
+  "minimumEvidenceQuality": 0.3,
+  "maximumGroupContribution": 0.5,
+  "inputs": [
+    {
+      "rsid": "rs1799930",
+      "claimIds": [
+        "rs1799930_AA_enzyme_activity",
+        "rs1799930_AC_enzyme_activity",
+        "rs1799930_AG_enzyme_activity",
+        "rs1799930_AT_enzyme_activity",
+        "rs1799930_CC_enzyme_activity",
+        "rs1799930_CG_enzyme_activity",
+        "rs1799930_CT_enzyme_activity",
+        "rs1799930_GG_enzyme_activity",
+        "rs1799930_GT_enzyme_activity",
+        "rs1799930_TT_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs1799930_AA_enzyme_activity": "scored",
+        "rs1799930_AC_enzyme_activity": "insufficient_evidence",
+        "rs1799930_AG_enzyme_activity": "scored",
+        "rs1799930_AT_enzyme_activity": "insufficient_evidence",
+        "rs1799930_CC_enzyme_activity": "supported_baseline",
+        "rs1799930_CG_enzyme_activity": "supported_baseline",
+        "rs1799930_CT_enzyme_activity": "supported_baseline",
+        "rs1799930_GG_enzyme_activity": "supported_baseline",
+        "rs1799930_GT_enzyme_activity": "supported_baseline",
+        "rs1799930_TT_enzyme_activity": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "nat2-acetylation-context",
+      "independenceGroup": "nat2-slow-acetylation",
+      "modelWeight": 1,
+      "profiles": ["exploratory"],
+      "inclusionRationale": "Archived from the original broad caffeine response model."
+    },
+    {
+      "rsid": "rs1799931",
+      "claimIds": [
+        "rs1799931_AA_enzyme_activity",
+        "rs1799931_AG_enzyme_activity",
+        "rs1799931_GG_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs1799931_AA_enzyme_activity": "scored",
+        "rs1799931_AG_enzyme_activity": "scored",
+        "rs1799931_GG_enzyme_activity": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "nat2-acetylation-context",
+      "independenceGroup": "nat2-slow-acetylation",
+      "modelWeight": 1,
+      "profiles": ["exploratory"],
+      "inclusionRationale": "Archived from the original broad caffeine response model."
+    },
+    {
+      "rsid": "rs4680",
+      "claimIds": [
+        "rs4680_AA_enzyme_activity",
+        "rs4680_AG_enzyme_activity",
+        "rs4680_GG_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs4680_AA_enzyme_activity": "scored",
+        "rs4680_AG_enzyme_activity": "scored",
+        "rs4680_GG_enzyme_activity": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "comt-stimulant-context",
+      "independenceGroup": "comt-stimulant-context",
+      "modelWeight": 1,
+      "profiles": ["exploratory"],
+      "inclusionRationale": "Archived from the original broad caffeine response model."
+    },
+    {
+      "rsid": "rs5751876",
+      "claimIds": [
+        "rs5751876_CC_biomarker_tendency",
+        "rs5751876_CT_biomarker_tendency",
+        "rs5751876_TT_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs5751876_CC_biomarker_tendency": "supported_baseline",
+        "rs5751876_CT_biomarker_tendency": "supported_baseline",
+        "rs5751876_TT_biomarker_tendency": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "adora2a-sensitivity",
+      "independenceGroup": "adora2a-sensitivity",
+      "modelWeight": 1,
+      "profiles": ["exploratory"],
+      "inclusionRationale": "Archived from the original broad caffeine response model."
+    },
+    {
+      "rsid": "rs762551",
+      "claimIds": [
+        "rs762551_AA_enzyme_activity",
+        "rs762551_AC_enzyme_activity",
+        "rs762551_CC_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs762551_AA_enzyme_activity": "scored",
+        "rs762551_AC_enzyme_activity": "supported_baseline",
+        "rs762551_CC_enzyme_activity": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "cyp1a2-ahr-axis",
+      "independenceGroup": "cyp1a2-ahr-axis",
+      "modelWeight": 1,
+      "profiles": ["exploratory"],
+      "inclusionRationale": "Archived from the original broad caffeine response model; AC is preserved as baseline to reproduce previous denominator behavior."
+    },
+    {
+      "rsid": "rs8175347",
+      "claimIds": [
+        "rs8175347_66_enzyme_activity",
+        "rs8175347_67_enzyme_activity",
+        "rs8175347_77_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs8175347_66_enzyme_activity": "supported_baseline",
+        "rs8175347_67_enzyme_activity": "scored",
+        "rs8175347_77_enzyme_activity": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "ugt1a1-clearance-context",
+      "independenceGroup": "ugt1a1-clearance-context",
+      "modelWeight": 1,
+      "profiles": ["exploratory"],
+      "inclusionRationale": "Archived from the original broad caffeine response model."
+    },
+    {
+      "rsid": "rs887829",
+      "claimIds": [
+        "rs887829_CC_biomarker_tendency",
+        "rs887829_CT_biomarker_tendency",
+        "rs887829_TT_biomarker_tendency"
+      ],
+      "contributionStates": {
+        "rs887829_CC_biomarker_tendency": "supported_baseline",
+        "rs887829_CT_biomarker_tendency": "scored",
+        "rs887829_TT_biomarker_tendency": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "ugt1a1-clearance-context",
+      "independenceGroup": "ugt1a1-clearance-context",
+      "modelWeight": 1,
+      "profiles": ["exploratory"],
+      "inclusionRationale": "Archived from the original broad caffeine response model."
+    }
+  ],
+  "interpretationBands": [
+    {
+      "min": 0,
+      "max": 39,
+      "label": "toward slower clearance or stronger stimulant sensitivity"
+    },
+    {
+      "min": 40,
+      "max": 60,
+      "label": "near the model midpoint"
+    },
+    {
+      "min": 61,
+      "max": 100,
+      "label": "toward faster clearance or lower stimulant sensitivity"
+    }
+  ],
+  "limitations": [
+    "Archived broad caffeine-response model retained only to reproduce earlier reports.",
+    "This model mixes clearance, sensitivity, NAT2, COMT, ADORA2A, and UGT1A1 context and should not be used as the current default.",
+    "The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization."
+  ]
+}

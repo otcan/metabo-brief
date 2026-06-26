@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "1.0.0",
+  "models": [
+    {
+      "modelId": "caffeine-clearance",
+      "modelVersion": "0.2.0",
+      "sha256": "4fff68a89901e4eedcb55b70a6bcd71d5ab8ef4c1b76d57b16813d9a1a0faf96"
+    },
+    {
+      "modelId": "caffeine-sensitivity",
+      "modelVersion": "0.1.0",
+      "sha256": "5c25c71c7a7b0eb838cfc7c15fa760beb6def186861a5e053b42f84a112bc5ca"
+    },
+    {
+      "modelId": "caffeine-response-legacy",
+      "modelVersion": "1.0.0",
+      "sha256": "4677b101e605313da6feb860caf7c4766621c046e6c4dc5712cf258f61cafd64"
+    }
+  ]
+}

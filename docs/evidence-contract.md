@@ -114,23 +114,42 @@ Draft pathway score shape:
   "pathwayId": "caffeine-clearance",
   "pathway": "Caffeine / stimulant sensitivity",
   "title": "Caffeine clearance tendency",
-  "biologicalQuestion": "Do the supported variants collectively favor faster or slower caffeine handling?",
-  "negativePole": "Tendency toward slower caffeine clearance or stronger stimulant sensitivity",
-  "positivePole": "Tendency toward faster caffeine clearance or lower stimulant sensitivity",
-  "score": 72,
-  "rawScore": 0.449,
-  "scoreLabel": "toward faster caffeine clearance or lower stimulant sensitivity",
+  "biologicalQuestion": "Do the explicitly supported variants favor faster or slower caffeine clearance?",
+  "negativePole": "Tendency toward slower caffeine clearance",
+  "positivePole": "Tendency toward faster caffeine clearance",
+  "score": 70,
+  "rawScore": 0.393,
+  "numerator": 0.11,
+  "denominator": 0.28,
+  "scoringFormula": "50 + (50 * numerator / denominator)",
+  "scoreLabel": "toward faster caffeine clearance",
+  "scoreStatus": "provisional",
   "signalStrength": "weak",
-  "evidenceConfidence": "strong",
-  "evidenceWeight": 0.76,
-  "coverage": 0.286,
+  "evidenceQuality": "moderate",
+  "evidenceWeight": 0.55,
+  "directionalConsistency": "consistent_positive",
+  "resultSupport": "low",
+  "evidenceConflict": "none",
+  "coverage": 0.5,
   "stability": "stable",
-  "eligibleVariantCount": 7,
-  "observedVariantCount": 2,
+  "contributorDominance": {
+    "label": "single-signal dominated",
+    "topIndependentGroupPercent": 100
+  },
+  "leaveOneGroupOut": {
+    "min": 50,
+    "max": 50,
+    "scores": []
+  },
+  "inputCount": 2,
+  "observedVariantCount": 1,
   "independentSignalCount": 1,
-  "modelId": "metabobrief-pathway",
-  "modelVersion": "metabobrief-pathway-v1",
-  "variantModelVersion": "legacy-v0",
+  "modelId": "caffeine-clearance",
+  "modelVersion": "0.2.0",
+  "modelSha256": "...",
+  "algorithmId": "group-capped-normalized-sum",
+  "algorithmVersion": "1.0.0",
+  "variantContributionModelVersion": "legacy-v0",
   "contributors": []
 }
 ```
@@ -174,7 +193,7 @@ Draft finding shape:
     "certainty": 0.58,
     "contribution": 0.203,
     "formulaContribution": 0.203,
-    "modelId": "metabobrief-pathway",
+    "modelId": "metabobrief-variant-contribution",
     "modelVersion": "legacy-v0",
     "formula": "direction * magnitude * certainty"
   },
@@ -194,21 +213,35 @@ Pathway models should be machine-readable and separate from SNP annotations.
 ```text
 models/
   pathway-model.schema.json
-  caffeine-clearance.json
+  manifest.json
+  model-lock.json
+  caffeine-clearance/
+    0.2.0.json
+  caffeine-sensitivity/
+    0.1.0.json
+  archived/
+    caffeine-response-legacy-v1.json
 ```
 
 Each model defines:
 
 - Biological axis.
 - Included and excluded mechanisms.
-- Eligible target types.
+- Explicit accepted rsIDs and claim IDs.
+- Pathway-axis multiplier for each input.
+- Mechanism or subpathway.
 - Independence groups.
+- Contribution states.
+- Conservative and exploratory profile eligibility.
 - Minimum coverage.
 - Minimum independent signals.
-- Evidence floor for conservative scoring.
-- Aggregation formula.
+- Minimum evidence quality.
+- Algorithm ID and version.
+- Compatible annotation-pack version.
 - Interpretation bands.
 - Limitations.
+
+The runtime must not select model inputs implicitly by pathway label or target type.
 
 ## Pack Manifest Shape
 

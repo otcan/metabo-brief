@@ -1,5 +1,8 @@
 import { buildPathwayScores, buildVariantScoring } from "./scoring-engine.js";
 
+export const APPLICATION_VERSION = "0.3.0";
+export const REPORT_SCHEMA_VERSION = "0.3.0";
+
 const BASES = new Set(["A", "C", "G", "T"]);
 const BASE_ORDER = { A: 0, C: 1, G: 2, T: 3 };
 
@@ -321,7 +324,7 @@ function buildValidation(parsed, coverage) {
   };
 }
 
-export function analyzeVariants(parsed, panel, pathwayModels = []) {
+export function analyzeVariants(parsed, panel, pathwayModels = [], reportContext = {}) {
   const findings = [];
   const missing = [];
   const unknownGenotypes = [];
@@ -485,8 +488,18 @@ export function analyzeVariants(parsed, panel, pathwayModels = []) {
   const pathwayScores = buildPathwayScores({ panel, parsed, findings, pathwayModels });
 
   return {
-    reportSchemaVersion: "0.2.0",
+    applicationVersion: reportContext.applicationVersion || APPLICATION_VERSION,
+    reportSchemaVersion: reportContext.reportSchemaVersion || REPORT_SCHEMA_VERSION,
     panelVersion: panel.version,
+    panelSha256: reportContext.panelSha256 || null,
+    pathwayModelVersions: pathwayModels.map(model => ({
+      modelId: model.modelId,
+      modelVersion: model.modelVersion,
+      sha256: model.sha256 || model.__manifest?.sha256 || null,
+      algorithmId: model.algorithm?.id || null,
+      algorithmVersion: model.algorithm?.version || null,
+      variantContributionModelVersion: model.variantContributionModelVersion || null
+    })),
     generatedAt: new Date().toISOString(),
     metadata: parsed.metadata,
     validation,

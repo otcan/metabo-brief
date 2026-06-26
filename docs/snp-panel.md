@@ -28,7 +28,7 @@ Each SNP record includes:
 
 Each genotype entry includes:
 
-- signed prototype `score`
+- signed legacy contribution `score`, when the entry has explicit scoring components
 - `direction`
 - `magnitude`
 - `certainty`
@@ -65,11 +65,15 @@ Reports should pair every score with:
 - clinical relevance
 - coverage confidence
 - signal strength
-- evidence confidence
+- evidence quality
+- directional consistency
+- result support
 - score stability
 - limitations
 
-Pathway scores should only be calculated through a documented, versioned pathway model. The first model is `models/caffeine-clearance.json`.
+Pathway scores are calculated only through documented, versioned pathway models listed in `models/manifest.json`. A panel claim does not enter a model unless the model explicitly lists its rsID, accepted claim IDs, axis mapping, contribution state, and independence group.
+
+Legacy attention-style fields that do not have a claim ID, magnitude, and certainty are not treated as pathway contributions.
 
 ## Important limitations
 

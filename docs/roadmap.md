@@ -62,6 +62,8 @@ Requirements:
 - Supported genome builds.
 - Evidence grading rules.
 - Pathway axes and scoring formulas.
+- Explicit model input lists.
+- Contribution-state semantics.
 - Linkage and independence groups.
 - Reproducible build metadata.
 - Schema and content validation.
@@ -123,7 +125,7 @@ A v1 release should satisfy all of these:
 - Default analysis makes no external network calls.
 - Raw genotype data never leaves the browser in Lite mode.
 - Every finding has a visible source, evidence grade, and limitation.
-- Every pathway score has visible signal strength, evidence confidence, coverage, stability, model version, and limitations.
+- Every pathway score has visible signal strength, evidence quality, directional consistency, result support, coverage, stability, model version, and limitations.
 - The same file and annotation-pack version always produce the same report.
 - Unsupported builds, formats, and alleles fail visibly rather than being guessed.
 - Reports export as printable HTML/PDF and structured JSON.

@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-06-26",
+  "modelSchema": {
+    "path": "models/pathway-model.schema.json",
+    "sha256": "9d15f896b936b4ed72abad55d1c2bc438b8ac0bd8ea6d77baf7b30f68ac6c338"
+  },
+  "annotationPack": {
+    "id": "starter-snp-panel",
+    "version": "0.2.0",
+    "path": "data/snp-panel.json",
+    "sha256": "0f7b04c65bfcb4eb2269e1f9b6647b5c209c1f5f8e5134398d8ef1c8c55dbbd7",
+    "recordCount": 140,
+    "claimCount": 491
+  },
+  "models": [
+    {
+      "modelId": "caffeine-clearance",
+      "modelVersion": "0.2.0",
+      "path": "models/caffeine-clearance/0.2.0.json",
+      "sha256": "4fff68a89901e4eedcb55b70a6bcd71d5ab8ef4c1b76d57b16813d9a1a0faf96",
+      "status": "experimental",
+      "defaultEnabled": true,
+      "compatibleAnnotationPack": "0.2.0",
+      "requiredEngineVersion": "0.3.0",
+      "requiredSchemaVersion": "1.0.0",
+      "algorithm": {
+        "id": "group-capped-normalized-sum",
+        "version": "1.0.0"
+      },
+      "variantContributionModelVersion": "legacy-v0",
+      "modelCard": "docs/scoring-architecture.md"
+    },
+    {
+      "modelId": "caffeine-sensitivity",
+      "modelVersion": "0.1.0",
+      "path": "models/caffeine-sensitivity/0.1.0.json",
+      "sha256": "5c25c71c7a7b0eb838cfc7c15fa760beb6def186861a5e053b42f84a112bc5ca",
+      "status": "experimental",
+      "defaultEnabled": true,
+      "compatibleAnnotationPack": "0.2.0",
+      "requiredEngineVersion": "0.3.0",
+      "requiredSchemaVersion": "1.0.0",
+      "algorithm": {
+        "id": "group-capped-normalized-sum",
+        "version": "1.0.0"
+      },
+      "variantContributionModelVersion": "legacy-v0",
+      "modelCard": "docs/scoring-architecture.md"
+    },
+    {
+      "modelId": "caffeine-response-legacy",
+      "modelVersion": "1.0.0",
+      "path": "models/archived/caffeine-response-legacy-v1.json",
+      "sha256": "4677b101e605313da6feb860caf7c4766621c046e6c4dc5712cf258f61cafd64",
+      "status": "archived",
+      "defaultEnabled": false,
+      "compatibleAnnotationPack": "0.2.0",
+      "requiredEngineVersion": "0.3.0",
+      "requiredSchemaVersion": "1.0.0",
+      "algorithm": {
+        "id": "group-capped-normalized-sum",
+        "version": "1.0.0"
+      },
+      "variantContributionModelVersion": "legacy-v0",
+      "modelCard": "docs/scoring-architecture.md"
+    }
+  ]
+}

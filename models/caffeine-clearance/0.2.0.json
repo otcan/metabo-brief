@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "1.0.0",
+  "modelId": "caffeine-clearance",
+  "modelVersion": "0.2.0",
+  "name": "Caffeine clearance tendency",
+  "pathway": "Caffeine / stimulant sensitivity",
+  "profileGroup": "Caffeine response profile",
+  "status": "experimental",
+  "algorithm": {
+    "id": "group-capped-normalized-sum",
+    "version": "1.0.0"
+  },
+  "variantContributionModelVersion": "legacy-v0",
+  "compatiblePanelVersion": "0.2.0",
+  "biologicalQuestion": "Do the explicitly supported variants favor faster or slower caffeine clearance?",
+  "negativePole": "Tendency toward slower caffeine clearance",
+  "positivePole": "Tendency toward faster caffeine clearance",
+  "includedMechanisms": [
+    "CYP1A2 caffeine metabolism activity",
+    "Documented CYP1A2 regulatory context"
+  ],
+  "excludedMechanisms": [
+    "Current caffeine intake",
+    "Smoking status",
+    "Pregnancy",
+    "Medication interactions",
+    "Liver function",
+    "Measured caffeine clearance",
+    "Experiential stimulant sensitivity"
+  ],
+  "defaultProfile": "conservative",
+  "minimumCoverage": 0.4,
+  "minimumIndependentSignals": 1,
+  "minimumEvidenceQuality": 0.3,
+  "maximumGroupContribution": 0.5,
+  "inputs": [
+    {
+      "rsid": "rs762551",
+      "claimIds": [
+        "rs762551_AA_enzyme_activity",
+        "rs762551_AC_enzyme_activity",
+        "rs762551_CC_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs762551_AA_enzyme_activity": "scored",
+        "rs762551_AC_enzyme_activity": "scored",
+        "rs762551_CC_enzyme_activity": "supported_baseline"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "cyp1a2-clearance",
+      "independenceGroup": "cyp1a2-clearance",
+      "modelWeight": 1,
+      "profiles": ["conservative", "exploratory"],
+      "inclusionRationale": "CYP1A2 is the primary caffeine clearance gene represented in the starter panel."
+    },
+    {
+      "rsid": "rs2472297",
+      "claimIds": [
+        "rs2472297_CC_enzyme_activity",
+        "rs2472297_CT_enzyme_activity",
+        "rs2472297_TT_enzyme_activity"
+      ],
+      "contributionStates": {
+        "rs2472297_CC_enzyme_activity": "supported_baseline",
+        "rs2472297_CT_enzyme_activity": "scored",
+        "rs2472297_TT_enzyme_activity": "scored"
+      },
+      "axisMultiplier": 1,
+      "mechanism": "cyp1a2-regulatory-context",
+      "independenceGroup": "cyp1a2-ahr-regulatory",
+      "modelWeight": 0.5,
+      "profiles": ["exploratory"],
+      "inclusionRationale": "Included as exploratory CYP1A2 regulatory context; it is not enough by itself for a strong result."
+    }
+  ],
+  "interpretationBands": [
+    {
+      "min": 0,
+      "max": 39,
+      "label": "toward slower caffeine clearance"
+    },
+    {
+      "min": 40,
+      "max": 60,
+      "label": "near the model midpoint"
+    },
+    {
+      "min": 61,
+      "max": 100,
+      "label": "toward faster caffeine clearance"
+    }
+  ],
+  "limitations": [
+    "This is a relative pathway tendency within the MetaboBrief model, not a population percentile.",
+    "The model does not include current caffeine intake, smoking, pregnancy, liver function, medications, or measured caffeine clearance.",
+    "The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization."
+  ]
+}

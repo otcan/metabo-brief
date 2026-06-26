@@ -1,7 +1,9 @@
-import { analyzeVariants, parseRawGenotype } from "./snp-core.js";
+import { APPLICATION_VERSION, REPORT_SCHEMA_VERSION, analyzeVariants, parseRawGenotype } from "./snp-core.js";
 
 const state = {
   panel: null,
+  panelSha256: null,
+  modelManifest: null,
   pathwayModels: [],
   latestReport: null,
   query: "",
@@ -51,6 +53,33 @@ function formatPercent(value) {
 
 function formatScore(value) {
   return value === null || value === undefined ? "Insufficient" : `${Math.round(value)}/100`;
+}
+
+function formatScoreRange(range) {
+  if (!range || range.min === null || range.max === null) {
+    return "not available";
+  }
+  return `${formatScore(range.min)} to ${formatScore(range.max)}`;
+}
+
+async function sha256Hex(text) {
+  const bytes = new TextEncoder().encode(text);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(digest))
+    .map(byte => byte.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+async function fetchJsonWithHash(path) {
+  const response = await fetch(path);
+  if (!response.ok) {
+    throw new Error(`Could not load ${path} (${response.status})`);
+  }
+  const text = await response.text();
+  return {
+    data: JSON.parse(text),
+    sha256: await sha256Hex(text)
+  };
 }
 
 function plural(value, singular, pluralLabel = `${singular}s`) {
@@ -241,7 +270,7 @@ function renderPathwayScores(report) {
         <td>${escapeHtml(contributor.gene)} <small>${escapeHtml(contributor.rsid)}</small></td>
         <td>${escapeHtml(contributor.genotype)}</td>
         <td>${contributor.contribution > 0 ? "+" : ""}${Number(contributor.contribution).toFixed(3)}</td>
-        <td>${escapeHtml(contributor.status)}</td>
+        <td>${escapeHtml(contributor.contributionState)}</td>
       </tr>
     `).join("");
     const limitations = score.limitations.slice(0, 4).map(item => `<li>${escapeHtml(item)}</li>`).join("");
@@ -251,7 +280,7 @@ function renderPathwayScores(report) {
       <article class="pathway-score-card" data-status="${escapeHtml(score.scoreStatus)}">
         <div class="pathway-score-head">
           <div>
-            <p class="snp-kicker">Pathway tendency score</p>
+            <p class="snp-kicker">Pathway tendency score${score.profileGroup ? ` / ${escapeHtml(score.profileGroup)}` : ""}</p>
             <h3>${escapeHtml(score.title)}</h3>
             <p>${escapeHtml(score.biologicalQuestion || "Modelled genetic tendency within this pathway.")}</p>
           </div>
@@ -267,9 +296,12 @@ function renderPathwayScores(report) {
         </div>
         <div class="pathway-score-metrics">
           <div><span>Signal</span><strong>${escapeHtml(formatLabel(score.signalStrength))}</strong></div>
-          <div><span>Confidence</span><strong>${escapeHtml(formatLabel(score.evidenceConfidence))}</strong><small>weight ${Number(score.evidenceWeight || 0).toFixed(2)}</small></div>
-          <div><span>Coverage</span><strong>${escapeHtml(formatPercent(score.coverage))}</strong><small>${formatNumber(score.observedVariantCount)} of ${formatNumber(score.eligibleVariantCount)} eligible loci</small></div>
-          <div><span>Stability</span><strong>${escapeHtml(formatLabel(score.stability))}</strong></div>
+          <div><span>Evidence quality</span><strong>${escapeHtml(formatLabel(score.evidenceQuality))}</strong><small>weight ${Number(score.evidenceWeight || 0).toFixed(2)}</small></div>
+          <div><span>Result support</span><strong>${escapeHtml(formatLabel(score.resultSupport))}</strong><small>${escapeHtml(formatLabel(score.scoreStatus))}</small></div>
+          <div><span>Coverage</span><strong>${escapeHtml(formatPercent(score.coverage))}</strong><small>${formatNumber(score.observedVariantCount)} of ${formatNumber(score.inputCount)} model inputs observed</small></div>
+          <div><span>Directional consistency</span><strong>${escapeHtml(formatLabel(score.directionalConsistency))}</strong><small>conflict ${escapeHtml(score.evidenceConflict)}</small></div>
+          <div><span>Dominance</span><strong>${escapeHtml(formatLabel(score.contributorDominance?.label))}</strong><small>top group ${formatNumber(score.contributorDominance?.topIndependentGroupPercent)}%</small></div>
+          <div><span>Stability</span><strong>${escapeHtml(formatLabel(score.stability))}</strong><small>LOO ${escapeHtml(formatScoreRange(score.leaveOneGroupOut))}</small></div>
           <div><span>Independent signals</span><strong>${formatNumber(score.independentSignalCount)}</strong></div>
           <div><span>Model</span><strong>${escapeHtml(score.modelVersion)}</strong></div>
         </div>
@@ -514,7 +546,7 @@ function renderFindings(report) {
             <div><span>Direction</span><strong>${Number(finding.scoring.direction).toFixed(0)}</strong></div>
             <div><span>Magnitude</span><strong>${Number(finding.scoring.magnitude).toFixed(3)}</strong></div>
             <div><span>Certainty</span><strong>${Number(finding.scoring.certainty).toFixed(3)}</strong></div>
-            <div><span>Legacy contribution</span><strong>${finding.scoring.contribution > 0 ? "+" : ""}${Number(finding.scoring.contribution).toFixed(3)}</strong></div>
+            <div><span>Variant contribution</span><strong>${finding.scoring.contribution > 0 ? "+" : ""}${Number(finding.scoring.contribution).toFixed(3)}</strong></div>
             <div><span>Scoring model</span><strong>${escapeHtml(finding.scoring.modelVersion)}</strong></div>
           </div>
           <div class="finding-grid">
@@ -557,29 +589,51 @@ async function analyzeText(text, label) {
   }
 
   const parsed = parseRawGenotype(text);
-  const report = analyzeVariants(parsed, state.panel, state.pathwayModels);
+  const report = analyzeVariants(parsed, state.panel, state.pathwayModels, {
+    applicationVersion: APPLICATION_VERSION,
+    reportSchemaVersion: REPORT_SCHEMA_VERSION,
+    panelSha256: state.panelSha256
+  });
   renderReport(report);
   els.fileName.textContent = label;
   setStatus(`Analyzed ${label}. Everything stayed in this browser session.`, "success");
 }
 
 async function loadPanel() {
-  const response = await fetch("data/snp-panel.json");
-  if (!response.ok) {
-    throw new Error(`Could not load SNP panel (${response.status})`);
+  const panelLoad = await fetchJsonWithHash("data/snp-panel.json");
+  state.panel = panelLoad.data;
+  state.panelSha256 = panelLoad.sha256;
+  const manifestLoad = await fetchJsonWithHash("models/manifest.json");
+  state.modelManifest = manifestLoad.data;
+  const annotationPack = state.modelManifest.annotationPack;
+  if (!annotationPack) {
+    throw new Error("Model manifest is missing annotation-pack metadata.");
   }
-  state.panel = await response.json();
-  const modelResponse = await fetch("models/caffeine-clearance.json");
-  if (!modelResponse.ok) {
-    throw new Error(`Could not load pathway model (${modelResponse.status})`);
+  if (annotationPack.version !== state.panel.version || annotationPack.sha256 !== state.panelSha256) {
+    throw new Error(`Model manifest expects panel ${annotationPack.version || "unknown"} but loaded ${state.panel.version}.`);
   }
-  state.pathwayModels = [await modelResponse.json()];
+  const enabledModelEntries = (state.modelManifest.models || []).filter(model => model.defaultEnabled);
+  state.pathwayModels = [];
+  for (const entry of enabledModelEntries) {
+    if (entry.compatibleAnnotationPack !== state.panel.version) {
+      throw new Error(`${entry.modelId} ${entry.modelVersion} is not compatible with panel ${state.panel.version}`);
+    }
+    const modelLoad = await fetchJsonWithHash(entry.path);
+    if (modelLoad.sha256 !== entry.sha256) {
+      throw new Error(`${entry.modelId} ${entry.modelVersion} checksum mismatch`);
+    }
+    state.pathwayModels.push({
+      ...modelLoad.data,
+      sha256: modelLoad.sha256,
+      __manifest: entry
+    });
+  }
   const generatedFrom = state.panel.generatedFrom || {};
   els.panelRelease.textContent = `v${state.panel.version}`;
   els.panelVariantCount.textContent = formatNumber(state.panel.variants.length);
   els.panelClaimCount.textContent = formatNumber(generatedFrom.claimCount);
   els.panelStudyCount.textContent = formatNumber(generatedFrom.studyEvidenceCount);
-  setStatus(`Ready. SNP panel ${state.panel.version} loaded with ${state.panel.variants.length} variants and ${state.pathwayModels.length} pathway model.`, "success");
+  setStatus(`Ready. SNP panel ${state.panel.version} loaded with ${state.panel.variants.length} variants and ${state.pathwayModels.length} enabled pathway models.`, "success");
 }
 
 async function loadSample() {

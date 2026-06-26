@@ -36,13 +36,14 @@ Design contracts:
 - Browser-only parsing for 23andMe-style and AncestryDNA-style raw genotype files.
 - A curated SNP panel in `data/snp-panel.json` with 140 SNPs and 491 genotype claims.
 - A pure scoring engine in `analyzer/scoring-engine.js`.
-- A first machine-readable pathway model in `models/caffeine-clearance.json`.
+- Manifest-backed pathway models in `models/manifest.json`, currently split into caffeine-clearance and caffeine-sensitivity scores.
+- An archived broad caffeine-response model retained for old-score reproducibility.
 - Local SNP report rendering in `analyze.html`.
 - Alpha file-validation metadata for provider, format, genome build, orientation, and file plausibility.
-- A score-first report surface with pathway tendency scores, signal strength, evidence confidence, coverage, stability, plain-language finding cards, and source links.
+- A score-first report surface with pathway tendency scores, signal strength, evidence quality, result support, directional consistency, coverage, stability, contributor dominance, leave-one-group-out sensitivity, plain-language finding cards, and source links.
 - Short and long methodology pages for future metabolomics and digital-twin framing.
 - Privacy and use notes that emphasize synthetic data for public demos.
-- GitHub Actions for static deployment and SNP parser validation.
+- GitHub Actions for static deployment, semantic model validation, scoring invariants, regression tests, and SNP parser validation.
 
 ## Supported inputs
 
@@ -65,7 +66,9 @@ MetaboBrief now treats SNP analysis as core. The default analyzer performs direc
 | SNP parser and analysis engine | `analyzer/snp-core.js` |
 | Pathway scoring engine | `analyzer/scoring-engine.js` |
 | Starter SNP panel | `data/snp-panel.json` |
-| First pathway model | `models/caffeine-clearance.json` |
+| Pathway model manifest | `models/manifest.json` |
+| Caffeine clearance model | `models/caffeine-clearance/0.2.0.json` |
+| Caffeine sensitivity model | `models/caffeine-sensitivity/0.1.0.json` |
 | Short methodology explainer | `personalized.html` |
 | Longer methodology explainer | `personalized-full.html` |
 | Research navigation page | `research-summary.html` |
@@ -117,9 +120,11 @@ MetaboBrief is informational software for SNP pathway interpretation and persona
 
 1. Expand or edit the SNP panel in `data/snp-panel.json`.
 2. Keep source links, limitations, and validation markers on every panel record.
-3. Replace sample copy in `index.html`, `personalized.html`, and `personalized-full.html`.
-4. Update `privacy.html` and `terms.html` before deploying any version with forms, uploads, analytics, or account features.
-5. Replace assets under `assets/` if your fork has its own visual identity.
+3. Add pathway scoring only through explicit model inputs in `models/`.
+4. Update `models/manifest.json` and `models/model-lock.json` when a model version intentionally changes.
+5. Replace sample copy in `index.html`, `personalized.html`, and `personalized-full.html`.
+6. Update `privacy.html` and `terms.html` before deploying any version with forms, uploads, analytics, or account features.
+7. Replace assets under `assets/` if your fork has its own visual identity.
 
 ## Roadmap
 
@@ -129,7 +134,7 @@ Near-term priorities:
 
 - Define the shared report JSON schema and evidence-grading framework.
 - Move from one `snp-panel.json` file to versioned annotation packs.
-- Formalize more pathway models with explicit axes, thresholds, linkage groups, and score decomposition.
+- Formalize more pathway models with explicit claim membership, axes, thresholds, linkage groups, and score decomposition.
 - Add TypeScript parser modules, web-worker parsing, ZIP support, and provider detection.
 - Add genome-build and orientation detection before expanding report claims.
 - Keep scoring first-class while pairing every score with evidence grade, coverage, stability, and limitations.

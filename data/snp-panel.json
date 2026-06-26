@@ -8524,18 +8524,22 @@
       ],
       "genotypes": {
         "CC": {
-          "score": 1.5,
+          "legacyAttentionScore": 1.5,
           "direction": "higher_attention",
+          "targetType": "trait_association",
+          "pathwayScoringEligible": false,
           "interpretation": "In many European-ancestry studies, CC is associated with lactase non-persistence tendency. Symptoms and ancestry context matter."
         },
         "CT": {
-          "score": 0,
           "direction": "persistence_tendency",
+          "targetType": "trait_association",
+          "pathwayScoringEligible": false,
           "interpretation": "One T allele is commonly associated with lactase persistence in European-ancestry contexts."
         },
         "TT": {
-          "score": 0,
           "direction": "persistence_tendency",
+          "targetType": "trait_association",
+          "pathwayScoringEligible": false,
           "interpretation": "Two T alleles are commonly associated with lactase persistence in European-ancestry contexts."
         }
       },
