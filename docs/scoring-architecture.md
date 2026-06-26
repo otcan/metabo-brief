@@ -88,6 +88,8 @@ The current model files are loaded through `models/manifest.json`:
 
 The generated starter models cover every current non-caffeine panel pathway family using the axes in `data/pathway-definitions.json`. They are explicit model files, not runtime label matching. The archived caffeine-response model is not enabled by default. It preserves old broad-score reproducibility after the split into clearance and sensitivity.
 
+Default-enabled pathway models are marked `reviewed` with `starter-reviewed` review level and a model card under `docs/model-cards/`. That status means the model has explicit inputs, axes, contribution states, thresholds, and limitations suitable for an informational release. It does not mean expert clinical review or population calibration.
+
 ## Contribution States
 
 Each model input resolves to one runtime state:
@@ -161,8 +163,11 @@ Reports keep these versions separately:
 - `algorithmId`
 - `algorithmVersion`
 - `variantContributionModelVersion`
+- `modelStatus`
+- `reviewLevel`
+- `modelCard`
 
-The model manifest also records the starter annotation-pack checksum and pathway-definition checksum. CI validates model checksums, model-lock entries, explicit claim membership, interpretation bands, panel compatibility, definition drift, and scoring invariants.
+The model manifest also records the starter annotation-pack checksum and pathway-definition checksum. CI validates model checksums, model-lock entries, explicit claim membership, interpretation bands, panel compatibility, definition drift, review metadata, model-card presence, and scoring invariants.
 
 ## No Global Score
 

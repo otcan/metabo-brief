@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Added starter-reviewed release metadata and model cards for every enabled pathway score.
+- Added UI grouping for reviewed versus experimental pathway scores with review status, release-use text, known weaknesses, and model-card links.
+- Tightened model validation and tests so default-enabled models require review metadata and model-card coverage.
 - Added starter pathway score models for every current panel pathway family.
 - Added `data/pathway-definitions.json` as the clear source for pathway axes, questions, included mechanisms, and exclusions.
 - Added generated explicit model files under `models/generated/` and refreshed the manifest/model lock to 16 enabled score models.

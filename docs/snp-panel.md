@@ -73,7 +73,7 @@ Reports should pair every score with:
 
 Pathway scores are calculated only through documented, versioned pathway models listed in `models/manifest.json`. A panel claim does not enter a model unless the model explicitly lists its rsID, accepted claim IDs, axis mapping, contribution state, and independence group.
 
-The starter release includes generated models for every current panel pathway family. Their user-facing axes live in `data/pathway-definitions.json`, and their generated explicit model files live under `models/generated/`.
+The starter release includes starter-reviewed models for every current panel pathway family. Their user-facing axes live in `data/pathway-definitions.json`, their generated explicit model files live under `models/generated/`, and their model cards live under `docs/model-cards/`.
 
 Legacy attention-style fields that do not have a claim ID, magnitude, and certainty are not treated as pathway contributions.
 

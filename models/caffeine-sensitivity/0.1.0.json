@@ -5,7 +5,17 @@
   "name": "Caffeine sensitivity tendency",
   "pathway": "Caffeine / stimulant sensitivity",
   "profileGroup": "Caffeine response profile",
-  "status": "experimental",
+  "status": "reviewed",
+  "reviewLevel": "starter-reviewed",
+  "reviewedAt": "2026-06-26",
+  "reviewChecklistVersion": "1.0.0",
+  "reviewNotes": "Starter-reviewed for release as an informational caffeine-sensitivity tendency model with explicit ADORA2A/COMT membership, axis mapping, contribution states, and limitations.",
+  "knownWeaknesses": [
+    "Direct rsID matching is used; genome build and strand normalization are not yet fail-closed.",
+    "Sleep, anxiety history, caffeine dose, tolerance, medications, and real-world context are not included.",
+    "The model is not calibrated to a population percentile."
+  ],
+  "releaseUse": "Informational genetic pathway tendency scoring only; not diagnostic, clinical, treatment, or population-percentile interpretation.",
   "algorithm": {
     "id": "group-capped-normalized-sum",
     "version": "1.0.0"

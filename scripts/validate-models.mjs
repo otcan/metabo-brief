@@ -14,6 +14,7 @@ const VALID_STATES = new Set([
 ]);
 
 const VALID_PROFILES = new Set(["conservative", "exploratory"]);
+const VALID_REVIEW_LEVELS = new Set(["starter-reviewed", "expert-reviewed"]);
 
 function repoRoot() {
   return path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -191,6 +192,43 @@ function validateInputs(model, panelIndex, errors) {
   }
 }
 
+async function validateReviewMetadata(root, model, manifestEntry, errors) {
+  const prefix = `${model.modelId || "unknown"} ${model.modelVersion || "unknown"}`;
+  if (model.status !== "reviewed") {
+    return;
+  }
+  if (!VALID_REVIEW_LEVELS.has(model.reviewLevel)) {
+    errors.push(`${prefix} reviewed model has invalid review level`);
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(model.reviewedAt || "")) {
+    errors.push(`${prefix} reviewed model has no reviewedAt date`);
+  }
+  if (!model.reviewChecklistVersion) {
+    errors.push(`${prefix} reviewed model has no review checklist version`);
+  }
+  if (!model.reviewNotes || model.reviewNotes.length < 40) {
+    errors.push(`${prefix} reviewed model has insufficient review notes`);
+  }
+  if (!Array.isArray(model.knownWeaknesses) || model.knownWeaknesses.length < 2) {
+    errors.push(`${prefix} reviewed model must list known weaknesses`);
+  }
+  if (!String(model.releaseUse || "").toLowerCase().includes("informational")) {
+    errors.push(`${prefix} reviewed model release use must be explicitly informational`);
+  }
+  if (!manifestEntry.modelCard) {
+    errors.push(`${prefix} reviewed model has no model-card path in manifest`);
+    return;
+  }
+  try {
+    const card = await readFile(path.join(root, manifestEntry.modelCard), "utf8");
+    if (!card.includes(model.name) || !card.includes(model.modelId)) {
+      errors.push(`${prefix} model card does not include model name and ID`);
+    }
+  } catch {
+    errors.push(`${prefix} model card file is missing`);
+  }
+}
+
 export async function validateModels(root = repoRoot()) {
   const errors = [];
   const panel = await readJson(root, "data/snp-panel.json");
@@ -247,6 +285,7 @@ export async function validateModels(root = repoRoot()) {
     validateModelShape(model, entry, panelIndex, errors);
     validateInputs(model, panelIndex, errors);
     validateBands(model, errors);
+    await validateReviewMetadata(root, model, entry, errors);
   }
 
   return errors;

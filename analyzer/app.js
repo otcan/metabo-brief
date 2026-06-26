@@ -88,7 +88,7 @@ function plural(value, singular, pluralLabel = `${singular}s`) {
 
 function formatLabel(value) {
   return String(value || "unknown")
-    .replace(/_/g, " ")
+    .replace(/[-_]/g, " ")
     .replace(/\s+/g, " ")
     .trim()
     .replace(/\b[a-z]/g, char => char.toUpperCase());
@@ -264,7 +264,32 @@ function renderPathwayScores(report) {
     return "";
   }
 
-  const cards = scores.map(score => {
+  function groupLabel(score) {
+    if (score.modelStatus === "reviewed") {
+      return {
+        id: "reviewed",
+        kicker: "Reviewed models",
+        title: "Reviewed pathway scores",
+        description: "Starter-reviewed informational tendency models with explicit claim membership and model cards."
+      };
+    }
+    if (score.modelStatus === "experimental") {
+      return {
+        id: "experimental",
+        kicker: "Experimental models",
+        title: "Experimental pathway scores",
+        description: "Exploratory models are visible for inspection but should not be treated as reviewed release models."
+      };
+    }
+    return {
+      id: "other",
+      kicker: "Other models",
+      title: "Other pathway scores",
+      description: "Additional model outputs retained for reproducibility or compatibility."
+    };
+  }
+
+  function scoreCard(score) {
     const contributors = score.contributors.slice(0, 6).map(contributor => `
       <tr>
         <td>${escapeHtml(contributor.gene)} <small>${escapeHtml(contributor.rsid)}</small></td>
@@ -274,7 +299,12 @@ function renderPathwayScores(report) {
       </tr>
     `).join("");
     const limitations = score.limitations.slice(0, 4).map(item => `<li>${escapeHtml(item)}</li>`).join("");
+    const weaknesses = (score.knownWeaknesses || []).slice(0, 4).map(item => `<li>${escapeHtml(item)}</li>`).join("");
     const scoreAvailable = score.score !== null && score.score !== undefined;
+    const reviewLabel = score.reviewLevel || score.modelStatus || "unreviewed";
+    const modelCard = score.modelCard
+      ? `<a href="${escapeHtml(score.modelCard)}" target="_blank" rel="noopener noreferrer">Open model card</a>`
+      : "";
 
     return `
       <article class="pathway-score-card" data-status="${escapeHtml(score.scoreStatus)}">
@@ -303,6 +333,7 @@ function renderPathwayScores(report) {
           <div><span>Dominance</span><strong>${escapeHtml(formatLabel(score.contributorDominance?.label))}</strong><small>top group ${formatNumber(score.contributorDominance?.topIndependentGroupPercent)}%</small></div>
           <div><span>Stability</span><strong>${escapeHtml(formatLabel(score.stability))}</strong><small>LOO ${escapeHtml(formatScoreRange(score.leaveOneGroupOut))}</small></div>
           <div><span>Independent signals</span><strong>${formatNumber(score.independentSignalCount)}</strong></div>
+          <div><span>Review</span><strong>${escapeHtml(formatLabel(reviewLabel))}</strong><small>${score.reviewedAt ? `reviewed ${escapeHtml(score.reviewedAt)}` : escapeHtml(formatLabel(score.modelStatus))}</small></div>
           <div><span>Model</span><strong>${escapeHtml(score.modelVersion)}</strong></div>
         </div>
         ${scoreAvailable ? `
@@ -325,21 +356,45 @@ function renderPathwayScores(report) {
               <tbody>${contributors || '<tr><td colspan="4">No observed eligible contributors.</td></tr>'}</tbody>
             </table>
           </div>
+          <div class="finding-grid">
+            <div>
+              <h4>Review status</h4>
+              <p>${escapeHtml(score.reviewNotes || "No model review note listed.")}</p>
+              <p>${escapeHtml(score.releaseUse || "Informational use only.")}</p>
+              ${modelCard ? `<p>${modelCard}</p>` : ""}
+            </div>
+            <div>
+              <h4>Known weaknesses</h4>
+              <ul>${weaknesses || "<li>No model weaknesses listed.</li>"}</ul>
+            </div>
+          </div>
           <ul class="score-limitations">${limitations || "<li>No model limitations listed.</li>"}</ul>
         </details>
       </article>
     `;
-  }).join("");
+  }
 
-  return `
-    <section class="pathway-score-section" aria-label="Pathway tendency scores">
+  const groups = [];
+  for (const score of scores) {
+    const label = groupLabel(score);
+    let group = groups.find(item => item.id === label.id);
+    if (!group) {
+      group = { ...label, scores: [] };
+      groups.push(group);
+    }
+    group.scores.push(score);
+  }
+
+  return groups.map(group => `
+    <section class="pathway-score-section" aria-label="${escapeHtml(group.title)}">
       <div class="report-overview-heading">
-        <p class="snp-kicker">Scores</p>
-        <h3>Pathway tendency scores</h3>
+        <p class="snp-kicker">${escapeHtml(group.kicker)}</p>
+        <h3>${escapeHtml(group.title)}</h3>
+        <p>${escapeHtml(group.description)}</p>
       </div>
-      ${cards}
+      ${group.scores.map(scoreCard).join("")}
     </section>
-  `;
+  `).join("");
 }
 
 function renderSummary(report) {

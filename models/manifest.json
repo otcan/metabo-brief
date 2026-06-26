@@ -3,11 +3,11 @@
   "generatedAt": "2026-06-26",
   "modelSchema": {
     "path": "models/pathway-model.schema.json",
-    "sha256": "9d15f896b936b4ed72abad55d1c2bc438b8ac0bd8ea6d77baf7b30f68ac6c338"
+    "sha256": "250c7cfbe8ac25be69852898ec3d1745096fd6b1d97eea35f29cbe416aff41c2"
   },
   "pathwayDefinitions": {
     "path": "data/pathway-definitions.json",
-    "sha256": "49e7653d7ce9d5b100bd8eb4ebd11f41a202530cc81a5d39722c4a4a8f704844"
+    "sha256": "c7739b5cf69654709abf55eb12a7bd8a010997fea9e4edf245cf409297aed04a"
   },
   "annotationPack": {
     "id": "starter-snp-panel",
@@ -22,8 +22,8 @@
       "modelId": "b12-transport",
       "modelVersion": "0.1.0",
       "path": "models/generated/b12-transport/0.1.0.json",
-      "sha256": "148c5f49ae53d303572572ac326e13b76d8fab416b61b865be0385dad6e6a882",
-      "status": "experimental",
+      "sha256": "0b90e9c11a438b0687c29d41fcb0f5602b58d50b073e26be1d67b34e3a117c4b",
+      "status": "reviewed",
       "defaultEnabled": true,
       "compatibleAnnotationPack": "0.3.0",
       "requiredEngineVersion": "0.4.0",
@@ -33,14 +33,14 @@
         "version": "1.0.0"
       },
       "variantContributionModelVersion": "legacy-v0",
-      "modelCard": "docs/scoring-architecture.md"
+      "modelCard": "docs/model-cards/b12-transport.md"
     },
     {
       "modelId": "caffeine-clearance",
       "modelVersion": "0.2.0",
       "path": "models/caffeine-clearance/0.2.0.json",
-      "sha256": "3bdfed6c0d0fef54a7926fa7f8e4ce752455f712dc81c9b053611c56c4be9d03",
-      "status": "experimental",
+      "sha256": "f15744872084b788081e5f130f1b18b29310392e8f23fb83384ade2595356cf2",
+      "status": "reviewed",
       "defaultEnabled": true,
       "compatibleAnnotationPack": "0.3.0",
       "requiredEngineVersion": "0.4.0",
@@ -50,14 +50,14 @@
         "version": "1.0.0"
       },
       "variantContributionModelVersion": "legacy-v0",
-      "modelCard": "docs/scoring-architecture.md"
+      "modelCard": "docs/model-cards/caffeine-clearance.md"
     },
     {
       "modelId": "caffeine-sensitivity",
       "modelVersion": "0.1.0",
       "path": "models/caffeine-sensitivity/0.1.0.json",
-      "sha256": "f72c9b23ae6b4215553db586366155e8429cc449a283eedae506dffe866b06dc",
-      "status": "experimental",
+      "sha256": "ec50dca2b493f4cf6ede7d52f6913cccc39dff34ee2b3299d848d67d09b9baa7",
+      "status": "reviewed",
       "defaultEnabled": true,
       "compatibleAnnotationPack": "0.3.0",
       "requiredEngineVersion": "0.4.0",
@@ -67,14 +67,14 @@
         "version": "1.0.0"
       },
       "variantContributionModelVersion": "legacy-v0",
-      "modelCard": "docs/scoring-architecture.md"
+      "modelCard": "docs/model-cards/caffeine-sensitivity.md"
     },
     {
       "modelId": "carbohydrate-digestion",
       "modelVersion": "0.1.0",
       "path": "models/generated/carbohydrate-digestion/0.1.0.json",
-      "sha256": "0013a7ae4b9ccb93c19da87f25e495b3bbca1b6a19b335d8dd90fac8095f2cde",
-      "status": "experimental",
+      "sha256": "ca33f61478c377d70e33e1e42bba9edcb0008a97d31364f2718140437a92050b",
+      "status": "reviewed",
       "defaultEnabled": true,
       "compatibleAnnotationPack": "0.3.0",
       "requiredEngineVersion": "0.4.0",
@@ -84,14 +84,14 @@
         "version": "1.0.0"
       },
       "variantContributionModelVersion": "legacy-v0",
-      "modelCard": "docs/scoring-architecture.md"
+      "modelCard": "docs/model-cards/carbohydrate-digestion.md"
     },
     {
       "modelId": "choline-support",
       "modelVersion": "0.1.0",
       "path": "models/generated/choline-support/0.1.0.json",
-      "sha256": "0662bfded9a9fdbe631a773c52c46a9ad7eeadfebf8427118a0c061f33c68d96",
-      "status": "experimental",
+      "sha256": "bdb1638ccce2c6e595955b78ddf386dfeaddba50eb19348674b8a493c059b6b3",
+      "status": "reviewed",
       "defaultEnabled": true,
       "compatibleAnnotationPack": "0.3.0",
       "requiredEngineVersion": "0.4.0",
@@ -101,14 +101,14 @@
         "version": "1.0.0"
       },
       "variantContributionModelVersion": "legacy-v0",
-      "modelCard": "docs/scoring-architecture.md"
+      "modelCard": "docs/model-cards/choline-support.md"
     },
     {
       "modelId": "estrogen-metabolism",
       "modelVersion": "0.1.0",
       "path": "models/generated/estrogen-metabolism/0.1.0.json",
-      "sha256": "3473c4ac44b43684ce61d9b5b5056a73d5d66767b41d831a88b4934cd3b67d11",
-      "status": "experimental",
+      "sha256": "32ad16ef23373c687c19bdaee435e813334a43afc24edf335b8f0cda62cc3000",
+      "status": "reviewed",
       "defaultEnabled": true,
       "compatibleAnnotationPack": "0.3.0",
       "requiredEngineVersion": "0.4.0",
@@ -118,14 +118,14 @@
         "version": "1.0.0"
       },
       "variantContributionModelVersion": "legacy-v0",
-      "modelCard": "docs/scoring-architecture.md"
+      "modelCard": "docs/model-cards/estrogen-metabolism.md"
     },
     {
       "modelId": "glucose",
       "modelVersion": "0.1.0",
       "path": "models/generated/glucose/0.1.0.json",
-      "sha256": "ed19cbe7a58ebfc75b8c96cf11575e0abed47f2892d1909e4d8dd025c9432a59",
-      "status": "experimental",
+      "sha256": "32864946b3a5af7f9a4cd7aa0989f581d1d79f4a4913490af22d22a341149524",
+      "status": "reviewed",
       "defaultEnabled": true,
       "compatibleAnnotationPack": "0.3.0",
       "requiredEngineVersion": "0.4.0",
@@ -135,14 +135,14 @@
         "version": "1.0.0"
       },
       "variantContributionModelVersion": "legacy-v0",
-      "modelCard": "docs/scoring-architecture.md"
+      "modelCard": "docs/model-cards/glucose.md"
     },
     {
       "modelId": "histamine",
       "modelVersion": "0.1.0",
       "path": "models/generated/histamine/0.1.0.json",
-      "sha256": "0bd9c63acafbb5fe68142cf3afaad3994e5037f62dc50d29f497136ef7f4873b",
-      "status": "experimental",
+      "sha256": "1853c03b57630c43d3a9068f749f135120faa9963a359af3710577177b2a1b9f",
+      "status": "reviewed",
       "defaultEnabled": true,
       "compatibleAnnotationPack": "0.3.0",
       "requiredEngineVersion": "0.4.0",
@@ -152,14 +152,14 @@
         "version": "1.0.0"
       },
       "variantContributionModelVersion": "legacy-v0",
-      "modelCard": "docs/scoring-architecture.md"
+      "modelCard": "docs/model-cards/histamine.md"
     },
     {
       "modelId": "inflammation-immune-signaling",
       "modelVersion": "0.1.0",
       "path": "models/generated/inflammation-immune-signaling/0.1.0.json",
-      "sha256": "3281164b90a58ecb409932fddb24167b0e38193ec0d61a1561a461924c4c2fc5",
-      "status": "experimental",
+      "sha256": "3020a7a2f27cf50e7e22c123cd80986b4ee21a89d7e7bd7037965df2d5b2869f",
+      "status": "reviewed",
       "defaultEnabled": true,
       "compatibleAnnotationPack": "0.3.0",
       "requiredEngineVersion": "0.4.0",
@@ -169,14 +169,14 @@
         "version": "1.0.0"
       },
       "variantContributionModelVersion": "legacy-v0",
-      "modelCard": "docs/scoring-architecture.md"
+      "modelCard": "docs/model-cards/inflammation-immune-signaling.md"
     },
     {
       "modelId": "iron-handling",
       "modelVersion": "0.1.0",
       "path": "models/generated/iron-handling/0.1.0.json",
-      "sha256": "c59f2fb88f39d76dba24ed97e6b13e5f1ca0369b9478db291433920cc1eaeb91",
-      "status": "experimental",
+      "sha256": "1878e273d00b856417363202c25bdfec6def16b281c50512cfa186d6b637f9b1",
+      "status": "reviewed",
       "defaultEnabled": true,
       "compatibleAnnotationPack": "0.3.0",
       "requiredEngineVersion": "0.4.0",
@@ -186,14 +186,14 @@
         "version": "1.0.0"
       },
       "variantContributionModelVersion": "legacy-v0",
-      "modelCard": "docs/scoring-architecture.md"
+      "modelCard": "docs/model-cards/iron-handling.md"
     },
     {
       "modelId": "lipids",
       "modelVersion": "0.1.0",
       "path": "models/generated/lipids/0.1.0.json",
-      "sha256": "d07d92dd2eeb3f511b8e9956cdad52fca28a037c32f3eb7ca63fa9c27c7a3e31",
-      "status": "experimental",
+      "sha256": "b1009f37e40cec38708b1ecf0037935235d9125d7f9fa77c3cc9aac4f4ce5958",
+      "status": "reviewed",
       "defaultEnabled": true,
       "compatibleAnnotationPack": "0.3.0",
       "requiredEngineVersion": "0.4.0",
@@ -203,14 +203,14 @@
         "version": "1.0.0"
       },
       "variantContributionModelVersion": "legacy-v0",
-      "modelCard": "docs/scoring-architecture.md"
+      "modelCard": "docs/model-cards/lipids.md"
     },
     {
       "modelId": "methylation",
       "modelVersion": "0.1.0",
       "path": "models/generated/methylation/0.1.0.json",
-      "sha256": "1ac1bd8dc596dd54dd2083e80de1cd42a11f4cf58284fc3cb5fa6ca7eb02c107",
-      "status": "experimental",
+      "sha256": "83c60d6384e94a70b5167160e455676055ba0c3179615b7ccadcb1613397d5fd",
+      "status": "reviewed",
       "defaultEnabled": true,
       "compatibleAnnotationPack": "0.3.0",
       "requiredEngineVersion": "0.4.0",
@@ -220,14 +220,14 @@
         "version": "1.0.0"
       },
       "variantContributionModelVersion": "legacy-v0",
-      "modelCard": "docs/scoring-architecture.md"
+      "modelCard": "docs/model-cards/methylation.md"
     },
     {
       "modelId": "mitochondrial-energy",
       "modelVersion": "0.1.0",
       "path": "models/generated/mitochondrial-energy/0.1.0.json",
-      "sha256": "928d9f8edf6eb0de1c16a7fca9738a6a9961a8d1d2582b132d5a2ca8778196d4",
-      "status": "experimental",
+      "sha256": "bdeac981bd65c24021f7c77bd2e3eebe15056c9d4586c1bd9527043ab989d946",
+      "status": "reviewed",
       "defaultEnabled": true,
       "compatibleAnnotationPack": "0.3.0",
       "requiredEngineVersion": "0.4.0",
@@ -237,14 +237,14 @@
         "version": "1.0.0"
       },
       "variantContributionModelVersion": "legacy-v0",
-      "modelCard": "docs/scoring-architecture.md"
+      "modelCard": "docs/model-cards/mitochondrial-energy.md"
     },
     {
       "modelId": "nitric-oxide-vascular-tone",
       "modelVersion": "0.1.0",
       "path": "models/generated/nitric-oxide-vascular-tone/0.1.0.json",
-      "sha256": "936fd1cf1bd7f5a4386cd1cf24c8666a530fe2add7894a710761f29a421f5328",
-      "status": "experimental",
+      "sha256": "96a0f3b7a4610efc1d57ad6e04cabdb9d42fa6a8d1c787c17ee347fab8a4ca37",
+      "status": "reviewed",
       "defaultEnabled": true,
       "compatibleAnnotationPack": "0.3.0",
       "requiredEngineVersion": "0.4.0",
@@ -254,14 +254,14 @@
         "version": "1.0.0"
       },
       "variantContributionModelVersion": "legacy-v0",
-      "modelCard": "docs/scoring-architecture.md"
+      "modelCard": "docs/model-cards/nitric-oxide-vascular-tone.md"
     },
     {
       "modelId": "oxidative-stress",
       "modelVersion": "0.1.0",
       "path": "models/generated/oxidative-stress/0.1.0.json",
-      "sha256": "e7c10e2243660b5a1f03ff5df8e492bdd353321f6c15d1667918e555a0a998c6",
-      "status": "experimental",
+      "sha256": "d54222b394de89038a7d60db2dc2b81e713f46e17ffef7b1c6bd9dd311c9ef59",
+      "status": "reviewed",
       "defaultEnabled": true,
       "compatibleAnnotationPack": "0.3.0",
       "requiredEngineVersion": "0.4.0",
@@ -271,14 +271,14 @@
         "version": "1.0.0"
       },
       "variantContributionModelVersion": "legacy-v0",
-      "modelCard": "docs/scoring-architecture.md"
+      "modelCard": "docs/model-cards/oxidative-stress.md"
     },
     {
       "modelId": "sulfur-transsulfuration",
       "modelVersion": "0.1.0",
       "path": "models/generated/sulfur-transsulfuration/0.1.0.json",
-      "sha256": "1136078766f2c589799359c6cae8928cfdbbf5be4e549fc0ed2df605e0c44b9a",
-      "status": "experimental",
+      "sha256": "cffca05fc727efdbcb0feaa8ea6cd0e26ca1c8403e967f9f4a52e51353d2198e",
+      "status": "reviewed",
       "defaultEnabled": true,
       "compatibleAnnotationPack": "0.3.0",
       "requiredEngineVersion": "0.4.0",
@@ -288,7 +288,7 @@
         "version": "1.0.0"
       },
       "variantContributionModelVersion": "legacy-v0",
-      "modelCard": "docs/scoring-architecture.md"
+      "modelCard": "docs/model-cards/sulfur-transsulfuration.md"
     },
     {
       "modelId": "caffeine-response-legacy",
@@ -305,7 +305,7 @@
         "version": "1.0.0"
       },
       "variantContributionModelVersion": "legacy-v0",
-      "modelCard": "docs/scoring-architecture.md"
+      "modelCard": "docs/model-cards/caffeine-response-legacy.md"
     }
   ]
 }

@@ -24,7 +24,7 @@ The current constraints are equally important:
 - No genome-build or strand-orientation handling.
 - No VCF/gVCF support.
 - No REF/ALT-aware matching.
-- Starter pathway scores are now available for every current panel pathway family, but most non-caffeine models remain experimental generated models awaiting deeper biology-specific review.
+- Starter-reviewed pathway scores are now available for every current panel pathway family. They are release-ready as informational pathway-tendency models, but not expert/clinical reviewed models.
 - Current validation metadata makes these limits visible, but it is not yet fail-closed build or strand normalization.
 
 ## Positioning

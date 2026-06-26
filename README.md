@@ -38,6 +38,7 @@ Design contracts:
 - A pure scoring engine in `analyzer/scoring-engine.js`.
 - Manifest-backed pathway models in `models/manifest.json`, with 16 enabled scores covering every current panel pathway family.
 - Clear pathway axes in `data/pathway-definitions.json`, used to generate starter pathway models under `models/generated/`.
+- Starter-reviewed model cards in `docs/model-cards/` for every enabled pathway score.
 - An archived broad caffeine-response model retained for old-score reproducibility.
 - Local SNP report rendering in `analyze.html`.
 - Alpha file-validation metadata for provider, format, genome build, orientation, and file plausibility.
@@ -69,6 +70,7 @@ MetaboBrief now treats SNP analysis as core. The default analyzer performs direc
 | Starter SNP panel | `data/snp-panel.json` |
 | Pathway definitions | `data/pathway-definitions.json` |
 | Pathway model manifest | `models/manifest.json` |
+| Pathway model cards | `docs/model-cards/*.md` |
 | Caffeine clearance model | `models/caffeine-clearance/0.2.0.json` |
 | Caffeine sensitivity model | `models/caffeine-sensitivity/0.1.0.json` |
 | Generated starter pathway models | `models/generated/*/0.1.0.json` |
@@ -124,11 +126,10 @@ MetaboBrief is informational software for SNP pathway interpretation and persona
 1. Expand or edit the SNP panel in `data/snp-panel.json`.
 2. Keep source links, limitations, and validation markers on every panel record.
 3. Edit pathway axes in `data/pathway-definitions.json`.
-4. Run `node scripts/build-pathway-models.mjs` to regenerate model JSON, manifest, and lock file.
-5. Run `node scripts/build-synthetic-examples.mjs` when the panel changes.
-6. Replace sample copy in `index.html`, `personalized.html`, and `personalized-full.html`.
-7. Update `privacy.html` and `terms.html` before deploying any version with forms, uploads, analytics, or account features.
-8. Replace assets under `assets/` if your fork has its own visual identity.
+4. Run `npm run build:release-data` to regenerate model JSON, model cards, the manifest, the lock file, and synthetic examples.
+5. Replace sample copy in `index.html`, `personalized.html`, and `personalized-full.html`.
+6. Update `privacy.html` and `terms.html` before deploying any version with forms, uploads, analytics, or account features.
+7. Replace assets under `assets/` if your fork has its own visual identity.
 
 ## Roadmap
 
@@ -138,7 +139,7 @@ Near-term priorities:
 
 - Define the shared report JSON schema and evidence-grading framework.
 - Move from one `snp-panel.json` file to versioned annotation packs.
-- Review and refine the generated starter pathway models with stricter biology-specific axes, thresholds, linkage groups, and score decomposition.
+- Refine the starter-reviewed pathway models with stricter biology-specific axes, thresholds, linkage groups, and score decomposition.
 - Add TypeScript parser modules, web-worker parsing, ZIP support, and provider detection.
 - Add genome-build and orientation detection before expanding report claims.
 - Keep scoring first-class while pairing every score with evidence grade, coverage, stability, and limitations.

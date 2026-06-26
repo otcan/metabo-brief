@@ -5,7 +5,18 @@
   "name": "Sulfur and transsulfuration tendency",
   "pathway": "Sulfur / transsulfuration",
   "profileGroup": "MetaboBrief starter pathway profile",
-  "status": "experimental",
+  "status": "reviewed",
+  "reviewLevel": "starter-reviewed",
+  "reviewedAt": "2026-06-26",
+  "reviewChecklistVersion": "1.0.0",
+  "reviewNotes": "Starter-reviewed for release as an informational pathway tendency model. The model has explicit claim membership, pathway-axis text, contribution states, coverage thresholds, and limitations.",
+  "knownWeaknesses": [
+    "Generated from curated starter-panel pathway assignments and not yet expert-reviewed per variant mechanism.",
+    "Axis mapping is starter-level and may need pathway-specific refinement before stronger claims.",
+    "Direct rsID matching is used; genome build and strand normalization are not yet fail-closed.",
+    "Measured biomarkers, medications, diet, symptoms, and clinical context are not included."
+  ],
+  "releaseUse": "Informational genetic pathway tendency scoring only; not diagnostic, clinical, treatment, or population-percentile interpretation.",
   "algorithm": {
     "id": "group-capped-normalized-sum",
     "version": "1.0.0"

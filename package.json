@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build:release-data": "node scripts/build-pathway-models.mjs && node scripts/build-model-cards.mjs && node scripts/build-synthetic-examples.mjs",
     "test": "node scripts/validate-models.mjs && node tests/model-validation.test.mjs && node tests/scoring-invariants.test.mjs && node tests/scoring-regression.test.mjs && node tests/scoring-engine.test.mjs && node tests/snp-core.test.mjs"
   }
 }

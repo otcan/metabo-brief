@@ -14,7 +14,6 @@ const APPLICATION_VERSION = "0.4.0";
 const MODEL_SCHEMA_VERSION = "1.0.0";
 const GENERATED_MODEL_VERSION = "0.1.0";
 const GENERATED_MODELS_ROOT = "models/generated";
-const MODEL_CARD = "docs/scoring-architecture.md";
 const MANUAL_MODEL_PATHS = [
   "models/caffeine-clearance/0.2.0.json",
   "models/caffeine-sensitivity/0.1.0.json",
@@ -146,6 +145,10 @@ function buildModel(panel, definition, definitions) {
   const independentGroups = new Set(inputs.map(input => input.independenceGroup));
   const minimumIndependentSignals =
     definition.minimumIndependentSignals ?? (independentGroups.size >= 2 ? 2 : 1);
+  const review = {
+    ...(definitions.reviewDefaults || {}),
+    ...(definition.review || {})
+  };
 
   return {
     schemaVersion: MODEL_SCHEMA_VERSION,
@@ -154,7 +157,13 @@ function buildModel(panel, definition, definitions) {
     name: definition.name,
     pathway: definition.sourcePathway,
     profileGroup: definition.profileGroup || definitions.profileGroup,
-    status: definition.status || "experimental",
+    status: definition.status || review.status || "experimental",
+    reviewLevel: review.reviewLevel,
+    reviewedAt: review.reviewedAt,
+    reviewChecklistVersion: review.reviewChecklistVersion,
+    reviewNotes: review.reviewNotes,
+    knownWeaknesses: review.knownWeaknesses || [],
+    releaseUse: review.releaseUse,
     algorithm: {
       id: ALGORITHM_ID,
       version: ALGORITHM_VERSION
@@ -238,7 +247,7 @@ export async function buildPathwayModels(root = repoRoot()) {
       requiredSchemaVersion: model.schemaVersion,
       algorithm: model.algorithm,
       variantContributionModelVersion: model.variantContributionModelVersion,
-      modelCard: MODEL_CARD
+      modelCard: `docs/model-cards/${model.modelId}.md`
     });
   }
 

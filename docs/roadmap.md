@@ -50,7 +50,7 @@ Keep parsing and report generation independent of the UI so the same engine can 
 
 Create the annotation-pack compiler, formal pathway models, and first bundled pack.
 
-The first reviewed pack should prioritize several hundred understandable, well-supported findings and a smaller set of reviewed pathway models, not hundreds of thousands of weak associations. Generated starter models can cover the full current panel earlier, but each should remain marked experimental until reviewed.
+The first reviewed pack should prioritize several hundred understandable, well-supported findings and a starter set of pathway models with explicit review status, not hundreds of thousands of weak associations. Generated starter models can cover all current panel pathway families once they are marked with starter-review metadata, model cards, limitations, and validation checks.
 
 Requirements:
 
@@ -67,6 +67,8 @@ Requirements:
 - Linkage and independence groups.
 - Reproducible build metadata.
 - Schema and content validation.
+- Model cards for every enabled pathway score.
+- Explicit distinction between starter-reviewed, expert-reviewed, deprecated, archived, and experimental models.
 
 ## Milestone 4 - Consumer Report and Self-Hosting
 

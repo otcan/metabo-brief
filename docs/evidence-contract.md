@@ -150,6 +150,11 @@ Draft pathway score shape:
   "algorithmId": "group-capped-normalized-sum",
   "algorithmVersion": "1.0.0",
   "variantContributionModelVersion": "legacy-v0",
+  "modelStatus": "reviewed",
+  "reviewLevel": "starter-reviewed",
+  "reviewedAt": "2026-06-26",
+  "reviewChecklistVersion": "1.0.0",
+  "modelCard": "docs/model-cards/caffeine-clearance.md",
   "contributors": []
 }
 ```
@@ -235,6 +240,9 @@ Each model defines:
 - Biological axis.
 - Included and excluded mechanisms.
 - Explicit accepted rsIDs and claim IDs.
+- Model status and review level.
+- Review date, review checklist version, release-use statement, and known weaknesses.
+- Model-card location.
 - Pathway-axis multiplier for each input.
 - Mechanism or subpathway.
 - Independence groups.
