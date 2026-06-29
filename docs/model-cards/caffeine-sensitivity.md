@@ -50,7 +50,7 @@ Do the explicitly supported variants favor lower or higher experiential caffeine
 
 ## Known weaknesses
 
-- Direct rsID matching is used; genome build and strand normalization are not yet fail-closed.
+- Direct rsID matching is scoreability-gated, but coordinate validation and strand normalization are not yet performed.
 - Sleep, anxiety history, caffeine dose, tolerance, medications, and real-world context are not included.
 - The model is not calibrated to a population percentile.
 
@@ -58,7 +58,7 @@ Do the explicitly supported variants favor lower or higher experiential caffeine
 
 - This model estimates experiential stimulant sensitivity tendency, not caffeine clearance.
 - Sleep, anxiety, caffeine dose, tolerance, medications, and context can dominate real-world response.
-- The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization.
+- The current browser analyzer scoreability-gates direct provider-native rsID matching but still does not perform coordinate validation or strand normalization.
 
 ## Versioning
 

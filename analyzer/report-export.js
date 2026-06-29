@@ -86,12 +86,24 @@ export function buildReplayMetadata(report, deterministicReportSha256 = null) {
       orientationConfidence: validation.orientationConfidence || "limited",
       validationStatus: validation.validationStatus || "limited"
     },
+    scoreability: validation.scoreability || {
+      canScore: false,
+      status: "do_not_score",
+      label: "Do not score",
+      blockingReasons: ["Scoreability metadata was not present in this report."],
+      limitations: [],
+      excludedRsids: []
+    },
     coverage: {
       panelVariantCount: coverage.panelVariantCount || 0,
       presentPanelVariantCount: coverage.presentPanelVariantCount || 0,
+      interpretablePanelVariantCount: coverage.interpretablePanelVariantCount || 0,
       interpretedFindingCount: coverage.interpretedFindingCount || 0,
       missingPanelVariantCount: coverage.missingPanelVariantCount || 0,
       uninterpretablePanelVariantCount: coverage.uninterpretablePanelVariantCount || 0,
+      excludedPanelVariantCount: coverage.excludedPanelVariantCount || 0,
+      scoreEligibleFindingCount: coverage.scoreEligibleFindingCount || 0,
+      scoredPanelVariantCount: coverage.scoredPanelVariantCount || 0,
       directlyObservedFindingCount: coverage.directlyObservedFindingCount || 0
     },
     limitations: validation.limitations || []
@@ -160,6 +172,7 @@ export async function buildPrintableReportHtml(report, options = {}) {
   const payload = options.payload || await buildJsonExportPayload(report, options);
   const replay = payload.replayMetadata;
   const validation = replay.inputValidation;
+  const scoreability = replay.scoreability || {};
   const coverage = replay.coverage;
   const modelRows = (replay.pathwayModelVersions || []).map(model => `
     <tr>
@@ -252,16 +265,21 @@ export async function buildPrintableReportHtml(report, options = {}) {
         <div class="metric"><span>Provider</span><strong>${escapeHtml(validation.provider)}</strong></div>
         <div class="metric"><span>Genome build</span><strong>${escapeHtml(validation.genomeBuild)}</strong></div>
         <div class="metric"><span>Validation</span><strong>${escapeHtml(formatLabel(validation.validationStatus))}</strong></div>
-        <div class="metric"><span>Panel coverage</span><strong>${escapeHtml(`${formatNumber(coverage.presentPanelVariantCount)} / ${formatNumber(coverage.panelVariantCount)}`)}</strong></div>
+        <div class="metric"><span>Scoring</span><strong>${escapeHtml(scoreability.label || "Not assessed")}</strong></div>
       </div>
       <table>
         <tbody>
           ${renderKeyValueRows([
+            ["Panel coverage", `${formatNumber(coverage.presentPanelVariantCount)} / ${formatNumber(coverage.panelVariantCount)}`],
             ["Format", `${validation.format} (${validation.formatConfidence})`],
             ["Orientation", `${validation.orientation} (${validation.orientationConfidence})`],
             ["Interpreted findings", formatNumber(coverage.interpretedFindingCount)],
+            ["Score eligible findings", formatNumber(coverage.scoreEligibleFindingCount)],
+            ["Scored loci", formatNumber(coverage.scoredPanelVariantCount)],
             ["Missing panel loci", formatNumber(coverage.missingPanelVariantCount)],
-            ["Uninterpretable panel loci", formatNumber(coverage.uninterpretablePanelVariantCount)]
+            ["Uninterpretable panel loci", formatNumber(coverage.uninterpretablePanelVariantCount)],
+            ["Excluded panel loci", formatNumber(coverage.excludedPanelVariantCount)],
+            ["Score blocking reasons", (scoreability.blockingReasons || []).join(" / ") || "none"]
           ])}
         </tbody>
       </table>

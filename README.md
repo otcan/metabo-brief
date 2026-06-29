@@ -42,7 +42,7 @@ Design contracts:
 - Starter-reviewed model cards in `docs/model-cards/` for every enabled pathway score.
 - An archived broad caffeine-response model retained for old-score reproducibility.
 - Local SNP report rendering in `analyze.html`.
-- Alpha file-validation metadata for provider, format, genome build, orientation, and file plausibility.
+- Alpha file-validation metadata for provider, format, genome build, orientation, file plausibility, and scoreability.
 - A score-first report surface with pathway tendency scores, signal strength, evidence quality, result support, directional consistency, coverage, stability, contributor dominance, leave-one-group-out sensitivity, plain-language finding cards, and source links.
 - Deterministic JSON export with replay metadata, panel/model hashes, and a separate run timestamp.
 - Printable standalone HTML export and a browser print/PDF path.
@@ -91,7 +91,7 @@ MetaboBrief now treats SNP analysis as core. The default analyzer performs direc
 ## What is not included
 
 - No backend, account system, checkout, analytics, or upload pipeline.
-- No strand flipping, imputation, phasing, or genome-build liftover yet. The report now exposes this as validation metadata, but genotypes must still match the panel's recorded allele orientation.
+- No strand flipping, imputation, phasing, or genome-build liftover yet. The report exposes this as validation metadata, and pathway scores are blocked when provider, build, or format confidence is too low.
 - No VCF/gVCF parser yet.
 - No medical advice engine and no global health score.
 - No bundled third-party evidence databases beyond the starter JSON panel.
@@ -191,6 +191,7 @@ Near-term priorities:
 - Refine the starter-reviewed pathway models with stricter biology-specific axes, thresholds, linkage groups, and score decomposition.
 - Add TypeScript parser modules, web-worker parsing, ZIP support, and provider detection.
 - Add genome-build and orientation detection before expanding report claims.
+- Continue hardening scoreability gates so unsupported builds, ambiguous inputs, and conflicting genotype calls fail visibly.
 - Keep scoring first-class while pairing every score with evidence grade, coverage, stability, and limitations.
 - Add printable HTML/PDF export and deterministic JSON export.
 - Add official static container and full Docker Compose deployment.

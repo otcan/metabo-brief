@@ -1,10 +1,13 @@
 import { buildPathwayScores, buildVariantScoring } from "./scoring-engine.js";
 
 export const APPLICATION_VERSION = "0.4.0";
-export const REPORT_SCHEMA_VERSION = "0.3.0";
+export const REPORT_SCHEMA_VERSION = "0.4.0";
 
 const BASES = new Set(["A", "C", "G", "T"]);
 const BASE_ORDER = { A: 0, C: 1, G: 2, T: 3 };
+const SCOREABILITY_READY = "ready_to_score";
+const SCOREABILITY_LIMITED = "limited_confidence";
+const SCOREABILITY_BLOCKED = "do_not_score";
 
 export function normalizeRsid(value) {
   return String(value || "").trim().toLowerCase();
@@ -198,6 +201,7 @@ export function parseRawGenotype(text, inputMetadata = {}) {
   let duplicateCount = 0;
   let conflictingDuplicateCount = 0;
   let malformedCount = 0;
+  const conflictingDuplicateRsids = new Set();
 
   for (const rawLine of lines) {
     const line = rawLine.trim();
@@ -250,6 +254,7 @@ export function parseRawGenotype(text, inputMetadata = {}) {
       duplicateCount += 1;
       if (variants.get(normalizedRsid).normalizedGenotype !== normalizedGenotype) {
         conflictingDuplicateCount += 1;
+        conflictingDuplicateRsids.add(normalizedRsid);
       }
     }
 
@@ -294,6 +299,7 @@ export function parseRawGenotype(text, inputMetadata = {}) {
       noCallCount,
       duplicateCount,
       conflictingDuplicateCount,
+      conflictingDuplicateRsids: Array.from(conflictingDuplicateRsids).sort(),
       malformedCount,
       detectedHeader: Boolean(header),
       provider: provider.provider,
@@ -311,26 +317,57 @@ export function parseRawGenotype(text, inputMetadata = {}) {
 function buildValidation(parsed, coverage) {
   const metadata = parsed.metadata;
   const limitations = [];
+  const scoreBlockingReasons = [];
+  const scoringLimitations = [];
   const parsedVariantCount = metadata.parsedVariantCount || 0;
 
   if (!metadata.provider) {
-    limitations.push("Provider was not detected from file comments or headers.");
+    const reason = "Provider was not detected from file comments, headers, or filename.";
+    limitations.push(reason);
+    scoreBlockingReasons.push(reason);
   }
   if (!metadata.genomeBuild) {
-    limitations.push("Genome build was not detected; no liftover or coordinate validation was performed.");
+    const reason = "Genome build was not detected; no liftover or coordinate validation was performed.";
+    limitations.push(reason);
+    scoreBlockingReasons.push(reason);
+  }
+  if (metadata.formatConfidence === "low") {
+    const reason = "Input format was not confidently recognized as a supported raw genotype table.";
+    limitations.push(reason);
+    scoreBlockingReasons.push(reason);
   }
   if (metadata.orientationConfidence !== "high") {
-    limitations.push("Alleles are treated as provider-native direct genotype calls; strand normalization is not performed.");
+    const reason = "Alleles are treated as provider-native direct genotype calls; strand normalization is not performed.";
+    limitations.push(reason);
+    scoringLimitations.push(reason);
   }
   if (parsedVariantCount < 1000) {
-    limitations.push("This file has far fewer variants than a normal consumer DNA export and may be a fixture or partial file.");
+    const reason = "This file has far fewer variants than a normal consumer DNA export and may be a fixture or partial file.";
+    limitations.push(reason);
+    scoringLimitations.push(reason);
   }
   if (coverage.uninterpretablePanelVariantCount > 0) {
-    limitations.push(`${coverage.uninterpretablePanelVariantCount} panel loci were present but did not match a supported genotype claim.`);
+    const reason = `${coverage.uninterpretablePanelVariantCount} panel loci were present but did not match a supported genotype claim.`;
+    limitations.push(reason);
+    scoringLimitations.push(reason);
+  }
+  if (coverage.excludedPanelVariantCount > 0) {
+    const reason = `${coverage.excludedPanelVariantCount} panel loci were excluded from scoring or interpretation.`;
+    limitations.push(reason);
+    scoringLimitations.push(reason);
   }
   if (metadata.conflictingDuplicateCount > 0) {
-    limitations.push(`${metadata.conflictingDuplicateCount} duplicated rsID call(s) conflicted; later rows were used.`);
+    const reason = `${metadata.conflictingDuplicateCount} duplicated rsID call(s) conflicted; affected panel loci were excluded.`;
+    limitations.push(reason);
+    scoringLimitations.push(reason);
   }
+
+  const canScore = scoreBlockingReasons.length === 0;
+  const scoreabilityStatus = !canScore
+    ? SCOREABILITY_BLOCKED
+    : scoringLimitations.length
+      ? SCOREABILITY_LIMITED
+      : SCOREABILITY_READY;
 
   return {
     fileName: metadata.fileName || null,
@@ -351,8 +388,21 @@ function buildValidation(parsed, coverage) {
         : parsedVariantCount >= 1000
           ? "small or partial genotype export"
           : "fixture or partial file",
-    validationStatus: limitations.length ? "limited" : "pass",
-    limitations
+    validationStatus: scoreBlockingReasons.length ? "fail" : limitations.length ? "limited" : "pass",
+    limitations,
+    scoreability: {
+      canScore,
+      status: scoreabilityStatus,
+      label:
+        scoreabilityStatus === SCOREABILITY_READY
+          ? "Ready to score"
+          : scoreabilityStatus === SCOREABILITY_LIMITED
+            ? "Limited confidence"
+            : "Do not score",
+      blockingReasons: scoreBlockingReasons,
+      limitations: scoringLimitations,
+      excludedRsids: metadata.conflictingDuplicateRsids || []
+    }
   };
 }
 
@@ -360,7 +410,9 @@ export function analyzeVariants(parsed, panel, pathwayModels = [], reportContext
   const findings = [];
   const missing = [];
   const unknownGenotypes = [];
+  const excluded = [];
   const pathwayCounts = new Map();
+  const conflictingDuplicateRsids = new Set(parsed.metadata.conflictingDuplicateRsids || []);
 
   function pathwayEntry(pathway) {
     if (!pathwayCounts.has(pathway)) {
@@ -429,12 +481,24 @@ export function analyzeVariants(parsed, panel, pathwayModels = [], reportContext
   }
 
   for (const variant of panel.variants || []) {
-    const parsedVariant = parsed.variants.get(normalizeRsid(variant.rsid));
+    const normalizedPanelRsid = normalizeRsid(variant.rsid);
+    const parsedVariant = parsed.variants.get(normalizedPanelRsid);
     if (!parsedVariant) {
       missing.push({
         rsid: variant.rsid,
         gene: variant.gene,
         pathway: variant.pathway
+      });
+      continue;
+    }
+
+    if (conflictingDuplicateRsids.has(normalizedPanelRsid)) {
+      excluded.push({
+        rsid: variant.rsid,
+        gene: variant.gene,
+        genotype: parsedVariant.normalizedGenotype,
+        pathway: variant.pathway,
+        reason: "conflicting_duplicate"
       });
       continue;
     }
@@ -507,17 +571,30 @@ export function analyzeVariants(parsed, panel, pathwayModels = [], reportContext
 
   const pathwaySummary = Array.from(pathwayCounts.values())
     .sort((a, b) => b.findingCount - a.findingCount || a.pathway.localeCompare(b.pathway));
-  const presentPanelVariantCount = findings.length + unknownGenotypes.length;
+  const presentPanelVariantCount = findings.length + unknownGenotypes.length + excluded.length;
+  const scoreEligibleFindingCount = findings.filter(finding => finding.scoring.eligible).length;
   const coverage = {
     panelVariantCount: (panel.variants || []).length,
     presentPanelVariantCount,
+    interpretablePanelVariantCount: findings.length,
     interpretedFindingCount: findings.length,
     missingPanelVariantCount: missing.length,
     uninterpretablePanelVariantCount: unknownGenotypes.length,
+    excludedPanelVariantCount: excluded.length,
+    scoreEligibleFindingCount,
+    scoredPanelVariantCount: scoreEligibleFindingCount,
     directlyObservedFindingCount: findings.length
   };
   const validation = buildValidation(parsed, coverage);
-  const pathwayScores = buildPathwayScores({ panel, parsed, findings, pathwayModels });
+  coverage.scoredPanelVariantCount = validation.scoreability.canScore ? scoreEligibleFindingCount : 0;
+  const pathwayScores = buildPathwayScores({
+    panel,
+    parsed,
+    findings,
+    pathwayModels,
+    scoreability: validation.scoreability,
+    excludedRsids: validation.scoreability.excludedRsids
+  });
 
   return {
     applicationVersion: reportContext.applicationVersion || APPLICATION_VERSION,
@@ -545,6 +622,7 @@ export function analyzeVariants(parsed, panel, pathwayModels = [], reportContext
     findings,
     missing,
     unknownGenotypes,
+    excluded,
     pathwaySummary,
     pathwayScores
   };

@@ -51,7 +51,7 @@ Do the explicitly supported variants favor faster or slower caffeine clearance?
 
 ## Known weaknesses
 
-- Direct rsID matching is used; genome build and strand normalization are not yet fail-closed.
+- Direct rsID matching is scoreability-gated, but coordinate validation and strand normalization are not yet performed.
 - Smoking, pregnancy, medications, liver function, and measured caffeine clearance are not included.
 - The model is not calibrated to a population percentile.
 
@@ -59,7 +59,7 @@ Do the explicitly supported variants favor faster or slower caffeine clearance?
 
 - This is a relative pathway tendency within the MetaboBrief model, not a population percentile.
 - The model does not include current caffeine intake, smoking, pregnancy, liver function, medications, or measured caffeine clearance.
-- The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization.
+- The current browser analyzer scoreability-gates direct provider-native rsID matching but still does not perform coordinate validation or strand normalization.
 
 ## Versioning
 

@@ -37,8 +37,8 @@ Upgrade the current analyzer:
 - Web-worker parsing.
 - ZIP support.
 - Provider detection.
-- Build and orientation detection.
-- Better duplicate and no-call handling.
+- Build and orientation detection. Initial scoreability gating is present; allele normalization and coordinate validation remain future work.
+- Better duplicate and no-call handling. Conflicting duplicate panel loci are now excluded from scoring.
 - Deterministic report generation.
 - Synthetic test fixtures for each provider.
 - Clear unsupported-file errors.

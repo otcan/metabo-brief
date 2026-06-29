@@ -413,7 +413,9 @@ function renderSummary(report) {
   const headerState = report.metadata.detectedHeader ? "Detected" : "Inferred";
   const coverage = report.coverage || {};
   const validation = report.validation || {};
+  const scoreability = validation.scoreability || {};
   const validationRows = [
+    ["Can this file be scored?", scoreability.label || "Not assessed"],
     ["Input", validation.importedFrom || validation.fileName || "not recorded"],
     ["Compression", validation.compression || "none"],
     ["Provider", `${validation.provider || "not detected"} (${validation.providerConfidence || "none"})`],
@@ -439,8 +441,11 @@ function renderSummary(report) {
     <div class="analysis-stat"><span>Parsed SNPs</span><strong>${formatNumber(report.metadata.parsedVariantCount)}</strong></div>
     <div class="analysis-stat"><span>Panel loci present</span><strong>${formatNumber(coverage.presentPanelVariantCount ?? matched)}/${panelSize}</strong></div>
     <div class="analysis-stat"><span>Interpreted</span><strong>${formatNumber(coverage.interpretedFindingCount ?? matched)}</strong></div>
+    <div class="analysis-stat"><span>Score eligible</span><strong>${formatNumber(coverage.scoreEligibleFindingCount)}</strong></div>
+    <div class="analysis-stat"><span>Scored loci</span><strong>${formatNumber(coverage.scoredPanelVariantCount)}</strong></div>
     <div class="analysis-stat"><span>Not in file</span><strong>${formatNumber(coverage.missingPanelVariantCount ?? report.missing.length)}</strong></div>
     <div class="analysis-stat"><span>Uninterpretable</span><strong>${formatNumber(coverage.uninterpretablePanelVariantCount ?? report.unknownGenotypes.length)}</strong></div>
+    <div class="analysis-stat"><span>Excluded</span><strong>${formatNumber(coverage.excludedPanelVariantCount)}</strong></div>
     <div class="analysis-stat"><span>No-calls</span><strong>${formatNumber(report.metadata.noCallCount)}</strong></div>
     <div class="analysis-stat"><span>Header</span><strong>${headerState}</strong></div>
   `;

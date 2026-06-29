@@ -55,6 +55,8 @@ export function genotypeText(rows) {
   return [
     "# Synthetic 23andMe-style file for scoring tests.",
     "# This is not real personal genotype data.",
+    "# Provider: 23andMe",
+    "# Genome build: GRCh37",
     "# rsid\tchromosome\tposition\tgenotype",
     body
   ].join("\n");

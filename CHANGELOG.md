@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Added scoreability validation with `ready_to_score`, `limited_confidence`, and `do_not_score` states.
+- Blocked pathway-score calculation when provider, genome build, or file format confidence is unsafe.
+- Excluded conflicting duplicate panel loci from findings and pathway-score contributors instead of overwriting them silently.
+- Expanded report coverage into present, interpretable, score-eligible, scored, missing, uninterpretable, and excluded loci.
+- Bumped the report schema to `0.4.0`.
 - Added deterministic JSON report export with replay metadata, panel/model hashes, and timestamp separation.
 - Added printable standalone HTML export and browser print/PDF flow with a sensitive-data warning.
 - Added static Docker packaging with Nginx security headers, `/healthz`, Docker Compose, and a GHCR build workflow.

@@ -201,7 +201,7 @@ function buildModel(panel, definition, definitions) {
     limitations: [
       "This is a relative pathway tendency within the MetaboBrief starter model, not a population percentile.",
       "This model combines curated SNP contribution components assigned to this pathway; it does not measure current pathway activity.",
-      "The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization.",
+      "The current browser analyzer scoreability-gates direct provider-native rsID matching but still does not perform coordinate validation or strand normalization.",
       ...(definition.excludedMechanisms?.length
         ? [`Not included: ${definition.excludedMechanisms.join(", ")}.`]
         : [])

@@ -50,14 +50,14 @@ Do the curated SNP findings favor lower or higher modelled mitochondrial energy-
 
 - Generated from curated starter-panel pathway assignments and not yet expert-reviewed per variant mechanism.
 - Axis mapping is starter-level and may need pathway-specific refinement before stronger claims.
-- Direct rsID matching is used; genome build and strand normalization are not yet fail-closed.
+- Direct rsID matching is scoreability-gated, but coordinate validation and strand normalization are not yet performed.
 - Measured biomarkers, medications, diet, symptoms, and clinical context are not included.
 
 ## Limitations
 
 - This is a relative pathway tendency within the MetaboBrief starter model, not a population percentile.
 - This model combines curated SNP contribution components assigned to this pathway; it does not measure current pathway activity.
-- The current browser analyzer still performs direct provider-native rsID matching without build or strand normalization.
+- The current browser analyzer scoreability-gates direct provider-native rsID matching but still does not perform coordinate validation or strand normalization.
 - Not included: Measured lactate, exercise testing, mitochondrial disease diagnosis, medications.
 
 ## Versioning

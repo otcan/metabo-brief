@@ -210,7 +210,7 @@ function labelResultSupport({ coverage, independentSignalCount, topShare, denomi
   return "high";
 }
 
-function contributorForInput({ input, variant, parsed, finding }) {
+function contributorForInput({ input, variant, parsed, finding, excludedRsids = new Set() }) {
   const parsedVariant = parsed.variants.get(normalizeRsid(input.rsid));
   const modelWeight = finiteNumber(input.modelWeight, 1);
   const axisMultiplier = finiteNumber(input.axisMultiplier, 1);
@@ -225,6 +225,31 @@ function contributorForInput({ input, variant, parsed, finding }) {
       mechanism: input.mechanism,
       targetType: variant?.targetType || "unknown",
       contributionState: "not_observed",
+      profiles: profileList(input.profiles),
+      contribution: 0,
+      rawContribution: 0,
+      denominatorContribution: 0,
+      direction: 0,
+      magnitude: 0,
+      certainty: 0,
+      evidenceConflict: Boolean(input.evidenceConflict),
+      modelWeight,
+      axisMultiplier,
+      maxContribution,
+      independenceGroup: input.independenceGroup,
+      inclusionRationale: input.inclusionRationale || ""
+    };
+  }
+
+  if (excludedRsids.has(normalizeRsid(input.rsid))) {
+    return {
+      rsid: input.rsid,
+      gene: variant?.gene || input.gene || "unknown",
+      genotype: parsedVariant.normalizedGenotype || "excluded",
+      claimId: null,
+      mechanism: input.mechanism,
+      targetType: variant?.targetType || "unknown",
+      contributionState: "excluded",
       profiles: profileList(input.profiles),
       contribution: 0,
       rawContribution: 0,
@@ -408,7 +433,7 @@ function modelInputCount(model) {
   return (model.inputs || []).length;
 }
 
-export function scorePathwayModel({ panel, parsed, findings, model }) {
+export function scorePathwayModel({ panel, parsed, findings, model, scoreability = null, excludedRsids = new Set() }) {
   const variants = variantByRsid(panel);
   const findingsByRsid = findingByRsid(findings);
   const contributors = (model.inputs || []).map(input => {
@@ -417,7 +442,8 @@ export function scorePathwayModel({ panel, parsed, findings, model }) {
       input,
       variant,
       parsed,
-      finding: findingsByRsid.get(normalizeRsid(input.rsid))
+      finding: findingsByRsid.get(normalizeRsid(input.rsid)),
+      excludedRsids
     });
   });
 
@@ -442,13 +468,17 @@ export function scorePathwayModel({ panel, parsed, findings, model }) {
   const directionalConsistency = labelDirectionalConsistency(selected.groupContributions);
   const evidenceConflict = contributors.some(contributor => contributor.evidenceConflict) ? "present" : "none";
   const dominanceLabel = labelDominance(selected.topShare, selected.independentSignalCount);
-  const resultSupport = labelResultSupport({
+  const scoringBlocked = scoreability?.canScore === false;
+  const scoreBlockingReasons = scoreability?.blockingReasons || [];
+  const calculatedResultSupport = labelResultSupport({
     coverage,
     independentSignalCount: selected.independentSignalCount,
     topShare: selected.topShare,
     denominatorContributorCount: selected.denominatorContributorCount
   });
+  const resultSupport = scoringBlocked ? "not_calculated" : calculatedResultSupport;
   const passesThresholds =
+    !scoringBlocked &&
     selected.score !== null &&
     coverage >= minimumCoverage &&
     selected.independentSignalCount >= minimumIndependentSignals &&
@@ -456,7 +486,9 @@ export function scorePathwayModel({ panel, parsed, findings, model }) {
   const score = passesThresholds ? selected.score : null;
   const rawScore = passesThresholds ? round(selected.rawScore) : null;
   const loo = leaveOneGroupOut(selected);
-  const stability = !passesThresholds
+  const stability = scoringBlocked
+    ? "not calculated"
+    : !passesThresholds
     ? "insufficient coverage"
     : conservative.score === null || exploratory.score === null || Math.abs(conservative.score - exploratory.score) > 10
       ? "sensitive to limited evidence"
@@ -491,9 +523,23 @@ export function scorePathwayModel({ panel, parsed, findings, model }) {
     numerator: passesThresholds ? round(selected.numerator) : round(selected.numerator),
     denominator: passesThresholds ? round(selected.denominator) : round(selected.denominator),
     scoringFormula: "50 + (50 * numerator / denominator)",
-    scoreLabel: score === null ? "insufficient coverage to calculate" : interpretationForScore(score, model),
-    scoreStatus: passesThresholds ? (resultSupport === "low" ? "provisional" : "calculated") : "insufficient_coverage",
-    signalStrength: passesThresholds ? labelSignalStrength(selected.signalLoad, selected.independentSignalCount) : "insufficient",
+    scoringBlocked,
+    scoreBlockingReasons,
+    scoreLabel: scoringBlocked
+      ? "not calculated due to input validation"
+      : score === null
+        ? "insufficient coverage to calculate"
+        : interpretationForScore(score, model),
+    scoreStatus: scoringBlocked
+      ? "not_calculated"
+      : passesThresholds
+        ? (resultSupport === "low" ? "provisional" : "calculated")
+        : "insufficient_coverage",
+    signalStrength: scoringBlocked
+      ? "not_calculated"
+      : passesThresholds
+        ? labelSignalStrength(selected.signalLoad, selected.independentSignalCount)
+        : "insufficient",
     evidenceQuality,
     evidenceWeight: round(selected.evidenceWeight),
     evidenceConflict,
@@ -508,8 +554,8 @@ export function scorePathwayModel({ panel, parsed, findings, model }) {
       topIndependentGroupPercent: Math.round(selected.topShare * 100)
     },
     leaveOneGroupOut: loo,
-    conservativeScore: conservative.score,
-    exploratoryScore: exploratory.score,
+    conservativeScore: scoringBlocked ? null : conservative.score,
+    exploratoryScore: scoringBlocked ? null : exploratory.score,
     defaultProfile,
     inputCount,
     eligibleVariantCount: inputCount,
@@ -549,14 +595,25 @@ export function scorePathwayModel({ panel, parsed, findings, model }) {
         inclusionRationale: contributor.inclusionRationale
       })),
     missingVariantCount: contributors.filter(contributor => contributor.contributionState === "not_observed").length,
-    limitations: model.limitations || []
+    limitations: [
+      ...(model.limitations || []),
+      ...scoreBlockingReasons
+    ]
   };
 }
 
-export function buildPathwayScores({ panel, parsed, findings, pathwayModels = [] }) {
+export function buildPathwayScores({ panel, parsed, findings, pathwayModels = [], scoreability = null, excludedRsids = [] }) {
+  const excludedRsidSet = new Set((excludedRsids || []).map(normalizeRsid));
   return pathwayModels
     .filter(model => model && model.modelId)
-    .map(model => scorePathwayModel({ panel, parsed, findings, model }))
+    .map(model => scorePathwayModel({
+      panel,
+      parsed,
+      findings,
+      model,
+      scoreability,
+      excludedRsids: excludedRsidSet
+    }))
     .sort((a, b) => {
       if (a.score === null && b.score !== null) return 1;
       if (a.score !== null && b.score === null) return -1;

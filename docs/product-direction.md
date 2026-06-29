@@ -25,7 +25,7 @@ The current constraints are equally important:
 - No VCF/gVCF support.
 - No REF/ALT-aware matching.
 - Starter-reviewed pathway scores are now available for every current panel pathway family. They are release-ready as informational pathway-tendency models, but not expert/clinical reviewed models.
-- Current validation metadata makes these limits visible, but it is not yet fail-closed build or strand normalization.
+- Current validation metadata makes these limits visible. Pathway scoring is now blocked when provider, genome build, or format confidence is unsafe, but strand normalization and coordinate validation are still future work.
 
 ## Positioning
 
@@ -107,7 +107,7 @@ Category summaries should remain visible:
 - Findings needing confirmation.
 - Coverage and limitations.
 
-The current analyzer has started this hierarchy with an at-a-glance section and plain-language finding cards. It still needs stronger provider, build, and orientation detection before the validation layer can fail closed.
+The current analyzer has started this hierarchy with an at-a-glance section, plain-language finding cards, and scoreability gating. It still needs stronger provider, build, and orientation detection before validation can be considered robust across consumer exports.
 
 Finding cards should follow this shape:
 
